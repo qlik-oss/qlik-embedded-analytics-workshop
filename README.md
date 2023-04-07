@@ -3,9 +3,7 @@
 ## Introduction
 The aim of this Github project is to share a repository with the users who will attend the **Qlik Cloud Embedded Analytics workshop**. The repository contains a step by step integration to drive the participants to produce the final mashup result that will be implemented during the workshop activities. The workshop is a purely demonstration of Qlik SaaS integration capabilityies but does not pretend in any way to be production ready code.
 
-<p>
-<img src="img/final_result.png" width="800" title="hover text"/>
-</p>
+![MainImage](https://raw.githubusercontent.com/goldbergjeffrey/qlik-embedded-analytics-workshop-202304/main/img/final_result.png)
 
 ### Pre-requisites
 A Qlik Sense SaaS tenant available for the workshop. Please be aware that in this workshop we will not cover Single-Sign-On topic hence in order to correctly see the results of the integrations make sure to have a valid session to your tenant already open in a browser tab.
