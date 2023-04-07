@@ -16,11 +16,14 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 * A Qlik Cloud tenant
 * An account on the tenant with the Tenant Admin role
-* A Github account and access to [repl.it](https://replit.com/) for best results
+* A Github account
+* A development environment such as Visual Studio Code or an online IDE like [repl.it](https://replit.com/).
 * You are logged into the tenant as a user with access to the Qlik Cloud Analytics application
 
 > **Note: This workshop does not cover authentication options for securing web applications with Qlik Cloud.**
 > For more information on authentication and authorization for embedded applications [review the documentation](https://qlik.dev/authenticate) on [qlik.dev](https://qlik.dev).
+
+> **Note:** This workshop is built to work on [repl.it](https://replit.com/). If you're going through this workshop with another online IDE or a local development environment, your mileage may vary. 
 
 ## Workshop steps
 
@@ -85,58 +88,84 @@ Select `Themes` from the Management Console menu.
 
 <img src="img/configuration/themeicon.png" width="200px" alt="theme menu icon"></img>
 
-Click the `Add` button in the upper right side of the screen. Browse for the embeddedtheme.zip file you downloaded in [1.1](#11-download-content) and upload it to the tenant.
+Click the `Add` button on the upper right side of the screen. Browse for the embeddedtheme.zip file you downloaded in [1.1](#11-download-content) and upload it to the tenant.
 
 <img src="img/configuration/themeupload.png" width="300px" alt="theme menu icon"></img>
 
-
+### 1.4 Create a web integration
 
 Select `Web` from the Management Console menu.
 
+<img src="img/configuration/webiconnew.png" width="200px" alt="web menu icon"></img>
 
-Click the create new
+Click the `Create new` button on the upper right side of the screen.
 
-## 1. Getting Started
-1. Download and unpack, or `git clone` this repository into your computer
+* In the `Name` input give your web integration a friendly name.
+* In the `Add an origin` input enter the host URI for your web application.
 
-1. **Download Sales_Analytics_Workshop.qvf** located inside */content-to-upload/app/* folder: load the app in your Qlik Cloud Tenant. This is the .qvf we will use during the workshop to create the mashup.  
+> **Note:** If you're using [repl.it](https://replit.com), the origin you add will look something like this: `https://qlik-embedded-workshop.makethelogobigger.repl.co`.
 
-1. **Download Embedded_Analytics_Workshop.zip** located inside */content-to-upload/theme/* folder: navigate to *https://{your-tenant-hostname}.{region}.qlikcloud.com/console/themes/* and import the theme inside your tenant. The same theme file is located in the folder */themes/*. We will use this theme file to apply the theme in our Javascript integration (step 6.). After you imported the theme please apply it to the previously imported app inside the App Overview menu.
+* Click the Add button to set the origin as an allowed origin for this web integration.
+* Click the Create button on the bottom right to create the web integration reference.
 
-1. **Install Node.js** if you haven't already (https://nodejs.org) 
+The configuration will look like this when it's complete.
 
-1. (Optional) In *server.js* change server port at line 4.
+<img src="img/configuration/webintegrationconfig.png" width="300px" alt="web menu icon"></img>
 
-1. Go to *https://{your-tenant-hostname}.{region}.qlikcloud.com/console* and create a new **Web Integration** under the **Web** menu by adding *https://127.0.0.1:{port_number}* as the origin since this is the address of the local webserver hosting the mashup. A web integration is a resource representing a list of whitelisted origins that can make requests to a specified tenant. It is the implementation of the **CORS** mechanism within Qlik Sense SaaS. To know more about Web Integration please refer to [this page](https://qlik.dev/basics/authentication-options#web-integrations) of our online documentation.
+An entry for the web integration will appear in the list in the middle of the screen. Record the web integration id value for use with the web application.
 
-1. Go to *https://{your-tenant-hostname}.{region}.qlikcloud.com/console* and create a new **Policy** under the **Content Security Policy** menu by adding *127.0.0.1:{port_number}* as the origin since this will be the origin from where the Iframe is loaded. As directives please check *frame-ancestors*. To know more about Content Security Policy please refer to [this page](https://qlik.dev/basics/content-security-policy) on Qlik.dev .
+### 1.5 Add content security policy entry
 
-1. Under */config/* project's folder modify **config.js** file by adding: 
-    * Web Integration Id created at step 1.2
-    * Id of the imported App
-    * Id of the sheet to embed via Iframe (you can leave the default value)
+Select `Content Security Policy` from the Management Console menu.
 
-1. Open up a terminal window and `cd` into the source code folder and run `npm install` to install the project dependencies
+<img src="img/configuration/csplogo.png" width="300px" alt="web menu icon"></img>
 
-1. **Self-signed certificate for running a local HTTPS server that hosts the mashup (test purpose)**: 
-   * Create a directory called server_certs
-   * Open the directory in a terminal window
-   * Install OpenSSL
-   * Generate **server.key** and **server.cert** certificates inside the server_certs using the Generate a self-signed certificate command from the following link : [https://timonweb.com/javascript/running-expressjs-server-over-https/](https://timonweb.com/javascript/running-expressjs-server-over-https/).
-      ```javascript
-      https_exp.createServer({
-          key: fs.readFileSync('./server_certs/server.key'),
-          cert: fs.readFileSync('./server_certs/server.cert')
-        }, app)
-        .listen(port, '127.0.0.1', function () {
-          console.log('Https Server listening on port 1234! Go to https://127.0.0.1:'+port+'/')
-        })
-   ```
-1. Run `npm start` which should start a development server, open the link you see in your terminal (likely https://127.0.0.1:1234)
+Click the create `Add` button on the upper right side of the screen. The Add origin dialog window appears.
 
-<br>
+* Provide a name for the entry.
+* In the `Origin` input enter the host URI for your web application **omitting** the `https://` from the entry. If your origin is *https://qlik-embedded-workshop.makethelogobigger.repl.co*, enter `qlik-embedded-workshop.makethelogobigger.repl.co` into the field.
+* Select the checkbox next to `frame-ancestors` to activate the directive to allow iframe content from Qlik Cloud to be embedded into your web application.
+* Click the Add button to save the entry.
 
-## 2. Iframe Integration
+The configuration will look like this when it's complete.
+
+<img src="img/configuration/cspconfiguration.png" width="400px" alt="web menu icon"></img>
+
+## 2 Configure the web application
+
+### 2.1 Update the config file
+
+Access the config folder and open the `config.js` file.
+
+```javascript
+  module.exports = {
+    qlikWebIntegrationId: "<WEB_INTEGRATION_ID>", //The value created in 1.4
+    tenantHostname: "<TENANT_HOSTNAME>", //For example: example.us.qlikcloud.com
+    appId: "<APP_GUID>", //For example: 9eb11ea5-a66f-4b07-be0c-c263a7aad51e
+    sheetId: "a8bdb8b2-525e-486e-91d1-7318d362acee",
+    theme: "embeddedtheme",
+  };
+```
+Update these properties:
+
+* `qlikWebIntegrationId`: The value you created in [1.4](#14-create-a-web-integration)
+* `tenantHostname`: The domain URI for your tenant.
+* `appId`: The value you copied in [1.2](#12-import-qlik-sense-app) after importing the Qlik Sense application to your tenant.
+
+Leave the remaining values untouched. Save the `config.js` file.
+
+### 2.2 Install npm packages
+
+Open a terminal or shell window. At the prompt, enter the command `npm install`. This will install the dependencies for running the web application.
+
+## 3 Start the web application
+
+In the terminal or shell window, enter the command `npm run start` at the prompt. This will start the web application.
+
+## 4 Embed visualizations
+
+### 4.1 No-code embedded analytics
+
 The simplest method of embedding analytics built with Qlik Sense into your solutions is certainly through the use of an Iframe. An Iframe is generally used to show the content of a web resource, in our case Qlik Sense, within a frame of a web page/main portal. This is what I call "integration with a one single click of the mouse".
 
 We offer 2 different libraries to embed content via Iframe:
