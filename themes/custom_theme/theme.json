@@ -1,0 +1,107 @@
+{
+  "_inherit": true,
+  "_cards": true,
+  "color": "#555555",
+  "backgroundColor": "#FFFFFF",
+  "fontSize": "12px",
+  "title": {
+    "main": {
+      "color": "#555555",
+      "fontSize": "12px"
+    },
+    "subTitle": {
+      "color": "#555555",
+      "fontSize": "12px"
+    },
+    "footer": {
+      "color": "#555555",
+      "fontSize": "12px",
+      "backgroundColor": "#FFFFFF"
+    }
+  },
+  "label": {
+    "name": {
+      "color": "#555555",
+      "fontSize": "12px"
+    },
+    "value": {
+      "color": "#555555",
+      "fontSize": "12px"
+    }
+  },
+  "axis": {
+    "title": {
+      "fontSize": "12px",
+      "color": "#555555"
+    },
+    "label": {
+      "name": {
+        "color": "#555555",
+        "fontSize": "12px"
+      }
+    }
+  },
+  "line": {
+    "major": {
+      "color": "#555555"
+    },
+    "minor": {
+      "color": "#555555"
+    }
+  },
+  "grid": {
+    "line": {
+      "highContrast": {
+        "color": "#000000"
+      },
+      "major": {
+        "color": "#DDDDDD"
+      },
+      "minor": {
+        "color": "#DDDDDD"
+      }
+    }
+  },
+  "legend": {
+    "title": {
+      "color": "#555555",
+      "fontSize": "12px"
+    },
+    "label": {
+      "color": "#555555",
+      "fontSize": "12px"
+    }
+  },
+  "dataColors": {
+    "primaryColor": "#5e548e",
+    "othersColor": "#71AAE3",
+    "errorColor": "#E7004C",
+    "nullColor": "#C4CFDA"
+  },
+  "palettes": {
+    "data": [
+      {
+        "name": "palette_1",
+        "translation": "palette_1",
+        "propertyValue": "data-palette-1",
+        "type": "row",
+        "scale": ["#5e548e", "#9f86c0", "#be95c4", "#71AAE3"]
+      }
+    ],
+    "ui": [
+      {
+        "name": "ui_1",
+        "colors": ["#5e548e", "#9f86c0", "#be95c4", "#71AAE3"]
+      }
+    ]
+  },
+  "scales": [
+    {
+      "name": "scale_1",
+      "translation": "scale_1",
+      "propertyValue": "sg_1",
+      "type": "gradient",
+      "scale": ["#5e548e", "#71AAE3"]
+    }
+  ]
+}
