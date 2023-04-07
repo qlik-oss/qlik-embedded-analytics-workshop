@@ -24,5 +24,5 @@ app.get("/theme", (request, response) => {
 });
 
 app.listen(port, () => {
-  console.log(`The workshop is running on port 8080`);
+  console.log(`The workshop is running on port ${port}`);
 });

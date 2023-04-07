@@ -25,9 +25,11 @@ By the end of this workshop, you will have the skills to integrate powerful data
 ## Workshop steps
 
 - [1 Configure the Qlik Cloud tenant](#1-configure-the-qlik-cloud-tenant)
-  - [1.1 Import content](#11-import-content)
-  - [1.2 Create a web integration](#12-create-a-web-integration)
-  - [1.3 Add content security policy entry](#13-add-content-security-policy-entry)
+  - [1.1 Download content](#11-download-content)
+  - [1.2 Import Qlik Sense app](#12-import-qlik-sense-app)
+  - [1.3 Import theme file](#13-import-theme-file)
+  - [1.4 Create a web integration](#14-create-a-web-integration)
+  - [1.5 Add content security policy entry](#15-add-content-security-policy-entry)
 - [2 Configure the web application](#2-configure-the-web-application)
   - [2.1 Update the config file](#21-update-the-config-file)
   - [2.2 Install npm packages](#22-install-npm-packages)
@@ -46,6 +48,53 @@ By the end of this workshop, you will have the skills to integrate powerful data
 - [7 Bonus time](#7-bonus-time)
   - [7.1 Advanced dynamic visualization](#71-advanced-dynamic-visualization)
   - [7.2 Next generation embedded analytics ALPHA](#72-next-generation-embedded-analytics-alpha)
+
+## 1 Configure the Qlik Cloud tenant
+
+### 1.1 Download content
+
+Download the [Sales Analytics_Workshop.qvf](https://github.com/goldbergjeffrey/qlik-embedded-analytics-workshop/raw/main/content-to-upload/app/Sales%20Analytics_Workshop.qvf) file from the Github repository.
+
+Download the [embeddedtheme.zip](https://github.com/goldbergjeffrey/qlik-embedded-analytics-workshop/raw/main/content-to-upload/theme/embeddedtheme.zip) file from the Github repository.
+
+### 1.2 Import Qlik Sense app
+
+Login to your Qlik Cloud tenant. When the hub appears, click the `Add new` button and select `Upload app` from the dropdown list.
+
+<img src="img/configuration/uploadapp.png" width="300px" alt="Upload app button"></img>
+
+In the dialog window that appears, browse for the Sales Analytics_Workshop.qvf file and select it. Then, click the `Upload` button.
+
+<img src="img/configuration/uploaddialog.png" width="300px" alt="Upload dialog"></img>
+
+A card for the app will appear in the hub. Mouse over the app and click the open button.
+
+<img src="img/configuration/appcard.png" width="300px" alt="Qlik Analytics application ref"></img>
+
+Record the ID (highlighted) of the app from the address bar in your web browser. You will use this in the web application configuration later in the workshop.
+
+![appId](img/configuration/appguid.png)
+
+### 1.3 Import theme file
+
+Click the Launcher menu (it looks like a waffle on the upper right of the screen) and select the Management Console icon.
+
+<img src="img/configuration/mclogo.png" width="125px" alt="MC Logo"></img>
+
+Select `Themes` from the Management Console menu.
+
+<img src="img/configuration/themeicon.png" width="200px" alt="theme menu icon"></img>
+
+Click the `Add` button in the upper right side of the screen. Browse for the embeddedtheme.zip file you downloaded in [1.1](#11-download-content) and upload it to the tenant.
+
+<img src="img/configuration/themeupload.png" width="300px" alt="theme menu icon"></img>
+
+
+
+Select `Web` from the Management Console menu.
+
+
+Click the create new
 
 ## 1. Getting Started
 1. Download and unpack, or `git clone` this repository into your computer
