@@ -1,25 +1,18 @@
 {
-  "name": "templateforv2-static",
+  "name": "nodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.html",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "build": "echo This is a static template, there is no bundler or bundling involved!"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codesandbox-app/static-template.git"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Ives van Hoorne",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codesandbox-app/static-template/issues"
-  },
-  "homepage": "https://github.com/codesandbox-app/static-template#readme",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
+    "@types/node": "^18.0.6",
     "express": "^4.18.2",
-    "nodemon": "^2.0.20"
+    "node-fetch": "^3.2.6",
+    "nodemon": "^2.0.22"
   }
 }
