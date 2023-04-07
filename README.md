@@ -1,6 +1,7 @@
 # Qlik Cloud Embedded Analytics Workshop
 
 ## Introduction
+
 Welcome to this hands-on workshop on embedding visualizations from Qlik Cloud Analytics! In today's data-driven world, businesses need to quickly access and share insights from their data to make informed decisions. With Qlik Cloud Analytics, you can easily create powerful visualizations that enable you to explore your data and gain valuable insights.
 
 In this workshop, we will guide you through the process of embedding visualizations from Qlik Cloud Analytics into your web applications, making it easier to share insights with your team or customers. You will learn how to leverage the Qlik Cloud Analytics APIs and embed codes to integrate visualizations directly into your web pages.
@@ -15,14 +16,36 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 * A Qlik Cloud tenant
 * An account on the tenant with the Tenant Admin role
-* A Github account and access to an online sandbox solution like [repl.it](https://replit.com/) or [stackblitz](https://stackblitz.com/)
+* A Github account and access to [repl.it](https://replit.com/) for best results
+* You are logged into the tenant as a user with access to the Qlik Cloud Analytics application
+
+> **Note: This workshop does not cover authentication options for securing web applications with Qlik Cloud.**
+> For more information on authentication and authorization for embedded applications [review the documentation](https://qlik.dev/authenticate) on [qlik.dev](https://qlik.dev).
 
 ## Workshop steps
 
-- [Configure the Qlik Cloud tenant](#configure-the-qlik-cloud-tenant)
-  - [Import content](#import-content)
-  - [Create a web integration](#create-a-web-integration)
-  - [Add content security policy entry](#add-content-security-policy-entry)
+- [1 Configure the Qlik Cloud tenant](#1-configure-the-qlik-cloud-tenant)
+  - [1.1 Import content](#11-import-content)
+  - [1.2 Create a web integration](#12-create-a-web-integration)
+  - [1.3 Add content security policy entry](#13-add-content-security-policy-entry)
+- [2 Configure the web application](#2-configure-the-web-application)
+  - [2.1 Update the config file](#21-update-the-config-file)
+  - [2.2 Install npm packages](#22-install-npm-packages)
+- [3 Start the web application](#3-start-the-application)
+- [4 Embed visualizations](#4-embed-visualizations)
+  - [4.1 No-code embedded analytics](#41-no-code-embedded-analytics)
+  - [4.2 Low-code embedded analytics](#42-low-code-embedded-analytics)
+    - [4.2.1 Existing visualization from an app](#421-existing-visualization-from-an-app)
+    - [4.2.2 Dynamic visualization from expressions](#422-Dynamic-visualization-from-expressions)
+- [5 Embed ui components](#5-embed-ui-components)
+  - [5.1 The selections bar](#51-the-selection-bar)
+  - [5.2 Implement a custom theme](#52-implement-a-custom-theme)
+- [6 Trigger Qlik Sense actions](#6-trigger-qlik-sense-actions)
+  - [6.1 Clear selections](#61-clear-selections)
+  - [6.2 Apply a specific field value](#62-apply-a-specific-field-value)
+- [7 Bonus time](#7-bonus-time)
+  - [7.1 Advanced dynamic visualization](#71-advanced-dynamic-visualization)
+  - [7.2 Next generation embedded analytics ALPHA](#72-next-generation-embedded-analytics-alpha)
 
 - [Qlik Cloud Embedded Analytics Workshop](#qlik-cloud-embedded-analytics-workshop)
   - [Introduction](#introduction)
@@ -149,6 +172,9 @@ Moreover we have already configured *nuked*, e.g. the *Nebula.js* object where w
         id:'ejNeB'
       });
     ```
+
+### 1.1 Import content
+
 
 'KPI01' is the div tag contained in *index.html* HTML file where we are going to embed the object while 'ejNeB' is the id of the chart we want to embed. The id of a chart can be easily obtained by right clicking on an existing object --> share --> embed. In particular, in the example above we have placed the KPI with that particular id inside the div 'KPI01'.
 
