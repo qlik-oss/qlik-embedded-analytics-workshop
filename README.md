@@ -47,23 +47,6 @@ By the end of this workshop, you will have the skills to integrate powerful data
   - [7.1 Advanced dynamic visualization](#71-advanced-dynamic-visualization)
   - [7.2 Next generation embedded analytics ALPHA](#72-next-generation-embedded-analytics-alpha)
 
-- [Qlik Cloud Embedded Analytics Workshop](#qlik-cloud-embedded-analytics-workshop)
-  - [Introduction](#introduction)
-    - [Pre-requisites](#pre-requisites)
-- [Table of contents](#table-of-contents)
-  - [1. Getting Started](#1-getting-started)
-  - [3. Javascript integration (Nebula.js)](#3-javascript-integration-nebulajs)
-  - [4. On The Fly Visualization (Nebula.js)](#4-on-the-fly-visualization-nebulajs)
-  - [5. Embed Selections bar](#5-embed-selections-bar)
-  - [7. Trigger some actions via APIs on Qlik Engine](#7-trigger-some-actions-via-apis-on-qlik-engine)
-    - [7.1 Clear all filters](#71-clear-all-filters)
-    - [7.2 Apply selection: 'Italy'](#72-apply-selection-italy)
-  - [8. On The Fly - advanced](#8-on-the-fly---advanced)
-  
-
-  
-<br>
-
 ## 1. Getting Started
 1. Download and unpack, or `git clone` this repository into your computer
 
