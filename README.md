@@ -1,16 +1,29 @@
 # Qlik Cloud Embedded Analytics Workshop
 
 ## Introduction
-The aim of this Github project is to share a repository with the users who will attend the **Qlik Cloud Embedded Analytics workshop**. The repository contains a step by step integration to drive the participants to produce the final mashup result that will be implemented during the workshop activities. The workshop is a purely demonstration of Qlik SaaS integration capabilityies but does not pretend in any way to be production ready code.
+Welcome to this hands-on workshop on embedding visualizations from Qlik Cloud Analytics! In today's data-driven world, businesses need to quickly access and share insights from their data to make informed decisions. With Qlik Cloud Analytics, you can easily create powerful visualizations that enable you to explore your data and gain valuable insights.
+
+In this workshop, we will guide you through the process of embedding visualizations from Qlik Cloud Analytics into your web applications, making it easier to share insights with your team or customers. You will learn how to leverage the Qlik Cloud Analytics APIs and embed codes to integrate visualizations directly into your web pages.
+
+This workshop is designed for individuals with a basic understanding of web development, but no prior experience with Qlik Cloud Analytics is required. We'll start with some tenant configuration, then dive into the hands-on exercises where you will get to practice embedding visualizations into this web application.
+
+By the end of this workshop, you will have the skills to integrate powerful data visualizations from Qlik Cloud Analytics into your web applications, allowing you to deliver insights to your stakeholders quickly and easily.
 
 ![MainImage](https://raw.githubusercontent.com/goldbergjeffrey/qlik-embedded-analytics-workshop-202304/main/img/final_result.png)
 
-### Pre-requisites
-A Qlik Sense SaaS tenant available for the workshop. Please be aware that in this workshop we will not cover Single-Sign-On topic hence in order to correctly see the results of the integrations make sure to have a valid session to your tenant already open in a browser tab.
+## Requirements
 
-<br>
+* A Qlik Cloud tenant
+* An account on the tenant with the Tenant Admin role
+* A Github account and access to an online sandbox solution like [repl.it](https://replit.com/) or [stackblitz](https://stackblitz.com/)
 
-# Table of contents
+## Workshop steps
+
+- [Configure the Qlik Cloud tenant](#configure-the-qlik-cloud-tenant)
+  - [Import content](#import-content)
+  - [Create a web integration](#create-a-web-integration)
+  - [Add content security policy entry](#add-content-security-policy-entry)
+
 - [Qlik Cloud Embedded Analytics Workshop](#qlik-cloud-embedded-analytics-workshop)
   - [Introduction](#introduction)
     - [Pre-requisites](#pre-requisites)
