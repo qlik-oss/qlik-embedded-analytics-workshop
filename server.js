@@ -23,6 +23,6 @@ app.get("/theme", (request, response) => {
   response.end();
 });
 
-https.createServer(app).listen(port, () => {
-  console.log(`The workshop is running on port ${port}`);
+app.listen(port, () => {
+  console.log(`The workshop is running on port 8080`);
 });
