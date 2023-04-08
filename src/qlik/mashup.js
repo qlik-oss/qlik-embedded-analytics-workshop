@@ -39,7 +39,7 @@
   const app = await (await session.open()).openDoc(config.appId);
 
   // configure nucleus
-  const nuked = window.stardust.embed(app, {
+  const qlikEmbed = window.stardust.embed(app, {
     //6.2 paste your code here to add the loaded theme in the themes array
     themes: [],
 
@@ -71,9 +71,10 @@
     ],
   });
 
-  //3. paste your code here to embed objects using Nebula.js
-
-  //4. paste your code here to create an on-the-fly visualization using Nebula.js
+  //embed-objects-section
+  
+  
+  //on-the-fly-section
 
   //5. paste your code here to embed the Selections bar
 

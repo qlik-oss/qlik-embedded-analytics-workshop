@@ -25,32 +25,79 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 > **Note:** This workshop is built to work on [repl.it](https://replit.com/). If you're going through this workshop with another online IDE or a local development environment, your mileage may vary. 
 
-## Workshop steps
+## Workshop sections
 
-- [1 Configure the Qlik Cloud tenant](#1-configure-the-qlik-cloud-tenant)
+<details>
+  <summary>
+    <a href="#1-configure-the-qlik-cloud-tenant">1 Configure the Qlik Cloud tenant</a>
+  </summary>
+  
   - [1.1 Download content](#11-download-content)
   - [1.2 Import Qlik Sense app](#12-import-qlik-sense-app)
   - [1.3 Import theme file](#13-import-theme-file)
   - [1.4 Create a web integration](#14-create-a-web-integration)
   - [1.5 Add content security policy entry](#15-add-content-security-policy-entry)
-- [2 Configure the web application](#2-configure-the-web-application)
+
+</details>
+
+<details>
+  <summary>
+    <a href="#2-configure-the-web-application">2 Configure the web application</a>
+  </summary>
+  
   - [2.1 Update the config file](#21-update-the-config-file)
   - [2.2 Install npm packages](#22-install-npm-packages)
-- [3 Start the web application](#3-start-the-application)
-- [4 Embed visualizations](#4-embed-visualizations)
+
+</details>
+
+<details>
+  <summary>
+    <a href="#3-start-the-application">3 Start the web application</a>
+  </summary>
+</details>
+
+<details>
+  <summary>
+    <a href="#4-embed-visualizations">4 Embed visualizations</a>
+  </summary>
+
   - [4.1 No-code embedded analytics](#41-no-code-embedded-analytics)
-  - [4.2 Low-code embedded analytics](#42-low-code-embedded-analytics)
-    - [4.2.1 Existing visualization from an app](#421-existing-visualization-from-an-app)
-    - [4.2.2 Dynamic visualization from expressions](#422-Dynamic-visualization-from-expressions)
-- [5 Embed ui components](#5-embed-ui-components)
+  - [4.2 Pro-code embedded analytics](#42-low-code-embedded-analytics)
+    - [4.2.1 Connect to Qlik Cloud Analytics](#421-connect-to-qlik-cloud-analytics)
+    - [4.2.2 Embed objects from Qlik Sense applications](#422-embed-objects-from-qlik-sense-applications)
+    - [4.2.3 Embed visualizations using expressions](#423-embed-visualizations-using-expressions)
+  
+</details>
+
+<details>
+  <summary>
+    <a href="#5-embed-ui-components">5 Embed ui components</a>
+  </summary>
+
   - [5.1 The selections bar](#51-the-selection-bar)
   - [5.2 Implement a custom theme](#52-implement-a-custom-theme)
-- [6 Trigger Qlik Sense actions](#6-trigger-qlik-sense-actions)
+
+</details>
+
+<details>
+  <summary>
+    <a href="#6-trigger-qlik-sense-actions">6 Trigger Qlik Sense actions</a>
+  </summary>
+
   - [6.1 Clear selections](#61-clear-selections)
   - [6.2 Apply a specific field value](#62-apply-a-specific-field-value)
-- [7 Bonus time](#7-bonus-time)
+
+</details>
+
+<details>
+  <summary>
+    <a href="#7-bonus-time">7 Bonus time</a>
+  </summary>
+
   - [7.1 Advanced dynamic visualization](#71-advanced-dynamic-visualization)
   - [7.2 Next generation embedded analytics ALPHA](#72-next-generation-embedded-analytics-alpha)
+
+</details>
 
 ## 1 Configure the Qlik Cloud tenant
 
@@ -188,14 +235,20 @@ When the sheet renders in the browser, click on the three dots button next to th
 
 The Embed sheet dialog appears. Bring your attention to the bottom of the dialog. This is where the embed code provided to you. The embed code contains all the information needed to render the sheet in your web application.
 
-
-`<iframe src="https://ironingboard.us.qlikcloud.com/single/?appid=599071c0-0de0-440c-bf8f-5b1a0a07ebcf&sheet=a8bdb8b2-525e-486e-91d1-7318d362acee&theme=embeddedtheme&opt=ctxmenu,currsel" style="border:none;width:100%;height:100%;"></iframe>`
-
-<sub>Example iframe embed code from Qlik Sense</sub>
+```html
+<!-- example iframe embed code from Qlik Sense application -->
+<iframe src="https://ironingboard.us.qlikcloud.com/single/?appid=599071c0-0de0-440c-bf8f-5b1a0a07ebcf&sheet=a8bdb8b2-525e-486e-91d1-7318d362acee&theme=embeddedtheme&opt=ctxmenu,currsel" style="border:none;width:100%;height:100%;"></iframe>
+```
 
 Press the `Copy` button to copy the code snippet to your clipboard. 
 
-Open the `iframe.html` file. Use the find command to search in the file for `no-code-embed`.
+Open the `iframe.html` file of the workshop web application located in the `src` directory. Use the find command to search in the file for `no-code-embed`.
+
+```html
+<!-- begin no-code-embed exercise -->
+            <iframe id="no-code-embed" src="" style="border:none;width:100%;height:100%;"></iframe>
+<!-- end no-code-embed exercise -->
+```
 
 Replace the entire code snippet from `<iframe>` through `</iframe>` with the embed code from the application.
 
@@ -203,76 +256,191 @@ Save the `iframe.html` file.
 
 In the web application, click the iframe menu item on the left side of the screen. The sheet from Qlik Sense appears in the web application.
 
-## 3. Javascript integration (Nebula.js)
-Qlik modern Embedded Analytics solutions offers a stack of open-source libraries to build customized analytical platforms backed up with the robustness of Qlik’s Associative Engine. Historically, [Capability APIs](https://qlik.dev/apis/javascript/capabilities) have been extensively used to build mashups and perform application related operations. A more modern alternative and framework-agnostic offering to Capability API-based operations is [Nebula.js](https://qlik.dev/libraries-and-tools/nebulajs) and [Enigma.js](https://qlik.dev/libraries-and-tools/enigmajs).
+### 4.2 Pro-code embedded analytics
 
-**Enigma.js** is an open source library, developed on GitHub that helps you to communicate with the Qlik associative engine. You can use it as a wrapper to connect to Qlik Associative Engine and by using QIX api methods. 
-On the other hand, **Nebula.js** is an open source library, developed on GitHub as a collection of product and framework agnostic JavaScript libraries and APIs that helps developers integrate visualizations and mashups on top of the Qlik associative engine.
+In this section, you are going to learn how to embed visualizations into the web application using JavaScript. For efficiency, this exercise contains completed scaffolding necessary for connecting to Qlik. If you want to learn about connecting to Qlik Cloud Analytics, keep reading. Otherwise, you can skip to [4.2.2 Embed objects from Qlik Sense applications](#422-embed-objects-from-qlik-sense-applications)
 
-**How this works?** The first thing we need to do is to install or import the right libraries to be used in the project. For this workshop we have already imported in the header of *index.html* HTML file located under */src/* path both *Enigma.js* and *Nebula.js* libraries. In particular for *Nebula.js* we've loaded all the visualization types needed for embedding the objects of the app. This can be obtained by importing the module in the .html file or either by installing the required modules via `npm`.  In **mashup.js** located under */qlik/* folder, we have already established a *websocket* connection to Qlik Engine and once a session has been created, we've opened the app using QIX Engine APIs *openDoc()* method. 
-```javascript
-    // Open the application
-    const app = await (await session.open()).openDoc(config.appId);
-``` 
-Moreover we have already configured *nuked*, e.g. the *Nebula.js* object where we've declared all the types of visualizations we want to embed.
- * **JS**  To embed an existing visualizations inside the HTML template, *index.html* webpage, write the following snippet of code inside *mashup.js* script:
-    ```javascript
-    //3. Embed using Nebula.js
-    nuked.render({
-        element:document.getElementById('KPI01'),
-        id:'ejNeB'
-      });
-    ```
+Pro-code embedding analytics requires two libraries: [enigma.js](https://qlik.dev/toolkits/enigma-js/) for back-end communication to the Qlik Analytics engine, and nebula.js for rendering visualizations in your web applications.
 
-### 1.1 Import content
+#### 4.2.1 Connect to Qlik Cloud Analytics
 
+Learn how to make a connection to the Qlik Analytics engine for use in your web application.
 
-'KPI01' is the div tag contained in *index.html* HTML file where we are going to embed the object while 'ejNeB' is the id of the chart we want to embed. The id of a chart can be easily obtained by right clicking on an existing object --> share --> embed. In particular, in the example above we have placed the KPI with that particular id inside the div 'KPI01'.
+Open the `mashup.js` file of the workshop web application located in the `src/qlik/` directory for editing.
 
-We will do the same for the other objects we want to place inside the .html page, e.g. :
-```javascript
-nuked.render({
+Get the configuration from the web application. 
+
+```js
+  const config = await fetch("config").then((response) => response.json());
+```
+
+This will enable using substitution throughout the rest of the code for items like your tenant, the web integration id, and the appId.
+
+To prevent cross-site scripting request forgery (CSRF) to your tenant, Qlik cloud requires web applications to request a CSRF token for browser-based use cases.
+
+Request a CSRF token using the `tenantHostname` and `qlikWebIntegrationId` properties from the config.
+
+```js
+  const csrfTokenInfo = await fetch(
+    `https://${config.tenantHostname}/api/v1/csrf-token?qlik-web-integration-id=${config.qlikWebIntegrationId}`,
+    {
+      credentials: "include",
+      headers: {
+        "Qlik-Web-Integration-ID": config.qlikWebIntegrationId,
+      },
+    }
+  );
+  console.log("Token ", csrfTokenInfo.headers.get("qlik-csrf-token"));
+```
+
+Construct a URL for connecting to the Qlik Sense app you want to embed visualizations from using the `tenantHostname`, `appId, `qlikWebIntegrationId`, and the CSRF token you obtained earlier.
+
+```js
+  const url = `wss://${config.tenantHostname}/app/${
+    config.appId
+  }?qlik-web-integration-id=${
+    config.qlikWebIntegrationId
+  }&qlik-csrf-token=${csrfTokenInfo.headers.get("qlik-csrf-token")}`;
+```
+
+Before creating session with the Qlik Cloud Analytics engine, you need to fetch a schema to be able to communicate with the API.
+
+```js
+const schema = await (
+    await fetch("https://unpkg.com/enigma.js/schemas/3.2.json")
+  ).json();
+```
+
+Use the `schema` and `url` to create a session to Qlik Cloud using the [enigma.js](https://qlik.dev/toolkits/enigma-js/) library.
+
+```js
+const session = window.enigma.create({ schema, url });
+```
+
+Open the session by specifying the `appId` from the config.
+
+```js
+const app = await (await session.open()).openDoc(config.appId);
+```
+
+After connecting to Qlik Cloud you can use the `app` reference to embed visualizations using nebula.js from the Qlik Sense application into the web application.
+
+Define a variable to connect nebula.js to the Qlik Sense application.
+
+```js
+const qlikEmbed = window.stardust.embed(app, {});
+```
+
+Inside the `{}` there are a number of properties you can configure to instruct the nebula.js library.
+
+Set the `flags` property to support linechart forecasting
+
+```js
+flags: { LINECHART_FORECAST: true },
+```
+
+Add the visualization libraries you intend to embed into the web application using the `types` property.
+
+```js
+types: [
+      {
+        name: "linechart",
+        load: () => Promise.resolve(window["sn-line-chart"]),
+      },
+      {
+        name: "piechart",
+        load: () => Promise.resolve(window["sn-pie-chart"]),
+      },
+      {
+        name: "barchart",
+        load: () => Promise.resolve(window["sn-bar-chart"]),
+      },
+      {
+        name: "kpi",
+        load: () => Promise.resolve(window["sn-kpi"]),
+      },
+      {
+        name: "treemap",
+        load: () => Promise.resolve(window["sn-treemap"]),
+      },
+    ],
+```
+
+With nebula.js configuration complete, you can use the `qlikEmbed` variable to render visualizations in the web application.
+
+#### 4.2.2 Embed objects from Qlik Sense applications
+
+In this section, you're going to use the `qlikEmbed` variable from [4.2.1](#421-connect-to-qlik-cloud-analytics) to render visualizations in the workshop web application.
+
+Open the `mashup.js` file of the workshop web application located in the `src/qlik/` directory for editing.
+
+Search in the file for `embed-objects-section` and go to that line.
+
+Add this render function below the line.
+```js
+qlikEmbed.render({
+  element: document.getElementById('KPI01'),
+  id:'ejNeB'
+});
+```
+Save the `mashup.js` file.
+
+Open the web application and you can see a KPI object has appeared at the top of the page. Add the remaining functions to render the objects in the web application.
+
+```js
+qlikEmbed.render({
     element:document.getElementById('KPI02'),
     id:'AjaEfsc'
   });
 
-nuked.render({
+qlikEmbed.render({
     element: document.getElementById('KPI03'),
     id: 'wwSHz',
   });
 
-nuked.render({
+qlikEmbed.render({
     element: document.getElementById('QV01'),
     id: 'mAbpP',
   });
 
-nuked.render({
+qlikEmbed.render({
     element: document.getElementById('QV02'),
     id: 'LzuJNJ',
   });
-
 ```
-Save the file and try to click on JS Analytics in the portal to see the charts are rendered on the page.
 
-## 4. On The Fly Visualization (Nebula.js)
-You can even create **visualizations on-the-fly** using *Nebula.js*, i.e. visualizations that don't exists in the Qlik Sense app but that can be rendered on-the-fly by using the dimensions and measures contained in the app's data model. 
-<br>
-Let's place in div-tag *QV04* a barchart displaying for example  *Sales by CategoryName*. 
-<p>
-<img src="img/on-the-fly.PNG" width="400"  title="hover text"/>
-</p>
+Save the `mashup.js` file.
 
-* **JS**: place on-the-fly code snippet in *mashup.js* file after the part of the script where we open the app and nuked object created.
+The `render` function uses the `element` property to identify where in the HTML page to place the visualization. The `id` property is the unique identifier for the visualization in the Qlik Sense application.
 
-  ```javascript
-  //4. Embed On-The-Fly charts
-  nuked.render({
-      element:document.getElementById('QV04'),
-      type: 'barchart',
-      fields: ['CategoryName', "=sum(Sales)"],
+>**Note:** Finding the unique identifiers for Qlik objects can be a pain. Thankfully, there are some great tools out there that make it easier like the [Add Sense](https://chrome.google.com/webstore/detail/add-sense/bbiljflfafkaejgdebbnmcohpidgkejj) Chrome extension.
 
-    });
-  ```
+#### 4.2.3 Embed visualizations using expressions
+
+In addition to rendering visualizations that exist in a Qlik Sense application, you can create visualizations dynamically on-the-fly using expressions.
+
+Open the `mashup.js` file of the workshop web application located in the `src/qlik/` directory for editing.
+
+Search in the file for `on-the-fly-section` and go to that line.
+
+Add this render function below the line.
+
+```js
+qlikEmbed.render({
+  element: document.getElementById('QV04'),
+  type: 'barchart',
+  fields: ['CategoryName', "=sum(Sales)"],
+});
+```
+
+Save the `mashup.js` file.
+
+In this `render` function, the `element` property serves the same purpose as before, instructing qlikEmbed where to render the visualization in the web application. Instead of the `id` property, two alternative properties are in place: the `type` and the `fields` properties.
+
+The `type` property specifies the chart type to render. 
+
+The `fields` property accepts an array of field names and expressions to bring the chart to life.
+
 
 ## 5. Embed Selections bar
 One of the most common needs the users have during their analytics activities is to keep track about the context of selections they are applying to the data. That's where the selections bar comes in handy. In order to insert the **selections bar** we need to work both on HTML and JS.
