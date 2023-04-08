@@ -1,4 +1,4 @@
-entrypoint = "index.js"
+entrypoint = "server.js"
 
 hidden = [".config", "package-lock.json"]
 
@@ -71,7 +71,7 @@ support = true
       cwd = "."
       environment = []
       pauseForSourceMap = false
-      program = "./index.js"
+      program = "./server.js"
       request = "launch"
       sourceMaps = true
       stopOnEntry = false
@@ -86,4 +86,4 @@ pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
 start = "typescript-language-server --stdio"
 
 [deployment]
-run = ["sh", "-c", "node index.js"]
+run = ["sh", "-c", "node server.js"]
