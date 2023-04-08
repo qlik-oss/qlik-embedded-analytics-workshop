@@ -1,18 +1,17 @@
 {
-  "name": "nodejs",
+  "name": "qlik-cloud-embedded-analytics-workshop",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A self-directed workshop for learning how to embed Qlik Cloud Analytics into web applications",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "@goldbergjeffrey, from original work by @jackBrioschi",
+  "license": "MIT",
   "dependencies": {
     "@types/node": "^18.0.6",
     "express": "^4.18.2",
-    "node-fetch": "^3.2.6",
-    "nodemon": "^2.0.22"
+    "node-fetch": "^3.2.6"
   }
 }
