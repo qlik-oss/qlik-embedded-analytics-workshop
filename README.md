@@ -81,7 +81,7 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 <details>
   <summary>
-    <a href="#6-trigger-qlik-sense-actions">6 Trigger Qlik Sense actions</a>
+    <a href="#6-trigger-events-on-analytics-data-">6 Trigger events on analytics data</a>
   </summary>
 
   - [6.1 Clear selections](#61-clear-selections)
@@ -449,7 +449,7 @@ So far you've learned a few different ways to embed visualizations into a web ap
 
 One of the most common needs the users have during their analytics activities is to keep track about the context of selections they are applying to the data.
 
-#### Add selection bar placeholder
+#### 5.1.1 Add selection bar placeholder
 
 Open the `index.html` file for editing. Search in the file for `selection-bar-entry`.
 
@@ -461,7 +461,7 @@ Create a new line in the file below the comment and add a `div` tag as a placeho
 
 Save the `index.html` file.
 
-#### Render selection bar
+#### 5.1.2 Render selection bar
 
 Open the `mashup.js` file for editing. Search in the file for `selection-bar-entry`.
 
@@ -475,7 +475,7 @@ Save the `mashup.js` file.
 
 Refresh the web application and the selection bar appears at the top of the page. Click inside one of the embedded visualizations and make a selection. The selection bar will update with the current selections you've made.
 
-### Implement a custom theme
+### 5.2 Implement a custom theme
 
 Custom themes enable the visualizations you're embedding into your web applications match your branding and styling guidelines.
 
@@ -509,8 +509,13 @@ context: {
 
 Save the `mashup.js` file and refresh the web application in the browser. The visualizations colors will change to those specified in the theme.
 
-## 6 Trigger Qlik Sense actions
+## 6 Trigger events on analytics data
 
+You can do more than embed visualizations when you embed Qlik Cloud Analytics. The engine you connected to in [4.2.1](#421-connect-to-qlik-cloud-analytics enables you to execute functions and trigger events on the analytics data in the application directly.
+
+### 6.1 Clear selections
+
+For example, you can add a button to the web application
 
 ## 7. Trigger some actions via APIs on Qlik Engine
 The final step of the workshop is to see how you can perform a bi-directional integration to permit to your web app to communicate with Qlik Engine and viceversa.
