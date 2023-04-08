@@ -89,16 +89,6 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 </details>
 
-<details>
-  <summary>
-    <a href="#7-bonus-time">7 Bonus time</a>
-  </summary>
-
-  - [7.1 Advanced dynamic visualization](#71-advanced-dynamic-visualization)
-  - [7.2 Next generation embedded analytics ALPHA](#72-next-generation-embedded-analytics-alpha)
-
-</details>
-
 ## 1 Configure the Qlik Cloud tenant
 
 ### 1.1 Download content
@@ -591,14 +581,3 @@ To select multiple field values, the JSON payload for the `selectValues` functio
 Save the `mashup.js` file.
 
 Refresh the web application and the button appears in the web application. When you click on it, the embedded visualizations will filter to show information associated with Italy.
-
-
-## 8. On The Fly - advanced
-As the final part of this workshop we just want to highlight that under On The Fly item of the sidebar you can play with an advanced on-the-fly mashup where you can dynamically change Measure, Dimension and Chart type and the chart is rendered accordingly on the right side of the page.
-<p>
-<img src="img/on-the-fly-page.PNG" width="800" title="hover text"/>
-</p>
-
-## Copyright and License
- Code released under the [MIT](https://github.com/jackBrioschi/Qlik-Cloud-Embedded-Analytics-Workshop/blob/main/LICENSE) license.
-The HTML template used in this project is a partial remake of [sb-admin2 Bootstrap template](https://github.com/startbootstrap/startbootstrap-sb-admin-2).
