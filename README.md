@@ -441,59 +441,76 @@ The `type` property specifies the chart type to render.
 
 The `fields` property accepts an array of field names and expressions to bring the chart to life.
 
+## 5 Embed ui components
 
-## 5. Embed Selections bar
-One of the most common needs the users have during their analytics activities is to keep track about the context of selections they are applying to the data. That's where the selections bar comes in handy. In order to insert the **selections bar** we need to work both on HTML and JS.
+So far you've learned a few different ways to embed visualizations into a web application. In addition, Qlik enables you to add and customize user interface components like data selection and custom theming for visualizations.
 
-<p>
-<img src="img/selection_bar.PNG" width="800" title="hover text"/>
-</p>
+### 5.1 The selections bar
 
-* **HTML** : in *index.html* place a new div tag belonging to 'curr-selections' class with id 'currentSelections' at the beginning of *Begin Page Content* section. Insert the code below where the <!-- Selection Bar --> is placed.
-    ```HTML
-    <!-- Selection Bar -->
-    <div class="curr-selections" id="currentSelections" ></div>
-    ```
-                              
-* **JS** : in *mashup.js* we use Nebula to retrieve current Selections and we insert the selectionBar inside the new div we've created above.
-   ```javascript                    
-    //5. paste your code here to embed the Selections bar
-  (await nuked.selections()).mount(document.querySelector('.curr-selections'));
-    ```
-<br>
+One of the most common needs the users have during their analytics activities is to keep track about the context of selections they are applying to the data.
 
-## 6. Apply a Theme in the embedded scenario
-Qlik Sense comes with four default themes (Sense Classic, Sense Focus, Sense Breeze, and Qlik Horizon) and in addition to these you can create custom themes based on your company color palettes, fonts etc. With custom themes you can precisely style an app by changing the colors, adding images and backgrounds as well as specifying the font sizes and font colors on a global or granular basis throughout your app. You can also define color palettes to be used and customize the specifications for margins, padding and spacing. The theme you created can be applied as well in the embedded scenario to merge Qlik Sense Analytics with the look&feel of your web application.
+#### Add selection bar placeholder
 
-In order to apply a theme to a Nebula.js integrations, please follow these steps:
+Open the `index.html` file for editing. Search in the file for `selection-bar-entry`.
 
-* **JS**: in *mashup.js* script we need to fetch the theme file from backend (located in */themes/* folder), then we declare it in the nuked object. Please make sure you paste the code below into the JS file at the positions according to the comments.
+Create a new line in the file below the comment and add a `div` tag as a placeholder for the selection bar. 
 
-* 6.1. Fetch the theme file 
-   ```javascript
-  //6.1 fetch the theme file from backend
-  const themeFile =  await fetch("theme").then((response) =>
-      response.json()
-    )
-  ```
-* 6.2 Add the theme to the theme's array in Nuked
-  ```javascript
-  //6.2 in Nuked (window.stardust.embed...), add themes array
-    themes:[
-      {
-          id: 'custom_theme',
-          load: () => Promise.resolve(themeFile),
-      }
-      ],
-  ```
-* 6.3 as the last step we need to specify we are using this theme in the context dictionary:
-  ```javascript
-      //6.3 in context apply theme
-      context: {
-          theme: 'custom_theme',
-          language: 'en-US',
-          },
-  ```
+```html
+<div class="curr-selections" id="currentSelections" ></div>
+```
+
+Save the `index.html` file.
+
+#### Render selection bar
+
+Open the `mashup.js` file for editing. Search in the file for `selection-bar-entry`.
+
+Create a new line in the file below the comment and mount the nebula `selections` component to the `div` tag placeholder.
+
+```js
+(await qlikEmbed.selections()).mount(document.querySelector('.curr-selections'));
+```
+
+Save the `mashup.js` file.
+
+Refresh the web application and the selection bar appears at the top of the page. Click inside one of the embedded visualizations and make a selection. The selection bar will update with the current selections you've made.
+
+### Implement a custom theme
+
+Custom themes enable the visualizations you're embedding into your web applications match your branding and styling guidelines.
+
+Open the `mashup.js` file for editing. Search in the file for `fetch-theme`.
+
+Create a new line below the comment and add a new variable to fetch the theme file you uploaded in [1.3](#13-import-theme-file).
+
+```js
+const themeFile =  await fetch("theme").then((response) => response.json());
+```
+
+Search in the file for `theme-property`. Add the `theme` property to the `qlikEmbed` nebula object and load the fetched theme file.
+
+```js
+themes:[
+  {
+      id: 'custom_theme',
+      load: () => Promise.resolve(themeFile),
+  }
+],
+```
+
+Search in the file for `context-property`. Add the `context` property to instruct the `qlikEmbed` renderer to use the custom theme.
+
+```js
+context: {
+  theme: 'custom_theme',
+  language: 'en-US',
+},
+```
+
+Save the `mashup.js` file and refresh the web application in the browser. The visualizations colors will change to those specified in the theme.
+
+## 6 Trigger Qlik Sense actions
+
 
 ## 7. Trigger some actions via APIs on Qlik Engine
 The final step of the workshop is to see how you can perform a bi-directional integration to permit to your web app to communicate with Qlik Engine and viceversa.

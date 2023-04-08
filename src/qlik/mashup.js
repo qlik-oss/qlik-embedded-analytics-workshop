@@ -6,7 +6,7 @@
   // Get the configuration information from the config.js file
   const config = await fetch("config").then((response) => response.json());
 
-  //6.1: paste your code here to fetch the theme file
+  //fetch-theme
 
   //Get the cross-site scripting token to allow requests to QCS from the web app
   const csrfTokenInfo = await fetch(
@@ -38,12 +38,12 @@
   // Open the application
   const app = await (await session.open()).openDoc(config.appId);
 
-  // configure nucleus
+  // configure nebula
   const qlikEmbed = window.stardust.embed(app, {
-    //6.2 paste your code here to add the loaded theme in the themes array
-    themes: [],
 
-    //6.3 paste your code here to specify which theme we're using in the context dict
+    // theme-property
+
+    // context-property
 
     flags: { LINECHART_FORECAST: true },
 
@@ -71,12 +71,12 @@
     ],
   });
 
-  //embed-objects-section
+  // embed-objects-section
   
   
-  //on-the-fly-section
+  // on-the-fly-section
 
-  //5. paste your code here to embed the Selections bar
+  // selection-bar-entry
 
   //7.1 paste your code here to add the Clear All filters handler
 
