@@ -85,7 +85,7 @@ By the end of this workshop, you will have the skills to integrate powerful data
   </summary>
 
   - [6.1 Clear selections](#61-clear-selections)
-  - [6.2 Apply a specific field value](#62-apply-a-specific-field-value)
+  - [6.2 Select a specific field value](#62-select-a-specific-field-value)
 
 </details>
 
@@ -515,53 +515,83 @@ You can do more than embed visualizations when you embed Qlik Cloud Analytics. T
 
 ### 6.1 Clear selections
 
-For example, you can add a button to the web application
+For example, you can add a button to the web application that clears all of the selections that have been made.
 
-## 7. Trigger some actions via APIs on Qlik Engine
-The final step of the workshop is to see how you can perform a bi-directional integration to permit to your web app to communicate with Qlik Engine and viceversa.
-Here's where our Open APIs approach has a key role since it permits to trigger actions to Qlik Associative Engine from an external component of your web page. 
-
-### 7.1 Clear all filters
-With QIX engine APIs is possible to add a click handler to a custom HTML component, made with Bootstrap (see rubber icon below), that when it gets executed for example it clears all selections in all fields of the current Qlik Sense app.
-<p>
 <img src="img/clear_filters.png" width="300" title="hover text"/>
-</p>
 
-* **JS**: place the .click handler made with JQuery inside *mashup.js* script.
+To add a clear all selections function to the eraser button seen in the image above, open the `mashup.js` file and search in the file for `clear-all`.
 
-  ```javascript
-  // 7.1 Reset Selections in Mashup.js
-    $('#clearAll').click(async function() { 
-        app.clearAll();
-    });
-  ```
+Add a click event to the code so that when the eraser is clicked, the web application calls the `app.clearAll()` function on the analytics application running on Qlik Cloud.
 
-### 7.2 Apply selection: 'Italy'
-It's possible to build a custom HTML Button, made with Bootstrap, and add a click handler that when it gets executed, it uses the *app.field.selectValues()* method to select specific values in a field.
-<p>
-<img src="img/apply_filters.png" width="300" title="hover text"/>
-</p>
+```js
+$('#clearAll').click(async function() { 
+  app.clearAll();
+});
+```
 
-* **HTML**: place the the button in the html page inside *Page Heading* section.
-  ```HTML
-  <!-- Insert Selection Button -->        
-  <a id="SelectionButton" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-          class="fas fa-filter fa-sm text-white-50"></i>Italy</a>
-  ```
-* **JS**: place the .click handler made with JQuery inside the js script.
-  ```javascript
-  //7.2 Select Country button handler: select Italy
-    $("#SelectionButton").click(async function() {
-      yearField = await app.getField("Country");
-      await yearField.selectValues( {
-        "qFieldValues": [
-          {
-            "qText": 'Italy'
-          }
-        ]
-      });  
-    });
-  ```
+Save `mashup.js`. Go to the web application and make some selections in the embedded visualizations. Then click on the eraser icon and observe the content goes back to the default selection.
+
+### 6.2 Select a specific field value
+
+You can also contact the data model directly and apply selections to the embedded visualizations. In this section, you are going to add a button to the `index.html` page and connect it to a function in `mashup.js` that will select the field value "Italy" from the "Country" field in the analytics application's data model.
+
+#### 6.2.1 Add the country filter button
+
+Open the `index.html` file for editing. Search in the file for `italy-filter-button`.
+
+Create a new line in the file below the comment and add an anchor (`a`) tag defining the filter button.
+
+```html
+<a id="SelectionButton" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+  <i class="fas fa-filter fa-sm text-white-50"></i>Italy
+</a>
+```
+
+Save the `index.html` file.
+
+#### 6.2.2 Select the value from the field
+
+Open the `mashup.js` file for editing. Search in the file for `italy-filter-button`.
+
+Create a new line in the file below the comment and add the code snippet. 
+
+```js
+$("#SelectionButton").click(async function() {
+  let countryField = await app.getField("Country");
+  await countryField.selectValues( {
+    "qFieldValues": [
+      {
+        "qText": 'Italy'
+      }
+    ]
+  });  
+});
+```
+
+The click event executes a `getField` command on the `app` to work with the `"Country"` field in the data model. Then it calls the `selectValues` function passing in a JSON payload.
+
+* `qFieldValues`: An array of objects representing values of the field being queried.
+* `qText`: A string representing the value to be selected from the field in the data model being queried.
+
+To select multiple field values, the JSON payload for the `selectValues` function would look like the following.
+
+```js
+{
+  "qFieldValues": [
+    {
+      "qText": 'Italy'
+    },
+    {
+      "qText": 'France'
+    }
+  ]
+}
+```
+
+Save the `mashup.js` file.
+
+Refresh the web application and the button appears in the web application. When you click on it, the embedded visualizations will filter to show information associated with Italy.
+
 
 ## 8. On The Fly - advanced
 As the final part of this workshop we just want to highlight that under On The Fly item of the sidebar you can play with an advanced on-the-fly mashup where you can dynamically change Measure, Dimension and Chart type and the chart is rendered accordingly on the right side of the page.

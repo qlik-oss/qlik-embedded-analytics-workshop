@@ -73,12 +73,11 @@
 
   // embed-objects-section
   
-  
   // on-the-fly-section
 
   // selection-bar-entry
 
-  //7.1 paste your code here to add the Clear All filters handler
+  // clear-all
 
-  //7.2 paste your code here to add the apply selection 'Italy' handler
+  // italy-filter-button
 })();
