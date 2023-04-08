@@ -164,54 +164,44 @@ In the terminal or shell window, enter the command `npm run start` at the prompt
 
 ## 4 Embed visualizations
 
+Qlik offers a several no-code, low-code, and pro-code methods for embedding visualizations and data into your web applications.
+
+* **no-code** options make it easy to copy a code snippet from Qlik Sense and add it to an html page.
+* **low-code** options enable you to create dynamic visualizations in just a few lines of code and provide additional configuration options you can customize to modify an embedded object's behavior or user interface.
+* **pro-code** libraries and SDKs give programmers total control of the Qlik platform with direct access to the Qlik Analytics engine and management control plane.
+
 ### 4.1 No-code embedded analytics
 
-The simplest method of embedding analytics built with Qlik Sense into your solutions is certainly through the use of an Iframe. An Iframe is generally used to show the content of a web resource, in our case Qlik Sense, within a frame of a web page/main portal. This is what I call "integration with a one single click of the mouse".
+In this section, you are going to embed a sheet from a Qlik Sense application into the web application using an `<iframe>` tag.
 
-We offer 2 different libraries to embed content via Iframe:
-* [Single Integration APIs](https://qlik.dev/apis/javascript/single-integrations) : to embed a single sheet of the app or a single object of a given sheet. 
-*  [App Integration APIs](https://qlik.dev/apis/javascript/app-integration) : the App Integration API provides parameters that can be used to create a URL that returns a complete HTML page containing the embedded app. This is the way to go if you want to embed Self-Service menu to offer the possibility to users to create new sheets (under a valid Professional license).
+In a web browser, navigate to your tenant and open the `Sales Analytics` app. This is the app you uploaded in [1.2 Import Qlik Sense app](#12-import-qlik-sense-app).
 
-### 2.1 Single Integration (Embed sheet/objects)
-To start using this capability, simply head over to a sheet, right click on a visualization, and choose "Embed chart" from the context menu. If you want instead to embed the entire sheet like in our case, click on the top-left context menu of the app and choose "Embed sheet" like in the example below.
+<img src="img/configuration/appcard.png" width="150px" alt="Qlik Analytics application ref"></img>
 
-In this section we are going to place in the div *iframe_div* of *iframe.html* web page an iframe containing a sheet of the app.
-In order to create the Iframe, go to your Qlik Sense app, right click on top-left context menu --> share --> embed. Here chose the options you want and copy the generated iframe link as in the picture below.
+In the app overview, click on the `Customers Overview` sheet.
 
-<p>
-<img src="img/embed_iframe.png" width="800" title="hover text"/>
-</p>
+<img src="img/embed/customeroverview.png" width="150px" alt="Qlik Analytics application ref"></img>
 
-* **HTML** : in *iframe.html* HTML file located in */src/* folder we have already created the following Iframe tag:
-    ```HTML
-    <iframe id="iframe" src="" style="border:none;width:100%;height:100%;"></iframe>
-    ```
-* **JS** : in *iframe.js* JS file located in */src/qlik/* folder we have already inserted the following code to fill the src of the iframe with the embedded sheet via Single Integration APIs:
-    ```javascript
-      //2.1 single integration apis
-      if(page=='iframe.html'){
-          var iframe_url = `https://${config.tenantHostname}/single/?appid=${config.appId}&sheet=${config.sheetId}&theme=${config.theme}`;
-          document.getElementById("iframe").src= iframe_url;
-      }
-    ```
-Please note there are different levels of customization of an Iframe such as allowing or not interaction, applying an app theme when the app is rendered (like we did), applying bookmarks etc.
+When the sheet renders in the browser, click on the three dots button next to the Qlik logo and select `Embed sheet` from the menu.
 
-### 2.2 App Integration (Embed Self-Service)
-If you want to embed the entire app to enable self-service for Professional users (e.g. creating new sheets), this is the way to go.
-* **HTML** : in *iframe.html* HTML file located in */src/* folder we have already created the following Iframe tag:
-    ```HTML
-    <iframe id="iframe" src="" style="border:none;width:100%;height:100%;"></iframe>
-    ```/div>
+<img src="img/embed/embed-sheet-menu.png" width="150px" alt="Qlik Analytics application ref"></img>
 
-* **JS** : in *iframe.js* JS file located in */src/qlik/* folder we have already inserted the following code to fill the src of the iframe with the embedded app via App Integration APIs: 
-  ```javascript
-      //2.2 app integration apis (for Self-Service)
-      if(page=='self-service.html'){
-          var iframe_url = `https://${config.tenantHostname}/sense/app/${config.appId}/overview`;
-          document.getElementById("iframe").src= iframe_url; 
-      }
-  ```
-In the code above the values from the config file will automatic create the correct URL and insert them to the Iframe src tag. Navigate to the https://127.0.0.1:<yourPort> and select Iframe Analytics from the menu.
+The Embed sheet dialog appears. Bring your attention to the bottom of the dialog. This is where the embed code provided to you. The embed code contains all the information needed to render the sheet in your web application.
+
+
+`<iframe src="https://ironingboard.us.qlikcloud.com/single/?appid=599071c0-0de0-440c-bf8f-5b1a0a07ebcf&sheet=a8bdb8b2-525e-486e-91d1-7318d362acee&theme=embeddedtheme&opt=ctxmenu,currsel" style="border:none;width:100%;height:100%;"></iframe>`
+
+<sub>Example iframe embed code from Qlik Sense</sub>
+
+Press the `Copy` button to copy the code snippet to your clipboard. 
+
+Open the `iframe.html` file. Use the find command to search in the file for `no-code-embed`.
+
+Replace the entire code snippet from `<iframe>` through `</iframe>` with the embed code from the application.
+
+Save the `iframe.html` file.
+
+In the web application, click the iframe menu item on the left side of the screen. The sheet from Qlik Sense appears in the web application.
 
 ## 3. Javascript integration (Nebula.js)
 Qlik modern Embedded Analytics solutions offers a stack of open-source libraries to build customized analytical platforms backed up with the robustness of Qlik’s Associative Engine. Historically, [Capability APIs](https://qlik.dev/apis/javascript/capabilities) have been extensively used to build mashups and perform application related operations. A more modern alternative and framework-agnostic offering to Capability API-based operations is [Nebula.js](https://qlik.dev/libraries-and-tools/nebulajs) and [Enigma.js](https://qlik.dev/libraries-and-tools/enigmajs).
