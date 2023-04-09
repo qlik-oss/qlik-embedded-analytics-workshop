@@ -1,4 +1,4 @@
-entrypoint = "server.js"
+entrypoint = "README.md"
 
 hidden = [".config", "package-lock.json"]
 
