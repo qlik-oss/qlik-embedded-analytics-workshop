@@ -100,7 +100,7 @@ Open a terminal or shell window. At the prompt, enter the command `npm install`.
 
 ### 1.2 Start the web application
 
-In the terminal or shell window, enter the command `npm run start` at the prompt. This will start the web application.
+In the terminal or shell window, enter the command `npm run start` at the prompt. This will start the web application. The Webview window will appear with the URL for the web application. Record the URL for future use in the next section.
 
 ## 2 Configure the Qlik Cloud tenant
 
@@ -249,7 +249,13 @@ Replace the entire code snippet from `<iframe>` through `</iframe>` with the emb
 
 Save the `iframe.html` file.
 
+Open the web application in its own tab by clicking on the square with arror icon in the Webview address bar.
+
+![open in new window ](img/embed/newwindow.png)
+
 In the web application, click the iframe menu item on the left side of the screen. The sheet from Qlik Sense appears in the web application.
+
+>**Note:** The iframe content will not render in the Webview because of content security policy. This is why you need to open the application in a separate window.
 
 ### 4.2 Pro-code embedded analytics
 
