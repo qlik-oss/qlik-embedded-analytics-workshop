@@ -29,31 +29,34 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 <details>
   <summary>
-    <a href="#1-configure-the-qlik-cloud-tenant">1 Configure the Qlik Cloud tenant</a>
+    <a href="#1-install-dependencies-and-start-web-application">1 Install dependencies and start web application</a>
+  </summary>
+
+  -[1.1 Install npm packages](#11-install-npm-packages)
+  -[1.2 Start the web application](#12-start-the-web-application)
+  
+</details>
+
+<details>
+  <summary>
+    <a href="#2-configure-the-qlik-cloud-tenant">2 Configure the Qlik Cloud tenant</a>
   </summary>
   
-  - [1.1 Download content](#11-download-content)
-  - [1.2 Import Qlik Sense app](#12-import-qlik-sense-app)
-  - [1.3 Import theme file](#13-import-theme-file)
-  - [1.4 Create a web integration](#14-create-a-web-integration)
-  - [1.5 Add content security policy entry](#15-add-content-security-policy-entry)
+  - [2.1 Download content](#21-download-content)
+  - [2.2 Import Qlik Sense app](#22-import-qlik-sense-app)
+  - [2.3 Import theme file](#23-import-theme-file)
+  - [2.4 Create a web integration](#24-create-a-web-integration)
+  - [2.5 Add content security policy entry](#25-add-content-security-policy-entry)
 
 </details>
 
 <details>
   <summary>
-    <a href="#2-configure-the-web-application">2 Configure the web application</a>
+    <a href="#2-configure-the-web-application">3 Configure the web application</a>
   </summary>
   
-  - [2.1 Update the config file](#21-update-the-config-file)
-  - [2.2 Install npm packages](#22-install-npm-packages)
+  - [3.1 Update the config file](#31-update-the-config-file)
 
-</details>
-
-<details>
-  <summary>
-    <a href="#3-start-the-application">3 Start the web application</a>
-  </summary>
 </details>
 
 <details>
@@ -74,7 +77,7 @@ By the end of this workshop, you will have the skills to integrate powerful data
     <a href="#5-embed-ui-components">5 Embed ui components</a>
   </summary>
 
-  - [5.1 The selections bar](#51-the-selection-bar)
+  - [5.1 The selections bar](#51-the-selections-bar)
   - [5.2 Implement a custom theme](#52-implement-a-custom-theme)
 
 </details>
@@ -89,15 +92,25 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 </details>
 
-## 1 Configure the Qlik Cloud tenant
+## 1 Install dependencies and start web application
 
-### 1.1 Download content
+### 1.1 Install npm packages
+
+Open a terminal or shell window. At the prompt, enter the command `npm install`. This will install the dependencies for running the web application.
+
+### 1.2 Start the web application
+
+In the terminal or shell window, enter the command `npm run start` at the prompt. This will start the web application. The Webview window will appear with the URL for the web application. Record the URL for future use in the next section.
+
+## 2 Configure the Qlik Cloud tenant
+
+### 2.1 Download content
 
 Download the [Sales Analytics_Workshop.qvf](https://github.com/goldbergjeffrey/qlik-embedded-analytics-workshop/raw/main/content-to-upload/app/Sales%20Analytics_Workshop.qvf) file from the Github repository.
 
 Download the [embeddedtheme.zip](https://github.com/goldbergjeffrey/qlik-embedded-analytics-workshop/raw/main/content-to-upload/theme/embeddedtheme.zip) file from the Github repository.
 
-### 1.2 Import Qlik Sense app
+### 2.2 Import Qlik Sense app
 
 Login to your Qlik Cloud tenant. When the hub appears, click the `Add new` button and select `Upload app` from the dropdown list.
 
@@ -115,7 +128,7 @@ Record the ID (highlighted) of the app from the address bar in your web browser.
 
 ![appId](img/configuration/appguid.png)
 
-### 1.3 Import theme file
+### 2.3 Import theme file
 
 Click the Launcher menu (it looks like a waffle on the upper right of the screen) and select the Management Console icon.
 
@@ -125,11 +138,11 @@ Select `Themes` from the Management Console menu.
 
 <img src="img/configuration/themeicon.png" width="200px" alt="theme menu icon"></img>
 
-Click the `Add` button on the upper right side of the screen. Browse for the embeddedtheme.zip file you downloaded in [1.1](#11-download-content) and upload it to the tenant.
+Click the `Add` button on the upper right side of the screen. Browse for the embeddedtheme.zip file you downloaded in [2.1](#21-download-content) and upload it to the tenant.
 
 <img src="img/configuration/themeupload.png" width="300px" alt="theme menu icon"></img>
 
-### 1.4 Create a web integration
+### 2.4 Create a web integration
 
 Select `Web` from the Management Console menu.
 
@@ -151,7 +164,7 @@ The configuration will look like this when it's complete.
 
 An entry for the web integration will appear in the list in the middle of the screen. Record the web integration id value for use with the web application.
 
-### 1.5 Add content security policy entry
+### 2.5 Add content security policy entry
 
 Select `Content Security Policy` from the Management Console menu.
 
@@ -168,9 +181,9 @@ The configuration will look like this when it's complete.
 
 <img src="img/configuration/cspconfiguration.png" width="400px" alt="web menu icon"></img>
 
-## 2 Configure the web application
+## 3 Configure the web application
 
-### 2.1 Update the config file
+### 3.1 Update the config file
 
 Access the config folder and open the `config.js` file.
 
@@ -185,19 +198,11 @@ Access the config folder and open the `config.js` file.
 ```
 Update these properties:
 
-* `qlikWebIntegrationId`: The value you created in [1.4](#14-create-a-web-integration)
+* `qlikWebIntegrationId`: The value you created in [2.4](#24-create-a-web-integration)
 * `tenantHostname`: The domain URI for your tenant.
-* `appId`: The value you copied in [1.2](#12-import-qlik-sense-app) after importing the Qlik Sense application to your tenant.
+* `appId`: The value you copied in [2.2](#22-import-qlik-sense-app) after importing the Qlik Sense application to your tenant.
 
 Leave the remaining values untouched. Save the `config.js` file.
-
-### 2.2 Install npm packages
-
-Open a terminal or shell window. At the prompt, enter the command `npm install`. This will install the dependencies for running the web application.
-
-## 3 Start the web application
-
-In the terminal or shell window, enter the command `npm run start` at the prompt. This will start the web application.
 
 ## 4 Embed visualizations
 
@@ -211,7 +216,7 @@ Qlik offers a several no-code, low-code, and pro-code methods for embedding visu
 
 In this section, you are going to embed a sheet from a Qlik Sense application into the web application using an `<iframe>` tag.
 
-In a web browser, navigate to your tenant and open the `Sales Analytics` app. This is the app you uploaded in [1.2 Import Qlik Sense app](#12-import-qlik-sense-app).
+In a web browser, navigate to your tenant and open the `Sales Analytics` app. This is the app you uploaded in [2.2 Import Qlik Sense app](#22-import-qlik-sense-app).
 
 <img src="img/configuration/appcard.png" width="150px" alt="Qlik Analytics application ref"></img>
 
@@ -244,7 +249,13 @@ Replace the entire code snippet from `<iframe>` through `</iframe>` with the emb
 
 Save the `iframe.html` file.
 
+Open the web application in its own tab by clicking on the square with arror icon in the Webview address bar.
+
+![open in new window ](img/embed/newwindow.png)
+
 In the web application, click the iframe menu item on the left side of the screen. The sheet from Qlik Sense appears in the web application.
+
+>**Note:** The iframe content will not render in the Webview because of content security policy. This is why you need to open the application in a separate window.
 
 ### 4.2 Pro-code embedded analytics
 
