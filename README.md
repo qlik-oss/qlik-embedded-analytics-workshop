@@ -32,8 +32,8 @@ By the end of this workshop, you will have the skills to integrate powerful data
     <a href="#1-install-dependencies-and-start-web-application">1 Install dependencies and start web application</a>
   </summary>
 
-  -[1.1 Install npm packages](#11-install-npm-packages)
-  -[1.2 Start the web application](#12-start-the-web-application)
+  - [1.1 Install npm packages](#11-install-npm-packages)
+  - [1.2 Start the web application](#12-start-the-web-application)
   
 </details>
 
