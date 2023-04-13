@@ -12,11 +12,14 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 ![MainImage](https://raw.githubusercontent.com/goldbergjeffrey/qlik-embedded-analytics-workshop-202304/main/img/final_result.png)
 
+## Recommendations
+* A Github account
+* A Replit account for the best experience using this workshop.
+
 ## Requirements
 
 * A Qlik Cloud tenant
 * An account on the tenant with the Tenant Admin role
-* A Github account
 * A development environment such as Visual Studio Code or an online IDE like [repl.it](https://replit.com/).
 * You are logged into the tenant as a user with access to the Qlik Cloud Analytics application
 
