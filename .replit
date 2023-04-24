@@ -1,6 +1,6 @@
 entrypoint = "server.js"
 
-hidden = [".config", "package-lock.json", ".tutorial"]
+hidden = [".config", "package-lock.json"]
 
 [interpreter]
 command = [
