@@ -53,7 +53,7 @@ In the terminal or shell window, enter the command `npm run start` at the prompt
 
 Select `Web` from the Management Console menu.
 
-<img src="../img/configuration/webiconnew.png" width="200px" alt="web menu icon"></img>
+<img src="img/configuration/webiconnew.png" width="200px" alt="web menu icon"></img>
 
 Click the `Create new` button on the upper right side of the screen.
 
@@ -67,7 +67,7 @@ Click the `Create new` button on the upper right side of the screen.
 
 The configuration will look like this when it's complete.
 
-<img src="../img/configuration/webintegrationconfig.png" width="300px" alt="web menu icon"></img>
+<img src="img/configuration/webintegrationconfig.png" width="300px" alt="web menu icon"></img>
 
 An entry for the web integration will appear in the list in the middle of the screen. Record the web integration id value for use with the web application.
 
@@ -75,7 +75,7 @@ An entry for the web integration will appear in the list in the middle of the sc
 
 Select `Content Security Policy` from the Management Console menu.
 
-<img src="../img/configuration/csplogo.png" width="300px" alt="web menu icon"></img>
+<img src="img/configuration/csplogo.png" width="300px" alt="web menu icon"></img>
 
 Click the create `Add` button on the upper right side of the screen. The Add origin dialog window appears.
 
@@ -86,7 +86,7 @@ Click the create `Add` button on the upper right side of the screen. The Add ori
 
 The configuration will look like this when it's complete.
 
-<img src="../img/configuration/cspconfiguration.png" width="400px" alt="web menu icon"></img>
+<img src="img/configuration/cspconfiguration.png" width="400px" alt="web menu icon"></img>
 
 >**Note:** Please complete the steps below if the workshop application and embedded theme have not been added to your tenant. Otherwise, proceed to configure the web application.
 
@@ -100,33 +100,33 @@ Download the [embeddedtheme.zip](https://github.com/goldbergjeffrey/qlik-embedde
 
 Login to your Qlik Cloud tenant. When the hub appears, click the `Add new` button and select `Upload app` from the dropdown list.
 
-<img src="../img/configuration/uploadapp.png" width="300px" alt="Upload app button"></img>
+<img src="img/configuration/uploadapp.png" width="300px" alt="Upload app button"></img>
 
 In the dialog window that appears, browse for the Sales Analytics_Workshop.qvf file and select it. Then, click the `Upload` button.
 
-<img src="../img/configuration/uploaddialog.png" width="300px" alt="Upload dialog"></img>
+<img src="img/configuration/uploaddialog.png" width="300px" alt="Upload dialog"></img>
 
 A card for the app will appear in the hub. Mouse over the app and click the open button.
 
-<img src="../img/configuration/appcard.png" width="300px" alt="Qlik Analytics application ref"></img>
+<img src="img/configuration/appcard.png" width="300px" alt="Qlik Analytics application ref"></img>
 
 Record the ID (highlighted) of the app from the address bar in your web browser. You will use this in the web application configuration later in the workshop.
 
-![appId](../img/configuration/appguid.png)
+![appId](img/configuration/appguid.png)
 
 ## 2.5 Import theme file
 
 Click the Launcher menu (it looks like a waffle on the upper right of the screen) and select the Management Console icon.
 
-<img src="../img/configuration/mclogo.png" width="125px" alt="MC Logo"></img>
+<img src="img/configuration/mclogo.png" width="125px" alt="MC Logo"></img>
 
 Select `Themes` from the Management Console menu.
 
-<img src="../img/configuration/themeicon.png" width="200px" alt="theme menu icon"></img>
+<img src="img/configuration/themeicon.png" width="200px" alt="theme menu icon"></img>
 
 Click the `Add` button on the upper right side of the screen. Browse for the embeddedtheme.zip file you downloaded in [2.1](#21-download-content) and upload it to the tenant.
 
-<img src="../img/configuration/themeupload.png" width="300px" alt="theme menu icon"></img>
+<img src="img/configuration/themeupload.png" width="300px" alt="theme menu icon"></img>
 
 # 3 Configure the web application
 
@@ -155,15 +155,15 @@ In this section, you are going to embed a sheet from a Qlik Sense application in
 
 In a web browser, navigate to your tenant and open the `Sales Analytics` app. This is the app you uploaded in step 2.4.
 
-<img src="../img/configuration/appcard.png" width="150px" alt="Qlik Analytics application ref"></img>
+<img src="img/configuration/appcard.png" width="150px" alt="Qlik Analytics application ref"></img>
 
 In the app overview, click on the `Customers Overview` sheet.
 
-<img src="../img/embed/customeroverview.png" width="150px" alt="Qlik Analytics application ref"></img>
+<img src="img/embed/customeroverview.png" width="150px" alt="Qlik Analytics application ref"></img>
 
 When the sheet renders in the browser, click on the three dots button next to the Qlik logo and select `Embed sheet` from the menu.
 
-<img src="../img/embed/embed-sheet-menu.png" width="150px" alt="Qlik Analytics application ref"></img>
+<img src="img/embed/embed-sheet-menu.png" width="150px" alt="Qlik Analytics application ref"></img>
 
 The Embed sheet dialog appears. Bring your attention to the bottom of the dialog. This is where the embed code provided to you. The embed code contains all the information needed to render the sheet in your web application.
 
@@ -188,7 +188,7 @@ Save the `iframe.html` file.
 
 Open the web application in its own tab by clicking on the square with arrow icon in the Webview address bar.
 
-![open in new window ](../img/embed/newwindow.png)
+![open in new window ](img/embed/newwindow.png)
 
 In the web application, click the iframe menu item on the left side of the screen. The sheet from Qlik Sense appears in the web application.
 
@@ -451,7 +451,7 @@ You can do more than embed visualizations when you embed Qlik Cloud Analytics. T
 
 For example, you can add a button to the web application that clears all of the selections that have been made.
 
-<img src="../img/clear_filters.png" width="300" title="hover text"/>
+<img src="img/clear_filters.png" width="300" title="hover text"/>
 
 To add a clear all selections function to the eraser button seen in the image above, open the `mashup.js` file and search in the file for `clear-all`.
 
