@@ -34,7 +34,6 @@ Inside each of the following files search for `BEGIN qlik-embed configuration`:
 - index.html
 - classic-app.html
 - charts.html
-- self-service.html
 
 In the config script section, paste the script configuration.
 
