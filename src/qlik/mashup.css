@@ -180,3 +180,24 @@ body {
   font-size: 1rem;
   display: inline;
 }
+
+.classic-app {
+  height: 800px;
+  border: 1px solid #bbb;
+  flex: 2 0 auto;
+  border-radius: 3px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.viz {
+  width: 600px;
+  height: 600px;
+  padding: 16px;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  position:relative;
+}

@@ -15,15 +15,10 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Qlik - Enigma and Nebula -->
-    <script src="https://unpkg.com/enigma.js@2.7.2/enigma.min.js"></script>
-    <script src="https://unpkg.com/@nebula.js/stardust"></script>
-    <script src="https://unpkg.com/@nebula.js/sn-line-chart"></script>
-    <script src="https://unpkg.com/@nebula.js/sn-pie-chart"></script>
-    <script src="https://unpkg.com/@nebula.js/sn-bar-chart"></script>
-    <script src="https://unpkg.com/@nebula.js/sn-scatter-plot"></script>
-    <script src="https://unpkg.com/@nebula.js/sn-kpi"></script>
-    <script src="https://unpkg.com/@nebula.js/sn-treemap"></script>
+    <!-- BEGIN qlik-embed configuration -->
+    <script
+    ></script>
+    <!-- END qlik-embed configuration -->
 
     <!-- style and js for embedded analytics-->
     <script src="qlik/mashup.js"></script>
@@ -64,7 +59,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="iframe.html">
+                <a class="nav-link" href="classic-app.html">
                     <i class="fas fa-fw fa-code"></i>
                     <span>Iframe Analytics</span></a>
             </li>
@@ -235,7 +230,7 @@
                         </li>
 
                         <li class="nav-item mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="clearAll" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="clearAll" onclick="clearAll()" role="button"
                             aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-eraser fa-2x"></i>
                             <!-- Counter - Alerts -->
@@ -303,8 +298,15 @@
                         <div class="col-xl-3 col-md-4">
                             <div class="card border-left-primary shadow">
                                 <div class="card-body">
-                                    <div class="kpi-area" id="KPI01">
-                                                                              
+                                    <div class="kpi-area">
+                                     <qlik-embed
+                                       id="KPI01"
+                                       ui="classic/chart"
+                                       app-id="<app-id>"
+                                       object-id="<object-id>"
+                                       theme="embeddedtheme"
+                                       >                                       
+                                     </qlik-embed>                     
                                     </div>
                                 </div>
                             </div>
@@ -314,8 +316,15 @@
                         <div class="col-xl-3 col-md-4">
                             <div class="card border-left-primary shadow">
                                 <div class="card-body">
-                                    <div class="kpi-area" id="KPI02">
-                                                                                
+                                    <div class="kpi-area">
+                                      <qlik-embed
+                                         id="KPI02"
+                                         ui="classic/chart"
+                                         app-id="<app-id>"
+                                         object-id="<object-id>"
+                                         theme="embeddedtheme"
+                                         >                                       
+                                       </qlik-embed>  
                                     </div>
                                 </div>
                             </div>
@@ -325,8 +334,15 @@
                         <div class="col-xl-3 col-md-4">
                             <div class="card border-left-primary shadow">
                                 <div class="card-body">
-                                    <div class="kpi-area" id="KPI03">
-                                                                              
+                                    <div class="kpi-area">
+                                      <qlik-embed
+                                         id="KPI03"
+                                         ui="classic/chart"
+                                         app-id="<app-id>"
+                                         object-id="<object-id>"
+                                         theme="embeddedtheme"
+                                         >                                       
+                                       </qlik-embed>  
                                     </div>
                                 </div>
                             </div>
@@ -362,8 +378,15 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="trend-area" id="QV01">
-                                                                              
+                                    <div class="trend-area">
+                                      <qlik-embed
+                                         id="QV01"
+                                         ui="analytics/chart"
+                                         app-id="<app-id>"
+                                         object-id="<object-id>"
+                                         theme="embeddedtheme"
+                                         >                                       
+                                       </qlik-embed>  
                                     </div>
                                 </div>
                             </div>
@@ -393,9 +416,16 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="plot-area pt-4 pb-2"  id="QV02">                                    
+                                    <div class="plot-area pt-4 pb-2">
+                                      <qlik-embed
+                                         id="QV02"
+                                         ui="classic/chart"
+                                         app-id="<app-id>"
+                                         object-id="<object-id>"
+                                         theme="embeddedtheme"
+                                         >                                       
+                                       </qlik-embed>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -413,7 +443,15 @@
                                 <h6 class="m-0 font-weight-bold text-primary">On The Fly</h6>
                             </div>
                             <div class="card-body">
-                                <div class="plot-area" id="QV04">                                    
+                                <div class="plot-area"> 
+                                  <qlik-embed
+                                     id="QV04"
+                                     ui="classic/chart"
+                                     app-id="<app-id>"
+                                     object-id="<object-id>"
+                                     theme="embeddedtheme"
+                                     >                                       
+                                   </qlik-embed>
                                 </div>
                             </div>
                         </div>
@@ -577,6 +615,49 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+   <!-- Demo scripts for this page-->
+  <!--clear-all-->
+  <script type="module">
+    import { auth, qix } from "https://cdn.jsdelivr.net/npm/@qlik/api/index.js";
+
+    let appId = "<app-id>";
+
+    if(appId !== "<app-id>") {
+      auth.setDefaultHostConfig({
+        host: "<your-tenant.region.qlikcloud.com>",
+        authType: "Oauth2",
+        clientId: "<client-id>",
+      });
+
+      const app = qix.openAppSession({
+        appId: appId
+      }).getDoc();
+
+      async function clearAll() {
+        await app.clearAll();
+      }
+
+      async function makeSelection() {
+        let countryField = await app.getField("Country");
+        await countryField.selectValues( {
+          "qFieldValues": [
+            {
+              "qText": "Italy"
+            }
+          ]
+        });
+      }
+
+      // add more functions here if you want
+    }  
+    else {
+      console.log("Please provide an application id to the `clear-all` script");
+    }
+    
+
+    
+  </script>
 
 </body>
 

@@ -2,6 +2,7 @@
   "name": "qlik-cloud-embedded-analytics-workshop",
   "version": "1.0.0",
   "description": "A self-directed workshop for learning how to embed Qlik Cloud Analytics into web applications",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

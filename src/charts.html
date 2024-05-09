@@ -21,15 +21,12 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
     <!--Qlik-->
-    <script src="https://unpkg.com/enigma.js/enigma.min.js"></script>
-    <script src="https://unpkg.com/@nebula.js/stardust"></script>
-    <script src="https://unpkg.com/@nebula.js/sn-line-chart"></script>
-	<script src="https://unpkg.com/@nebula.js/sn-pie-chart"></script>
-	<script src="https://unpkg.com/@nebula.js/sn-bar-chart"></script>
-    <script src="https://unpkg.com/@nebula.js/sn-scatter-plot"></script>
-    <script src="https://unpkg.com/@nebula.js/sn-table"></script>
-
-    <script src="qlik/on_the_fly_charts.js"></script>
+  <!-- BEGIN qlik-embed configuration -->
+    <script
+      
+    ></script>
+  <!-- END qlik-embed configuration -->
+  
     <link rel="stylesheet" href="qlik/mashup.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -71,7 +68,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="iframe.html">
             <i class="fas fa-fw fa-code"></i>
-            <span>Iframe Analytics</span></a>
+            <span>Embed Full Analytics</span></a>
     </li>
 
     
@@ -375,8 +372,13 @@
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Visualization On-The-Fly</h6>
                                 </div>
-                                <div class="card-body">
-                                    <div class="on-the-fly-area" id="QV05">
+                                <div class="viz">
+                                    <qlik-embed
+                                        id="QV05"
+                                        ui="analytics/chart"
+                                        app-id="6b410f36-cb58-4bce-8e6f-a37220bfd437"
+                                        object-id="mAbpP"
+                                    ></qlik-embed>
                                     </div>
                                 </div>
                             </div>
@@ -414,11 +416,140 @@
 
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <script type="module">
+        let chartType, dimension, measure;
+        const element = document.getElementById("QV05");
+        const refApi = await element.getRefApi();
+        const app = await refApi.getDoc();
+        const qcMeasure = await app.getMeasureList();
+        const qcDimension = await app.getDimensionList();
+    
+
+
+
+        
+          function createMasterList(fieldType, masterlist) {
+                var master_dict ={};
+                for(let i=0; i<masterlist.length; i++){
+                  master_dict[masterlist[i].qMeta["title"]] = masterlist[i].qMeta["description"];
+                }
+
+                var selectItem = document.getElementById('qc'+fieldType);
+                if (fieldType == 'Dimension'){
+                    master_dict = {
+                      'Country':'Country', 
+                      'CategoryName': 'CategoryName', 
+                      'ProductName': 'ProductName', 
+                      'EmployeeName':'EmployeeName'
+                    }
+                }
+                for (var key in master_dict) {
+                    var newOption = document.createElement("option");
+                    newOption.text = key;
+                    newOption.value = key;
+                    selectItem.add(newOption);          
+                }
+
+          }
+
+          async function plotChart(chartType, dimension, measure) {
+                    // const obj = await app.getObject("Jfzp");
+                    // const objL = await obj.getLayout();
+                    // console.log(objL);
+              
+                    const properties = {
+                      qInfo: {
+                          qId: 'sessionChart',
+                          qType: 'barchart'
+                      },
+                    qHyperCubeDef: {
+                        qDimensions: [
+                          {
+                            qDef: { qFieldDefs: [`${dimension}`] },
+                          },
+                        ],
+                        qMeasures: [
+                          {
+                            qDef: { qDef: `=[${measure}]` },
+                          },
+                        ],
+                        qInitialDataFetch: [
+                          {
+                            qHeight: 100,
+                            qWidth: 2,
+                          },
+                        ],
+                      },
+                    };
+                    let chart;
+                    await app.destroySessionObject({
+                        qId: "sessionChart"
+                    })
+                    chart = await app.createSessionObject(properties);
+                    const chartLayout = await chart.getLayout();
+                   console.log(chartLayout);
+                     // const qlikEmbed = document.getElementById("QV05");
+                     // qlikEmbed.setAttribute("object-id", chartLayout.qInfo.qId);  
+
+          }
+
+        //create master measures options in the html
+        createMasterList('Measure', qcMeasure);
+        //create master dimension options in the html
+        createMasterList('Dimension', qcDimension);
+
+        document.getElementById('btn-bar').onclick= () => {
+            chartType = "barchart";
+            measure = document.getElementById('qcMeasure').value;
+            dimension = document.getElementById('qcDimension').value;
+            plotChart(chartType, dimension, measure);
+
+        };
+
+          const btn_pie = document.getElementById('btn-pie');
+          btn_pie.addEventListener('click', async function handleClick() {
+            chartType="piechart";
+              measure = document.getElementById('qcMeasure').value;
+              dimension = document.getElementById('qcDimension').value;
+              plotChart(chartType, dimension, measure);
+
+          });
+
+
+          const btn_line = document.getElementById('btn-line');
+          btn_line.addEventListener('click', function handleClick() {
+            chartType="linechart";
+              measure = document.getElementById('qcMeasure').value;
+              dimension = document.getElementById('qcDimension').value;
+              plotChart(chartType, dimension, measure);
+
+          });
+
+          const btn_table = document.getElementById('btn-table');
+          btn_table.addEventListener('click', function handleClick() {
+            chartType="table";
+              measure = document.getElementById('qcMeasure').value;
+              dimension = document.getElementById('qcDimension').value;
+              plotChart(chartType, dimension, measure);
+
+          });
+
+        const selectMeasure = document.getElementById('qcMeasure');
+        selectMeasure.addEventListener('change', async function () {
+            plotChart(chartType, dimension, measure);
+        });
+
+        const selectDimension = document.getElementById('qcDimension');
+        selectDimension.addEventListener('change', async function () {
+            plotChart(chartType, dimension, measure);
+        });
+    </script>
 
 </body>
 
