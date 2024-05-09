@@ -87,3 +87,7 @@ start = "typescript-language-server --stdio"
 
 [deployment]
 run = ["sh", "-c", "node server.js"]
+
+[[ports]]
+localPort = 8080
+externalPort = 80

@@ -1,53 +1,52 @@
 # 2 Configure the Qlik Cloud tenant
 
-## 2.1 Create a web integration
+## 2.1 Create a single-page application OAuth client
 
-Select `Web` from the Management Console menu.
+Select `OAuth` from the Management Console menu.
 
-<img src="../img/configuration/webiconnew.png" width="200px" alt="web menu icon"></img>
+<img src="../img/configuration/oauthconnnew.png" width="200px" alt="oauth menu icon"></img>
 
 Click the `Create new` button on the upper right side of the screen.
 
-* In the `Name` input give your web integration a friendly name.
-* In the `Add an origin` input enter the host URI for your web application.
+* From the `Client type` dropdown list, select *Single-page app*.
+* In the `Name` input give your OAuth client a friendly name.
+* *Optional:* In the `Description` input, add some information about the OAuth client.
 
-> **Note:** If you're using [repl.it](https://replit.com), the origin you add will look something like this: `https://qlik-embedded-workshop.makethelogobigger.repl.co`.
+### 2.1.1 Select OAuth client scopes
 
-* Click the Add button to set the origin as an allowed origin for this web integration.
-* Click the Create button on the bottom right to create the web integration reference.
+Select `user_default` within the Scopes selection window.
 
-The configuration will look like this when it's complete.
+<img src="../img/configuration/oauthscopesuserdefault.png" width="400px" alt="scope selection"></img>
 
-<img src="../img/configuration/webintegrationconfig.png" width="300px" alt="web menu icon"></img>
+### 2.1.2 Add redirect URL
 
-An entry for the web integration will appear in the list in the middle of the screen. Record the web integration id value for use with the web application.
+> **Note:** If you're using [repl.it](https://replit.com), the redirect URL is the address you obtained in [1.1.3](#113-obtain-the-web-application-address) with the addition of a location for the OAuth client should return to after the user authorizes, known as the callback page.
 
-## 2.2 Add content security policy entry
+In the Redirect URLs input, enter the URL the OAuth client should redirect to and press the `Add` button.
 
-Select `Content Security Policy` from the Management Console menu.
+<img src="../img/configuration/redirecturl.png" width="400px" alt="redirect url input"></img>
 
-<img src="../img/configuration/csplogo.png" width="300px" alt="web menu icon"></img>
+### 2.1.3 Add allowed origins
 
-Click the create `Add` button on the upper right side of the screen. The Add origin dialog window appears.
+> **Note:** If you're using [repl.it](https://replit.com), the allowed origin is the address you obtained in [1.1.3](#113-obtain-the-web-application-address).
 
-* Provide a name for the entry.
-* In the `Origin` input enter the host URI for your web application **omitting** the `https://` from the entry. If your origin is *https://qlik-embedded-workshop.makethelogobigger.repl.co*, enter `qlik-embedded-workshop.makethelogobigger.repl.co` into the field.
-* Select the checkbox next to `frame-ancestors` to activate the directive to allow iframe content from Qlik Cloud to be embedded into your web application.
-* Click the Add button to save the entry.
+In the Allowed origins input, enter the URL for the web application and press the `Add` button.
 
-The configuration will look like this when it's complete.
+<img src="../img/configuration/allowedorigin.png" width="400px" alt="allowed origin input"></img>
 
-<img src="../img/configuration/cspconfiguration.png" width="400px" alt="web menu icon"></img>
+### 2.1.4 Obtain the OAuth client id
 
->**Note:** Please complete the steps below if the workshop application and embedded theme have not been added to your tenant. Otherwise, proceed to configure the web application.
+Press the `Create` button to save the OAuth client configuration. Record the Client ID value for later use.
 
-## 2.3 Download content
+<img src="../img/configuration/oauthclientid.png" width="400px" alt="oauth client id modal"></img>
+
+## 2.2 Download content
 
 Download the [Sales Analytics_Workshop.qvf](https://github.com/goldbergjeffrey/qlik-embedded-analytics-workshop/raw/main/content-to-upload/app/Sales%20Analytics_Workshop.qvf) file from the Github repository.
 
 Download the [embeddedtheme.zip](https://github.com/goldbergjeffrey/qlik-embedded-analytics-workshop/raw/main/content-to-upload/theme/embeddedtheme.zip) file from the Github repository.
 
-## 2.4 Import Qlik Sense app
+## 2.3 Import Qlik Sense app
 
 Login to your Qlik Cloud tenant. When the hub appears, click the `Add new` button and select `Upload app` from the dropdown list.
 
@@ -65,7 +64,7 @@ Record the ID (highlighted) of the app from the address bar in your web browser.
 
 ![appId](../img/configuration/appguid.png)
 
-## 2.5 Import theme file
+## 2.4 Import theme file
 
 Click the Launcher menu (it looks like a waffle on the upper right of the screen) and select the Management Console icon.
 
@@ -75,6 +74,6 @@ Select `Themes` from the Management Console menu.
 
 <img src="../img/configuration/themeicon.png" width="200px" alt="theme menu icon"></img>
 
-Click the `Add` button on the upper right side of the screen. Browse for the embeddedtheme.zip file you downloaded in [2.1](#21-download-content) and upload it to the tenant.
+Click the `Add` button on the upper right side of the screen. Browse for the embeddedtheme.zip file you downloaded in [2.2](#22-download-content) and upload it to the tenant.
 
 <img src="../img/configuration/themeupload.png" width="300px" alt="theme menu icon"></img>

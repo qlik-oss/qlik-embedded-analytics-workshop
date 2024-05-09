@@ -21,6 +21,12 @@
     <link href="css/sb-admin-2.css" rel="stylesheet">
     <link rel="stylesheet" href="qlik/mashup.css">
 
+  <!-- BEGIN qlik-embed configuration -->
+    <script
+        
+    ></script> 
+  <!-- END qlik-embed configuration -->
+  
 </head>
 
 <body id="page-top">
@@ -43,7 +49,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="index.html">
             <i class="fab fa-fw fa-js"></i>
-            <span>JS Analytics</span></a>
+            <span>qlik-embed objects</span></a>
     </li>
 
     <!-- Nav Item - Dashboard -->
@@ -57,7 +63,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="iframe.html">
             <i class="fas fa-fw fa-code"></i>
-            <span>Iframe Analytics</span></a>
+            <span>qlik-embed classic/app</span></a>
     </li>
 
     <!-- Nav Item - Dashboard -->
@@ -290,9 +296,17 @@
 
             </div>
             <!-- End of Main Content -->
-<!-- begin no-code-embed exercise -->
-            <iframe id="no-code-embed" src="" style="border:none;width:100%;height:100%;"></iframe>
-<!-- end no-code-embed exercise -->
+<!-- begin classic/app exercise -->
+            <div class="classic-app">
+                <qlik-embed
+                  id="embed-qlik-sense-app"
+                  ui="classic/app"
+                  app-id="<app-id>"
+                  sheet-id="<sheet-id>"
+                >
+                </qlik-embed>
+            </div>
+<!-- end classic/app exercise -->
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -315,7 +329,7 @@
     </a>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script> -->
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
@@ -323,7 +337,7 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     
-    <script src="qlik/iframe.js"></script>
+    <!-- <script src="qlik/iframe.js"></script> -->
 
 </body>
 
