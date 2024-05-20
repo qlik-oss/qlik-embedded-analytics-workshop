@@ -12,7 +12,9 @@ To add a clear all selections function to the eraser button seen in the image ab
 
 ### 7.1.1 Set the application id
 
-Set the `appId` variable to the application id you obtained in in step [2.3](#23-import-qlik-sense-app).
+Set the `appId` variable with the word `let` before it to the application id you obtained in in step [2.3](#23-import-qlik-sense-app).
+
+>Note: Do not change the `<app-id>` in the if statement below. This checks to make sure there is a real value in `appId`.
 
 ### 7.1.2 Set the host configuration
 
@@ -39,46 +41,5 @@ Create a new line in the file below the comment and add an anchor (`a`) tag defi
 ```
 
 Save the `index.html` file.
-
-### 8.2.2 Select the value from the field
-
-Open the `mashup.js` file for editing. Search in the file for `italy-filter-button`.
-
-Create a new line in the file below the comment and add the code snippet. 
-
-```js
-$("#SelectionButton").click(async function() {
-  let countryField = await app.getField("Country");
-  await countryField.selectValues( {
-    "qFieldValues": [
-      {
-        "qText": 'Italy'
-      }
-    ]
-  });  
-});
-```
-
-The click event executes a `getField` command on the `app` to work with the `"Country"` field in the data model. Then it calls the `selectValues` function passing in a JSON payload.
-
-* `qFieldValues`: An array of objects representing values of the field being queried.
-* `qText`: A string representing the value to be selected from the field in the data model being queried.
-
-To select multiple field values, the JSON payload for the `selectValues` function would look like the following.
-
-```js
-{
-  "qFieldValues": [
-    {
-      "qText": 'Italy'
-    },
-    {
-      "qText": 'France'
-    }
-  ]
-}
-```
-
-Save the `mashup.js` file.
 
 Refresh the web application and the button appears in the web application. When you click on it, the embedded visualizations will filter to show information associated with Italy.

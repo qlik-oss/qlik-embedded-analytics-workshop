@@ -25,7 +25,7 @@ In the html file, search for `KPI01`. You should land in the `<qlik-embed>` elem
 Update the following properties:
 
 - `app-id`: The application id containing the visualization.
-- `object-id`: The unique identifier for the visualization to embed. Enter `ejNeB` as the value for this property.
+- `object-id`: The unique identifier for the visualization to embed. Enter this object id as the value for this property: `ejNeB`.
 
 ### 5.1.2 Configure additional embedded objects
 
@@ -40,7 +40,7 @@ Repeat step 5.1.1 searching for the element id, using the application id and ent
 - QV02
   - object-id: `LzuJNJ`
 
-Refresh the rendered web page to see it updated with the embedded visualizations.
+Refresh the web application and navigate to the `qlik-embed objects` page to see it updated with the embedded visualizations.
 
 ## 5.3 Embed visualizations using expressions
 
