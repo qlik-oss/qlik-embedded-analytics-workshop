@@ -22,8 +22,8 @@
 
     <!--Qlik-->
   <!-- BEGIN qlik-embed configuration -->
-    <script
-      
+    <script 
+        
     ></script>
   <!-- END qlik-embed configuration -->
   
@@ -376,8 +376,8 @@
                                     <qlik-embed
                                         id="QV05"
                                         ui="analytics/chart"
-                                        app-id="6b410f36-cb58-4bce-8e6f-a37220bfd437"
-                                        object-id="mAbpP"
+                                        app-id="<APP-ID>"
+                                        object-id="<OBJECT-ID>"
                                     ></qlik-embed>
                                     </div>
                                 </div>
@@ -429,10 +429,6 @@
         const app = await refApi.getDoc();
         const qcMeasure = await app.getMeasureList();
         const qcDimension = await app.getDimensionList();
-    
-
-
-
         
           function createMasterList(fieldType, masterlist) {
                 var master_dict ={};
@@ -459,43 +455,35 @@
           }
 
           async function plotChart(chartType, dimension, measure) {
-                    // const obj = await app.getObject("Jfzp");
-                    // const objL = await obj.getLayout();
-                    // console.log(objL);
+              console.log(chartType, dimension, measure)
+            const qlikEmbed = document.getElementById("QV05");
+              // dimensions='["[ARAge]"]'
+              //   measures='["[Margin %]"]'
+              qlikEmbed.removeAttribute("object-id");
+            let typeAttr, dimAttr, measAttr;
+            if(qlikEmbed.hasAttribute("type")) {
+                qlikEmbed.setAttribute("type", chartType);
+            } else {
+                typeAttr = document.createAttribute("type");
+                typeAttr.value = chartType;
+                qlikEmbed.setAttributeNode(typeAttr);
+            }
               
-                    const properties = {
-                      qInfo: {
-                          qId: 'sessionChart',
-                          qType: 'barchart'
-                      },
-                    qHyperCubeDef: {
-                        qDimensions: [
-                          {
-                            qDef: { qFieldDefs: [`${dimension}`] },
-                          },
-                        ],
-                        qMeasures: [
-                          {
-                            qDef: { qDef: `=[${measure}]` },
-                          },
-                        ],
-                        qInitialDataFetch: [
-                          {
-                            qHeight: 100,
-                            qWidth: 2,
-                          },
-                        ],
-                      },
-                    };
-                    let chart;
-                    await app.destroySessionObject({
-                        qId: "sessionChart"
-                    })
-                    chart = await app.createSessionObject(properties);
-                    const chartLayout = await chart.getLayout();
-                   console.log(chartLayout);
-                     // const qlikEmbed = document.getElementById("QV05");
-                     // qlikEmbed.setAttribute("object-id", chartLayout.qInfo.qId);  
+            if(qlikEmbed.hasAttribute("dimensions")) {
+                qlikEmbed.setAttribute("dimensions", `["[${dimension}]"]`);
+            } else {
+                dimAttr = document.createAttribute("dimensions");
+                dimAttr.value = `["[${dimension}]"]`;
+                qlikEmbed.setAttributeNode(dimAttr);
+            }
+
+            if(qlikEmbed.hasAttribute("measures")) {
+                qlikEmbed.setAttribute("measures", `["[${measure}]"]`);
+            } else {
+                measAttr = document.createAttribute("measures");
+                measAttr.value = `["[${measure}]"]`;
+                qlikEmbed.setAttributeNode(measAttr);
+            }
 
           }
 
@@ -542,11 +530,21 @@
 
         const selectMeasure = document.getElementById('qcMeasure');
         selectMeasure.addEventListener('change', async function () {
+            if(!chartType) {
+                chartType="linechart";
+            }
+            measure = document.getElementById('qcMeasure').value;
+            dimension = document.getElementById('qcDimension').value;
             plotChart(chartType, dimension, measure);
         });
 
         const selectDimension = document.getElementById('qcDimension');
         selectDimension.addEventListener('change', async function () {
+            if(!chartType) {
+                chartType="linechart";
+            }
+            measure = document.getElementById('qcMeasure').value;
+            dimension = document.getElementById('qcDimension').value;
             plotChart(chartType, dimension, measure);
         });
     </script>

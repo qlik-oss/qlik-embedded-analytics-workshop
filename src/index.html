@@ -16,9 +16,11 @@
     <link href="css/sb-admin-2.css" rel="stylesheet">
 
     <!-- BEGIN qlik-embed configuration -->
-    <script
-        
-    ></script>
+    <script 
+
+
+    >
+    </script>
     <!-- END qlik-embed configuration -->
 
     <!-- style and js for embedded analytics-->
@@ -446,12 +448,14 @@
                             <div class="card-body">
                                 <div class="plot-area"> 
                                   <qlik-embed
-                                     id="QV04"
-                                     ui="classic/chart"
-                                     app-id="<app-id>"
-                                     object-id="<object-id>"
+                                    id="QV04"
+                                    ui="analytics/chart"
+                                    app-id="<app-id>"
+                                    type="<chart-type>"
+                                    dimensions='["[Dimension1]"]'
+                                    measures='["[Measure1]", "[=Sum(Expression2)]", "=Avg(Expression2)"]'
                                      theme="embeddedtheme"
-                                     >                                       
+                                     >                                 
                                    </qlik-embed>
                                 </div>
                             </div>
