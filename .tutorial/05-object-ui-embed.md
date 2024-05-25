@@ -25,7 +25,7 @@ In the html file, search for `KPI01`. You should land in the `<qlik-embed>` elem
 Update the following properties:
 
 - `app-id`: The application id containing the visualization.
-- `object-id`: The unique identifier for the visualization to embed. Enter `ejNeB` as the value for this property.
+- `object-id`: The unique identifier for the visualization to embed. Enter this object id as the value for this property: `ejNeB`.
 
 ### 5.1.2 Configure additional embedded objects
 
@@ -40,7 +40,7 @@ Repeat step 5.1.1 searching for the element id, using the application id and ent
 - QV02
   - object-id: `LzuJNJ`
 
-Refresh the rendered web page to see it updated with the embedded visualizations.
+Refresh the web application and navigate to the `qlik-embed objects` page to see it updated with the embedded visualizations.
 
 ## 5.3 Embed visualizations using expressions
 
@@ -51,13 +51,21 @@ Search for `QV04` in the index.html file.
 Add this `<qlik-embed>` element below the line.
 
 ```html
-  <qlik-embed
-    id="QV04"
-    type="barchart"
-    fields= "['CategoryName', '=sum(Sales)']"
-  ></qlik-embed>
+<qlik-embed
+  id="QV04"
+  ui="analytics/chart"
+  app-id="<appid>"
+  type="barchart"
+  dimensions='["[CategoryName]"]'
+  measures='["[=Sum(Sales)]"]'
+  properties='{ orientation: "horizontal", barGrouping: { grouping: "stacked" } }'
+></qlik-embed>
 ```
 
 The `type` property specifies the chart type to render. 
 
-The `fields` property accepts an array of field names and expressions to bring the chart to life.
+The `dimensions` property specifies the governed dimension or field names for the chart. The use of square brackets inside the double quotes is for Qlik script expression syntax support. The outside square brackets represent the array you can use to supply one or more dimensions.
+
+The `measures` property specifies the calculation expression or governed measure for the chart. The use of square brackets inside the double quotes is for Qlik script expression syntax support. The outside square brackets represent the array you can use to supply one or more measures.
+
+The `properties` property allow you to set specific properties available for the chart. Supply the value as a `JSON` string.

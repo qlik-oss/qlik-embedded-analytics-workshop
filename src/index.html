@@ -16,13 +16,14 @@
     <link href="css/sb-admin-2.css" rel="stylesheet">
 
     <!-- BEGIN qlik-embed configuration -->
-    <script
+    <script 
+        
         
     ></script>
     <!-- END qlik-embed configuration -->
 
     <!-- style and js for embedded analytics-->
-    <script src="qlik/mashup.js"></script>
+    <!-- <script src="qlik/mashup.js"></script> -->
     <link rel="stylesheet" href="qlik/mashup.css">
 
 </head>
@@ -47,29 +48,29 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
-                    <i class="fab fa-fw fa-js"></i>
-                    <span>JS Analytics</span></a>
+                    <span>qlik-embed objects</span>
+                </a>
             </li>
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="self-service.html">
-                    <i class="fas fa-fw fa-coffee"></i>
-                    <span>Self Service</span></a>
+                    <span>Self Service</span>
+                </a>
             </li>
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="classic-app.html">
-                    <i class="fas fa-fw fa-code"></i>
-                    <span>Iframe Analytics</span></a>
+                    <span>qlik-embed classic/app</span>
+                </a>
             </li>
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="charts.html">
-                    <i class="fas fa-plane"></i>
-                    <span>On The Fly</span></a>
+                    <span>On The Fly</span>
+                </a>
             </li>
 
             <!-- Divider -->
@@ -81,7 +82,8 @@
             </div>
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
-                <img src="img/analytics_by_Qlik.png" width="150px" height="25px" alt="...">
+                <p>Embedded analytics by</p>
+                <img src="img/qlik-logo-1c-white.png" width="150px" alt="...">
             </div>
 
         </ul>
@@ -361,7 +363,7 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Nebula.js integration 1</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">qlik-embed integration 1</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -399,7 +401,7 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Nebula.js integration 2</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">qlik-embed integration 2</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -446,12 +448,14 @@
                             <div class="card-body">
                                 <div class="plot-area"> 
                                   <qlik-embed
-                                     id="QV04"
-                                     ui="classic/chart"
-                                     app-id="<app-id>"
-                                     object-id="<object-id>"
+                                    id="QV04"
+                                    ui="analytics/chart"
+                                    app-id="<app-id>"
+                                    type="<chart-type>"
+                                    dimensions='["[Dimension1]"]'
+                                    measures='["[Measure1]", "[=Sum(Expression2)]", "=Avg(Expression2)"]'
                                      theme="embeddedtheme"
-                                     >                                       
+                                     >                                 
                                    </qlik-embed>
                                 </div>
                             </div>

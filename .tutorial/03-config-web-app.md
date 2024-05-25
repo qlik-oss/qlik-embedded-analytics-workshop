@@ -29,6 +29,7 @@ Update these properties in the configuration script:
 ## 3.1.2 Copy paste the script configuration
 
 Copy the modified script configuration.
+Navigate to the `src` folder in the directory tree.
 Inside each of the following files search for `BEGIN qlik-embed configuration`:
 
 - index.html

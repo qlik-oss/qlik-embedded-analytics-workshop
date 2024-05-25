@@ -22,8 +22,8 @@
 
     <!--Qlik-->
   <!-- BEGIN qlik-embed configuration -->
-    <script
-      
+    <script 
+        
     ></script>
   <!-- END qlik-embed configuration -->
   
@@ -39,63 +39,60 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
- <!-- Sidebar -->
- <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <img src="img/ABC.png" width="140px" height="50px">
-    </a>
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <img src="img/ABC.png" width="140px" height="50px">
+            </a>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-            <i class="fab fa-fw fa-js"></i>
-            <span>JS Analytics</span></a>
-    </li>
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                    <span>qlik-embed objects</span>
+                </a>
+            </li>
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="self-service.html">
-            <i class="fas fa-fw fa-coffee"></i>
-            <span>Self Service</span></a>
-    </li>
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="self-service.html">
+                    <span>Self Service</span>
+                </a>
+            </li>
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="iframe.html">
-            <i class="fas fa-fw fa-code"></i>
-            <span>Embed Full Analytics</span></a>
-    </li>
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="classic-app.html">
+                    <span>qlik-embed classic/app</span>
+                </a>
+            </li>
 
-    
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="charts.html">
-            <i class="fas fa-plane"></i>
-            <span>On The Fly</span></a>
-    </li>
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="charts.html">
+                    <span>On The Fly</span>
+                </a>
+            </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
+            <!-- Divider -->
+            <hr class="sidebar-divider">
 
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+            <!-- Sidebar Message -->
+            <div class="sidebar-card d-none d-lg-flex">
+                <p>Embedded analytics by</p>
+                <img src="img/qlik-logo-1c-white.png" width="150px" alt="...">
+            </div>
 
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
-
-    <!-- Sidebar Message -->
-    <div class="sidebar-card d-none d-lg-flex">
-        <img src="img/analytics_by_Qlik.png" width="150px" height="25px" alt="...">
-    </div>
-
-
-</ul>
-<!-- End of Sidebar -->
+        </ul>
+        <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -376,8 +373,8 @@
                                     <qlik-embed
                                         id="QV05"
                                         ui="analytics/chart"
-                                        app-id="6b410f36-cb58-4bce-8e6f-a37220bfd437"
-                                        object-id="mAbpP"
+                                        app-id="<APP-ID>"
+                                        object-id="<OBJECT-ID>"
                                     ></qlik-embed>
                                     </div>
                                 </div>
@@ -429,10 +426,6 @@
         const app = await refApi.getDoc();
         const qcMeasure = await app.getMeasureList();
         const qcDimension = await app.getDimensionList();
-    
-
-
-
         
           function createMasterList(fieldType, masterlist) {
                 var master_dict ={};
@@ -459,43 +452,35 @@
           }
 
           async function plotChart(chartType, dimension, measure) {
-                    // const obj = await app.getObject("Jfzp");
-                    // const objL = await obj.getLayout();
-                    // console.log(objL);
+              console.log(chartType, dimension, measure)
+            const qlikEmbed = document.getElementById("QV05");
+              // dimensions='["[ARAge]"]'
+              //   measures='["[Margin %]"]'
+              qlikEmbed.removeAttribute("object-id");
+            let typeAttr, dimAttr, measAttr;
+            if(qlikEmbed.hasAttribute("type")) {
+                qlikEmbed.setAttribute("type", chartType);
+            } else {
+                typeAttr = document.createAttribute("type");
+                typeAttr.value = chartType;
+                qlikEmbed.setAttributeNode(typeAttr);
+            }
               
-                    const properties = {
-                      qInfo: {
-                          qId: 'sessionChart',
-                          qType: 'barchart'
-                      },
-                    qHyperCubeDef: {
-                        qDimensions: [
-                          {
-                            qDef: { qFieldDefs: [`${dimension}`] },
-                          },
-                        ],
-                        qMeasures: [
-                          {
-                            qDef: { qDef: `=[${measure}]` },
-                          },
-                        ],
-                        qInitialDataFetch: [
-                          {
-                            qHeight: 100,
-                            qWidth: 2,
-                          },
-                        ],
-                      },
-                    };
-                    let chart;
-                    await app.destroySessionObject({
-                        qId: "sessionChart"
-                    })
-                    chart = await app.createSessionObject(properties);
-                    const chartLayout = await chart.getLayout();
-                   console.log(chartLayout);
-                     // const qlikEmbed = document.getElementById("QV05");
-                     // qlikEmbed.setAttribute("object-id", chartLayout.qInfo.qId);  
+            if(qlikEmbed.hasAttribute("dimensions")) {
+                qlikEmbed.setAttribute("dimensions", `["[${dimension}]"]`);
+            } else {
+                dimAttr = document.createAttribute("dimensions");
+                dimAttr.value = `["[${dimension}]"]`;
+                qlikEmbed.setAttributeNode(dimAttr);
+            }
+
+            if(qlikEmbed.hasAttribute("measures")) {
+                qlikEmbed.setAttribute("measures", `["[${measure}]"]`);
+            } else {
+                measAttr = document.createAttribute("measures");
+                measAttr.value = `["[${measure}]"]`;
+                qlikEmbed.setAttributeNode(measAttr);
+            }
 
           }
 
@@ -542,11 +527,21 @@
 
         const selectMeasure = document.getElementById('qcMeasure');
         selectMeasure.addEventListener('change', async function () {
+            if(!chartType) {
+                chartType="linechart";
+            }
+            measure = document.getElementById('qcMeasure').value;
+            dimension = document.getElementById('qcDimension').value;
             plotChart(chartType, dimension, measure);
         });
 
         const selectDimension = document.getElementById('qcDimension');
         selectDimension.addEventListener('change', async function () {
+            if(!chartType) {
+                chartType="linechart";
+            }
+            measure = document.getElementById('qcMeasure').value;
+            dimension = document.getElementById('qcDimension').value;
             plotChart(chartType, dimension, measure);
         });
     </script>

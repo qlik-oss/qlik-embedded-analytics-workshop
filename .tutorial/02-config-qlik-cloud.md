@@ -20,7 +20,7 @@ Select `user_default` within the Scopes selection window.
 
 ### 2.1.2 Add redirect URL
 
-> **Note:** If you're using [repl.it](https://replit.com), the redirect URL is the address you obtained in [1.1.3](#113-obtain-the-web-application-address) with the addition of a location for the OAuth client should return to after the user authorizes, known as the callback page.
+> **Note:** If you're using [repl.it](https://replit.com), the redirect URL is the address you obtained in [1.1.3](#113-obtain-the-web-application-address) with the addition of a location for the OAuth client should return to after the user authorizes, known as the callback page. The callback page for the tutorial is `oauth-callback.html`.
 
 In the Redirect URLs input, enter the URL the OAuth client should redirect to and press the `Add` button.
 
@@ -28,7 +28,7 @@ In the Redirect URLs input, enter the URL the OAuth client should redirect to an
 
 ### 2.1.3 Add allowed origins
 
-> **Note:** If you're using [repl.it](https://replit.com), the allowed origin is the address you obtained in [1.1.3](#113-obtain-the-web-application-address).
+> **Note:** If you're using [repl.it](https://replit.com), the allowed origin is the address you obtained in [1.1.3](#113-obtain-the-web-application-address). Make sure to remove any trailing slashes at the end of the URL.
 
 In the Allowed origins input, enter the URL for the web application and press the `Add` button.
 
