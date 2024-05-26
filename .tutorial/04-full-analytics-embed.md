@@ -37,4 +37,3 @@ Open the web application in its own tab by clicking on the square with arrow ico
 In the web application, click the analytics menu item on the left side of the screen. The Qlik Sense application appears embedded in the window of the web application set to the specified sheet.
 
 >**Note:** The application content will not render in the Webview because of cross-site scripting restrictions. This is why you need to open the web application in a separate window.
-
