@@ -31,11 +31,10 @@ By the end of this workshop, you will have the skills to integrate powerful data
 - [1 Qlik Embedded Workshop Introduction](#1-qlik-embedded-workshop-introduction)
 - [2 Configure the Qlik Cloud tenant](#2-configure-the-qlik-cloud-tenant)
 - [3 Configure the web application](#3-configure-the-web-application)
-- [4 No-code embedded analytics](#4-no-code-embedded-analytics)
-- [5 Pro-code embedded analytics](#5-pro-code-embedded-analytics)
+- [4 Embed a complete analytics application](#4-embed-a-complete-analytics-application)
+- [5 Embed charts and UI objects](#5-embed-charts-and-UI-objects)
 - [6 Embed the selections bar](#6-embed-the-selections-bar)
-- [7 Implement a custom theme](#7-implement-a-custom-theme)
-- [8 Trigger events on analytics data](#8-trigger-events-on-analytics-data)
+- [7 Trigger events on analytics data](#7-trigger-events-on-analytics-data)
 
 ## 1.1 Install dependencies and start web application
 
