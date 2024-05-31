@@ -57,8 +57,7 @@ Add this `<qlik-embed>` element below the line.
   app-id="<appid>"
   type="barchart"
   dimensions='["[CategoryName]"]'
-  measures='["[=Sum(Sales)]"]'
-  properties='{ orientation: "horizontal", barGrouping: { grouping: "stacked" } }'
+  measures='["=Sum(Sales)"]'
 ></qlik-embed>
 ```
 
