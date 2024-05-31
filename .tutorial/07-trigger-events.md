@@ -24,11 +24,11 @@ Set the `clientId` property in the `auth.setDefaultHostConfig` function to the s
 
 Set the `redirectUri` property in the `auth.setDefaultHostConfig` function to the same value as the `data-redirect-uri` property you configured in [3.1.1](#311-set-the-qlik-embed-configuration).
 
-The `clearAll` function has been added to the code for your convenience.
+The `clearAll` function has been added to the code for your convenience. You can view the function in the `<script>` element at the bottom of the `index.html` page.
 
 ## 7.2 Select a specific field value
 
-You can also contact the data model directly and apply selections to the embedded visualizations. In this section, you are going to add a button to the `index.html` page and connect it to a function in `mashup.js` that will select the field value "Italy" from the "Country" field in the analytics application's data model.
+You can also contact the data model directly and apply selections to the embedded visualizations. In this section, you are going to add a button to the `index.html`. The selection button is connected to a function named `makeSelection` in the `<script>` section at the bottom of the html page.
 
 ### 7.2.1 Add the country filter button
 
