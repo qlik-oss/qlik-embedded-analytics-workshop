@@ -233,8 +233,7 @@
                         </li>
 
                         <li class="nav-item mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="clearAll" onclick="clearAll()" role="button"
-                            aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="clearAll" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-eraser fa-2x"></i>
                             <!-- Counter - Alerts -->
                             <span class="badge badge-danger badge-counter">+</span>
@@ -453,7 +452,7 @@
                                     app-id="<app-id>"
                                     type="<chart-type>"
                                     dimensions='["[Dimension1]"]'
-                                    measures='["[Measure1]", "[=Sum(Expression2)]", "=Avg(Expression2)"]'
+                                    measures='["[Measure1]", "=Sum(Expression2)", "=Avg(Expression2)"]'
                                      theme="embeddedtheme"
                                      >                                 
                                    </qlik-embed>
@@ -627,39 +626,53 @@
     import { auth, qix } from "https://cdn.jsdelivr.net/npm/@qlik/api/index.js";
 
     let appId = "<app-id>";
-
+    let app;
+      
     if(appId !== "<app-id>") {
       auth.setDefaultHostConfig({
-        host: "<your-tenant.region.qlikcloud.com>",
+        host: "https://<your-tenant.region.qlikcloud.com>",
         authType: "Oauth2",
         clientId: "<client-id>",
+        redirectUri: "<redirect-uri>",
       });
 
-      const app = qix.openAppSession({
-        appId: appId
-      }).getDoc();
+      app = await qix.openAppSession({
+          appId: appId
+        }).getDoc();
+        // add more functions here if you want
+          let appLayout = await app.getAppLayout();
+          console.log(appLayout);
+      }  
+      else {
+        console.log("Please provide an application id to the `clear-all` script");
+      }
 
       async function clearAll() {
-        await app.clearAll();
+        if(app) {
+            await app.clearAll();
+        }
       }
+
+      document.getElementById("clearAll").addEventListener("click", async function() {
+          clearAll();
+      });
 
       async function makeSelection() {
-        let countryField = await app.getField("Country");
-        await countryField.selectValues( {
-          "qFieldValues": [
-            {
-              "qText": "Italy"
-            }
-          ]
-        });
+        if(app) {
+            let countryField = await app.getField("Country");
+            await countryField.selectValues( {
+                "qFieldValues": [
+                    {
+                        "qText": "Italy"
+                    }
+                ]
+            });
+        }
       }
 
-      // add more functions here if you want
-    }  
-    else {
-      console.log("Please provide an application id to the `clear-all` script");
-    }
-    
+      document.getElementById("SelectionButton").addEventListener("click", async function() {
+          makeSelection();
+      });
 
     
   </script>

@@ -33,7 +33,7 @@ To add a theme to the application you embedded, enter a new attribute within the
   ui="classic/app"
   app-id="<APP_ID>"
   sheet-id="<SHEET_ID>"
-  theme="embeddedTheme"
+  theme="embeddedtheme"
 ></qlik-embed>
 ```
 
@@ -61,7 +61,13 @@ Save the `classic-app.html` file and refresh the browser window showing the appl
 
 Open the `classic-app.html` file for editing.
 
-You can also add a default selection instead of a bookmark. Remove the bookmark property and add the `select:json` property. Set it equal to <TODO: add a selection string>. The updated `qlik-embed` element should look like this:
+You can also add a default selection instead of a bookmark. Remove the bookmark property and add the `select:json` property and value shown below.
+
+```javacript
+  select:json="[{field:'Customer',values:['Boombastic','Casual Clothing']}]"
+```
+
+The updated `qlik-embed` element should look like this:
 
 ```html
 <qlik-embed

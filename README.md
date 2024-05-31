@@ -275,8 +275,7 @@ Add this `<qlik-embed>` element below the line.
   app-id="<appid>"
   type="barchart"
   dimensions='["[CategoryName]"]'
-  measures='["[=Sum(Sales)]"]'
-  properties='{ orientation: "horizontal", barGrouping: { grouping: "stacked" } }'
+  measures='["=Sum(Sales)"]'
 ></qlik-embed>
 ```
 
@@ -323,7 +322,7 @@ To add a theme to the application you embedded, enter a new attribute within the
   ui="classic/app"
   app-id="<APP_ID>"
   sheet-id="<SHEET_ID>"
-  theme="embeddedTheme"
+  theme="embeddedtheme"
 ></qlik-embed>
 ```
 
@@ -351,7 +350,13 @@ Save the `classic-app.html` file and refresh the browser window showing the appl
 
 Open the `classic-app.html` file for editing.
 
-You can also add a default selection instead of a bookmark. Remove the bookmark property and add the `select:json` property. Set it equal to <TODO: add a selection string>. The updated `qlik-embed` element should look like this:
+You can also add a default selection instead of a bookmark. Remove the bookmark property and add the `select:json` property and value shown below.
+
+```javacript
+  select:json="[{field:'Customer',values:['Boombastic','Casual Clothing']}]"
+```
+
+The updated `qlik-embed` element should look like this:
 
 ```html
 <qlik-embed
@@ -389,11 +394,13 @@ Set the `host` property in the `auth.setDefaultHostConfig` function to the same 
 
 Set the `clientId` property in the `auth.setDefaultHostConfig` function to the same value as the `data-client-id` property you configured in [3.1.1](#311-set-the-qlik-embed-configuration).
 
-The `clearAll` function has been added to the code for your convenience.
+Set the `redirectUri` property in the `auth.setDefaultHostConfig` function to the same value as the `data-redirect-uri` property you configured in [3.1.1](#311-set-the-qlik-embed-configuration).
+
+The `clearAll` function has been added to the code for your convenience. You can view the function in the `<script>` element at the bottom of the `index.html` page.
 
 ## 7.2 Select a specific field value
 
-You can also contact the data model directly and apply selections to the embedded visualizations. In this section, you are going to add a button to the `index.html` page and connect it to a function in `mashup.js` that will select the field value "Italy" from the "Country" field in the analytics application's data model.
+You can also contact the data model directly and apply selections to the embedded visualizations. In this section, you are going to add a button to the `index.html`. The selection button is connected to a function named `makeSelection` in the `<script>` section at the bottom of the html page.
 
 ### 7.2.1 Add the country filter button
 
@@ -402,7 +409,7 @@ Open the `index.html` file for editing. Search in the file for `italy-filter-but
 Create a new line in the file below the comment and add an anchor (`a`) tag defining the filter button.
 
 ```html
-<a id="SelectionButton" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="makeSelection()">
+<a id="SelectionButton" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
   <i class="fas fa-filter fa-sm text-white-50"></i>Italy
 </a>
 ```
