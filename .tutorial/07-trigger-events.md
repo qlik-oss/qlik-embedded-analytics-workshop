@@ -22,6 +22,8 @@ Set the `host` property in the `auth.setDefaultHostConfig` function to the same 
 
 Set the `clientId` property in the `auth.setDefaultHostConfig` function to the same value as the `data-client-id` property you configured in [3.1.1](#311-set-the-qlik-embed-configuration).
 
+Set the `redirectUri` property in the `auth.setDefaultHostConfig` function to the same value as the `data-redirect-uri` property you configured in [3.1.1](#311-set-the-qlik-embed-configuration).
+
 The `clearAll` function has been added to the code for your convenience.
 
 ## 7.2 Select a specific field value
@@ -35,7 +37,7 @@ Open the `index.html` file for editing. Search in the file for `italy-filter-but
 Create a new line in the file below the comment and add an anchor (`a`) tag defining the filter button.
 
 ```html
-<a id="SelectionButton" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="makeSelection()">
+<a id="SelectionButton" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
   <i class="fas fa-filter fa-sm text-white-50"></i>Italy
 </a>
 ```
