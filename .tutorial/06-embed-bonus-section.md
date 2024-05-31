@@ -33,7 +33,7 @@ To add a theme to the application you embedded, enter a new attribute within the
   ui="classic/app"
   app-id="<APP_ID>"
   sheet-id="<SHEET_ID>"
-  theme="embeddedTheme"
+  theme="embeddedtheme"
 ></qlik-embed>
 ```
 
