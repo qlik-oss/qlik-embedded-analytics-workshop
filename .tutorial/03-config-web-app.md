@@ -8,7 +8,7 @@ When you use qlik-embed web components to embed analytics, a configuration scrip
 <script
   crossorigin="anonymous"
   type="application/javascript"
-  src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components"
+  src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1.2.0/dist/index.min.js"
   data-host="https://<TENANT_HOSTNAME>.<REGION>.qlikcloud.com"
   data-auth-type="Oauth2"
   data-client-id="<OAUTH_SPA_CLIENT_ID_FROM_TENANT>"
