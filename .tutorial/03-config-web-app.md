@@ -18,26 +18,21 @@ When you use qlik-embed web components to embed analytics, a configuration scrip
 ></script>
 ```
 
+In this workshop, the configuration script is constructed from the contents of the `config.js` file.
+
 ## 3.1.1 Set the qlik-embed configuration
 
-Update these properties in the configuration script:
+Open the `config.js` file from the file list to the left. Update these properties in the `config` object:
 
-- `data-host`: The full hostname of your Qlik Cloud tenant including `https://`.
-- `data-client-id`: The OAuth client id from the OAuth client you configured in [2.1](#21-create-a-single-page-application-oauth-client).
-- `data-redirect-uri`: The URL for the oauth-callback.html page used in the application. This is Dev URL you obtained in step [1.1.3](#113-obtain-the-web-application-address) with `/oauth-callback.html` added to the end of the URL.
+- `host`: The full hostname of your Qlik Cloud tenant. For example, if your tenant is named "example" and runs in the "US" region, then the hostname you enter is `https://example.us.qlikcloud.com`.
+- `clientId`: The OAuth client id from the OAuth client you configured in [2.1](#21-create-a-single-page-application-oauth-client).
+- `redirectUri`: The URL for the oauth-callback.html page used in the application. This is Dev URL you obtained in step [1.1.3](#113-obtain-the-web-application-address) with `/oauth-callback.html` added to the end of the URL.
+- `appId`: The id for the Sales Analytics application on your tenant you uploaded in [2.3](#23-import-qlik-sense-app).
 
-## 3.1.2 Copy paste the script configuration
-
-Copy the modified script configuration.
-Navigate to the `src` folder in the directory tree.
-Inside each of the following files search for `BEGIN qlik-embed configuration`:
-
-- index.html
-- classic-app.html
-- charts.html
-
-In the config script section, paste the script configuration.
+Save the `config.js` file.
 
 ## 3.2 Configure the oauth-callback.html file
 
 Open the `oauth-callback.html` file and set the `data-host` property to the full hostname of your Qlik Cloud tenant including `https://`.
+
+Click the stop and run button at the top of the screen. 
