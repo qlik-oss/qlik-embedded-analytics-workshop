@@ -2,19 +2,17 @@
 
 You can do more than embed visualizations when you embed Qlik Cloud Analytics. The engine you connected to in step 5.1 enables you to execute functions and trigger events on the analytics data in the application directly.
 
+> Note: The workshop has been optimized to read from the `config.js` file you edited in [3.1.1](311-set-the-qlik-embed-configuration). Steps 7.1.1 and 7.1.2 describe how to configure the host information manually.
+
 ## 7.1 Clear selections
 
 For example, you can add a button to the web application that clears all of the selections that have been made.
 
 <img src="../img/clear_filters.png" width="300" title="hover text"/>
 
-To add a clear all selections function to the eraser button seen in the image above, open the `index.html` file and search for `clear-all` in the file.
-
 ### 7.1.1 Set the application id
 
 Set the `appId` variable with the word `let` before it to the application id you obtained in in step [2.3](#23-import-qlik-sense-app).
-
->Note: Do not change the `<app-id>` in the if statement below. This checks to make sure there is a real value in `appId`.
 
 ### 7.1.2 Set the host configuration
 

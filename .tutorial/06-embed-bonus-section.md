@@ -1,4 +1,4 @@
-# 6 Embed the selections bar
+# 6 qlik-embed bonus section
 
 One of the most common needs the users have during their analytics activities is to keep track of the
 selections they are applying to the data.

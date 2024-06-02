@@ -20,12 +20,6 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
     <link rel="stylesheet" href="qlik/mashup.css">
-
-  <!-- BEGIN qlik-embed configuration -->
-    <script
-        
-    ></script> 
-  <!-- END qlik-embed configuration -->
   
 </head>
 
@@ -49,13 +43,6 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <span>qlik-embed objects</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="self-service.html">
-                    <span>Self Service</span>
                 </a>
             </li>
 
@@ -336,5 +323,42 @@
 
 
 </body>
+    <script type="module">
+          async function buildQlikEmbedHead() {
+            const appConfig = await fetch("/config", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json"
+              }
+            }).then(res => res.json());
+            const qlikEmbedScript = document.createElement("script");
+            qlikEmbedScript.setAttribute("id", "qlik-embed-connection");
+            qlikEmbedScript.setAttribute("crossorigin", "anonymous");
+            qlikEmbedScript.setAttribute("type", "application/javascript");
+            qlikEmbedScript.setAttribute(
+              "src",
+              "https://cdn.jsdelivr.net/npm/@qlik/embed-web-components/dist/index.min.js",
+            );
+            qlikEmbedScript.setAttribute("data-host", appConfig.host);
+            qlikEmbedScript.setAttribute("data-client-id", appConfig.clientId);
+            qlikEmbedScript.setAttribute("data-access-token-storage","session");
+            qlikEmbedScript.setAttribute("data-auto-redirect", "true");
+            qlikEmbedScript.setAttribute("data-auth-type", "Oauth2");
+            qlikEmbedScript.setAttribute("data-redirect-uri", appConfig.redirectUri);
+            document.head.appendChild(qlikEmbedScript);
+          }
 
+          window.addEventListener("DOMContentLoaded", async () => {
+              try {
+                  if(document.getElementById("qlik-embed-connection")) {
+                      console.log("connection already exists");
+                      return;
+                  }
+                  await buildQlikEmbedHead();
+              } catch (e) {
+                  console.log(e);
+              }
+
+          });
+      </script>
 </html>
