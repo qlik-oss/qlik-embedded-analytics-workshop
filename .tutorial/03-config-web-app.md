@@ -29,6 +29,19 @@ Open the `config.js` file from the file list to the left. Update these propertie
 - `redirectUri`: The URL for the oauth-callback.html page used in the application. This is Dev URL you obtained in step [1.1.3](#113-obtain-the-web-application-address) with `/oauth-callback.html` added to the end of the URL.
 - `appId`: The id for the Sales Analytics application on your tenant you uploaded in [2.3](#23-import-qlik-sense-app).
 
+Here's an example of a completed `config.js` file:
+
+```javascript
+const config = {
+  host: "https://example.us.qlikcloud.com",
+  clientId: "0232949590293494592",
+  redirectUri: "https://some-replit-url.com/oauth-callback.html", //remember /oauth-callback.html
+  appId: "a516f00000000000000",
+}
+
+export default config;
+```
+
 Save the `config.js` file.
 
 ## 3.2 Configure the oauth-callback.html file

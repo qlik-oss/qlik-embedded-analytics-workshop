@@ -42,7 +42,7 @@ Repeat step 5.1.1 searching for the element id, using the application id and ent
 
 Refresh the web application and navigate to the `qlik-embed objects` page to see it updated with the embedded visualizations.
 
-## 5.3 Embed visualizations using expressions
+## 5.2 Embed visualizations using expressions
 
 In addition to rendering visualizations that exist in a Qlik Sense application, you can create visualizations dynamically on-the-fly using expressions.
 
