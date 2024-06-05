@@ -1,18 +1,26 @@
 import express from 'express';
-import config from './config.js';
 
 const port = 8080;
 
 const app = express();
-app.use(express.static("src"));
 
+const featureEasyBake = false;
+
+let config;
+if (featureEasyBake) {
+  config = await import('./easybake-config.js');
+  app.use(express.static("easybake-src"));
+} else {
+  config = await import('./config.js');
+  app.use(express.static("src"));
+}
 
 app.get("/", (request, response) => {
   response.sendFile(`${__dirname}/src/index.html`);
 });
 
 app.get("/config", (request, response) => {
-  response.json(config);
+  response.json(config.default);
   response.end;
 });
 
