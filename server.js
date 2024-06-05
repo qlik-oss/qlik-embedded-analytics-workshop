@@ -1,18 +1,35 @@
 import express from 'express';
-import config from './config.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
 const port = 8080;
-
 const app = express();
-app.use(express.static("src"));
 
+let config;
+const featureEasyBake = false;
+
+if(featureEasyBake) {
+  config = await import("./easybake-config.js");
+  app.use(express.static("easybake-src/src"));
+} else {
+  app.use(express.static("src"));
+}
 
 app.get("/", (request, response) => {
-  response.sendFile(`${__dirname}/src/index.html`);
+  if(featureEasyBake) {
+    response.sendFile(`${__dirname}/easybake-src/index.html`);
+  } else {
+    response.sendFile(`${__dirname}/src/index.html`);
+  }
+  
 });
 
 app.get("/config", (request, response) => {
-  response.json(config);
+  response.json(config.default);
   response.end;
 });
 
