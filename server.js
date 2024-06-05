@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
+import config from './config.js';
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -9,28 +9,15 @@ const __dirname = path.dirname(__filename); // get the name of the directory
 const port = 8080;
 const app = express();
 
-let config;
-const featureEasyBake = false;
+app.use(express.static("src"));
 
-if(featureEasyBake) {
-  config = await import("./easybake-config.js");
-  app.use(express.static("easybake-src/src"));
-} else {
-  config = await import("./config.js");
-  app.use(express.static("src"));
-}
 
 app.get("/", (request, response) => {
-  if(featureEasyBake) {
-    response.sendFile(`${__dirname}/easybake-src/index.html`);
-  } else {
-    response.sendFile(`${__dirname}/src/index.html`);
-  }
-  
+  response.sendFile(`${__dirname}/src/index.html`);
 });
 
 app.get("/config", (request, response) => {
-  response.json(config.default);
+  response.json(config);
   response.end;
 });
 
