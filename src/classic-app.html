@@ -331,6 +331,7 @@
                 "Content-Type": "application/json"
               }
             }).then(res => res.json());
+              console.log(appConfig);
             const qlikEmbedScript = document.createElement("script");
             qlikEmbedScript.setAttribute("id", "qlik-embed-connection");
             qlikEmbedScript.setAttribute("crossorigin", "anonymous");
