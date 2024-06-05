@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename); // get the name of the directory
 const port = 8080;
 const app = express();
 let config;
-const featureEasyBake = true;
+const featureEasyBake = false;
 
 if(featureEasyBake) {
   config = await import("./easybake-config.js");
