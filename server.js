@@ -16,6 +16,7 @@ if(featureEasyBake) {
   config = await import("./easybake-config.js");
   app.use(express.static("easybake-src/src"));
 } else {
+  config = await import("./config.js");
   app.use(express.static("src"));
 }
 
