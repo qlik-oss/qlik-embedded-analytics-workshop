@@ -54,11 +54,16 @@ const main = async () => {
     message: 'Input the URL to your tenant. Currently must be a US region Qlik Cloud tenant only',
   });
 
-    //https://0xnu8fry2fgj2i4.us.qlikcloud.com/
     const tenantHostname = tenant
     const codespaceName = `https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev/`;
 
     const at = await getTenantAccessToken(tenantHostname);
+
+    //get appId for Sales Analytics app on tenant.
+    const appId = await getAppId(tenantHostname, at) || "NoAppFound";
+    if(appId) {
+        spinner.text = "The workshop app exists on the tenant"
+    }
 
     spinner.start("Creating OAuth client on your tenant.")
     const clientId = await createTenantOAuthClient(tenantHostname, codespaceName, at);
@@ -73,8 +78,8 @@ const main = async () => {
         host: tenant,
         codespaceHostname: codespaceName,
         clientId: clientId.clientId,
-        appId: "TBD",
-        sheetId: "TBD"
+        appId: appId,
+        sheetId: "a8bdb8b2-525e-486e-91d1-7318d362acee"
     };
 
     spinner.start("creating config.js file");
@@ -256,6 +261,33 @@ async function userExists(tenantHostname, accessToken, userInput) {
         return false;
     }
 
+}
+
+async function getAppId(tenantHostname, accessToken) {
+
+    const params = new URLSearchParams();
+    params.append("name", "sales analytics");
+    params.append("resourceType", "app");
+
+    try {
+        const response = await fetch(`${tenantHostname}api/v1/items?${params}`, {
+            headers: {
+                "Authorization": `Bearer ${accessToken}`
+            }
+        });
+        if(!response.ok) {
+            throw new Error(`Response status: ${response.status}`)
+        }
+        const data = await response.json();
+        if(data.data.length == 1) {
+            return data.data[0].resourceId;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error(error.message);
+        return false;
+    }
 }
 
 function removeTrailingSlash(string) {
