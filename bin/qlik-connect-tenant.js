@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 
 import { input, confirm } from '@inquirer/prompts';
 import { triggerAsyncId } from 'async_hooks';
@@ -7,10 +8,11 @@ import ora from 'ora';
 import validator from "email-validator";
 import { access } from 'fs';
 import config from '../config.js';
+import randomstring from "randomstring";
 
 
 const main = async () => {
-
+    let result = "";
     const spinner = ora("");
 
     const confirmParticipation = await confirm({
@@ -38,7 +40,14 @@ const main = async () => {
     message: 'Input the hostname of your tenant. The part before the region designation.',
   });
 
+//   let codespaceName = await confirm({
+//     message: `Is the hostname in the simple browser address bar https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev?`,
+//     default: true
+//   });
+    //https://0xnu8fry2fgj2i4.us.qlikcloud.com/
     const tenantHostname = config.tenantHostname;
+    const codespaceName = `https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev/`;
+
 //     const codespaceHostname = config.codespaceHostname;
   
 // //   console.log(chalk.yellow(`You have entered ${tenant} for your hostname.`));
@@ -47,13 +56,22 @@ const main = async () => {
 //   spinner.text = 'Getting access token.';
 
     const at = await getTenantAccessToken(tenantHostname);
+
+    spinner.start("Creating OAuth client on your tenant.")
+    const clientId = await createTenantOAuthClient(tenantHostname, codespaceName, at);
+    result = await sleep(1500, spinner, "Creating OAuth client on your tenant.");
+    if(clientId) {
+        spinner.succeed(`OAuth clientId created with value: ${JSON.stringify(clientId)}`);
+    }
+
+    spinner.start("Checking for email on tenant.");
     const isUser = await userExists(tenantHostname, at, userInput);
     
     if(isUser) {
         spinner.succeed("You have an account on this tenant.");
     } else {
         spinner.start("You need an account on this tenant. Let's create it.");
-        let result = await sleep(1500, spinner, "Contacting your tenant");
+        result = await sleep(1500, spinner, "Contacting your tenant");
         spinner.succeed("Contacted tenant");
         spinner.start("Creating user on the system");
         const userCreated = await createUser(tenantHostname, at, userInput)
@@ -66,7 +84,7 @@ const main = async () => {
         } else {
             throw new Error(`Workshop setup failed on user creation and invite on tenant`);
         }
-        spinner.succeed("Created user on the system")
+        spinner.succeed("Created user on the system");
         spinner.start("Check your email");
         result = await sleep(1500, spinner, "Check your email");
         spinner.succeed("Check your email");
@@ -126,11 +144,12 @@ async function getTenantAccessToken(tenantHostname) {
 
 async function createTenantOAuthClient(tenantHostname, codespaceHostname, accessToken) {
    
+    const clientName = `Qlik-embed-workshop-${randomstring.generate(6)}`
     const requestPayload = {
         "appType": "spa",
-        "clientName": "Qlik-embed-workshop-learning",
-         "description": "Qlik-embed-workshop learning",
-         "redirectUris": [`${codespaceHostname}oauth.html`],
+        "clientName": clientName,
+         "description": "The name of this client is " + clientName,
+         "redirectUris": [`${codespaceHostname}oauth-callback.html`],
          "allowedScopes": ["user_default"],
          "allowedOrigins": [`${removeTrailingSlash(codespaceHostname)}`]
      };

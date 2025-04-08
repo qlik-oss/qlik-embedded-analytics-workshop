@@ -6,7 +6,7 @@ import config from './config.js';
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
 
-const port = 8080;
+const port = 3000;
 const app = express();
 
 app.use(express.static("src"));
