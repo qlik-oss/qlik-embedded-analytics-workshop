@@ -7,9 +7,12 @@ import { response } from 'express';
 import ora from 'ora';
 import validator from "email-validator";
 import { access } from 'fs';
-import config from '../config.js';
+//import config from '../config.js.old';
 import randomstring from "randomstring";
+import { createConfigFile, updateOAuthCallback } from "./configure-workshop.js";
 
+const regionClientId = process.env["REGION_CLIENT_ID"];
+const regionClientSecret = process.env["REGION_CLIENT_SECRET"];
 
 const main = async () => {
     let result = "";
@@ -36,24 +39,24 @@ const main = async () => {
         }
     })
   };
-  const tenant = await input({
-    message: 'Input the hostname of your tenant. The part before the region designation.',
+
+  const createTenant = await confirm({
+    message: "Do you want to create a new tenant today?",
+    default: false
   });
 
-//   let codespaceName = await confirm({
-//     message: `Is the hostname in the simple browser address bar https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev?`,
-//     default: true
-//   });
-    //https://0xnu8fry2fgj2i4.us.qlikcloud.com/
-    const tenantHostname = config.tenantHostname;
-    const codespaceName = `https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev/`;
+  if(createTenant) {
+    spinner.text = "tenant creation not implemented yet. you will need to supply a tenant URL."
+    await sleep(1500,spinner, "tenant creation not implemented yet. you will need to supply a tenant URL.")
+  }
 
-//     const codespaceHostname = config.codespaceHostname;
-  
-// //   console.log(chalk.yellow(`You have entered ${tenant} for your hostname.`));
-//   const spinner = ora('Processing...').start();
-//   spinner.color = 'yellow';
-//   spinner.text = 'Getting access token.';
+  const tenant = await input({
+    message: 'Input the URL to your tenant. Currently must be a US region Qlik Cloud tenant only',
+  });
+
+    //https://0xnu8fry2fgj2i4.us.qlikcloud.com/
+    const tenantHostname = tenant
+    const codespaceName = `https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev/`;
 
     const at = await getTenantAccessToken(tenantHostname);
 
@@ -63,6 +66,19 @@ const main = async () => {
     if(clientId) {
         spinner.succeed(`OAuth clientId created with value: ${JSON.stringify(clientId)}`);
     }
+
+    spinner.start("Updating oauth-callback file");
+    updateOAuthCallback(tenant);
+    const configData = {
+        host: tenant,
+        codespaceHostname: codespaceName,
+        clientId: clientId.clientId,
+        appId: "TBD",
+        sheetId: "TBD"
+    };
+
+    spinner.start("creating config.js file");
+    createConfigFile(configData);
 
     spinner.start("Checking for email on tenant.");
     const isUser = await userExists(tenantHostname, at, userInput);
@@ -90,32 +106,15 @@ const main = async () => {
         spinner.succeed("Check your email");
         process.exit();
     }
-
-//   if(at) {
-//     spinner.succeed();
-//   }
-//   spinner.text = "creating OAuth client on the tenant."
-
-//   const spaClient = await createTenantOAuthClient(tenantHostname, codespaceHostname, at);
-//     console.log(spaClient);
-//     if(spaClient) {
-//         spinner.succeed();
-//         spinner.text = `clientId for your application: ${spaClient.clientId}`
-//         spinner.stop;
-//     }
-    
 };
 
 main();
 
 async function getTenantAccessToken(tenantHostname) {
-    //replace with gh secrets in template repo
-    const clientId = config.regionClientId;
-    const clientSecret = config.regionClientSecret;
 
     const requestPayload = {
-        "client_id": clientId,
-        "client_secret": clientSecret,
+        "client_id": regionClientId,
+        "client_secret": regionClientSecret,
         "scope": ["admin_classic"],
         "grant_type": "client_credentials"
     };

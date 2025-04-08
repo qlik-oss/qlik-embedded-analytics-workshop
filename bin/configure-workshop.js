@@ -39,15 +39,21 @@ function updateOAuthCallback(newHost) {
 }
 
 function createConfigFile(configData) {
+  const configFilePath = path.join(__dirname, '../config.js');
+  const words = `
+  const config = {
+    host: "${removeTrailingSlash(configData.host)}",
+    codespaceHostname: "${configData.codespaceHostname}",
+    clientId: "${configData.clientId}",
+    redirectUri: "${configData.codespaceHostname}oauth-callback.html",
+    appId: "${configData.appId}",
+    sheetId: "${configData.sheetId}"
+  }
+  export default config;
+  `
+  
 
-  config.host = removeTrailingSlash(configData.host);
-  config.codespaceHostname = configData.codespaceHostname;
-  config.clientId = configData.clientId;
-  config.redirectUri = configData.codespaceHostname + 'oauth-callback.html';
-  config.appId = configData.appId;
-  config.sheetId = configData.sheetId;
-
-  fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2), 'utf-8');
+  fs.writeFileSync(configFilePath, words, 'utf-8');
   console.log('config.json updated successfully!');
 }
 
