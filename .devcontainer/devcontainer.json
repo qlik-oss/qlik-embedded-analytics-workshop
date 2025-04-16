@@ -6,9 +6,5 @@
         "onAutoForward": "openPreview"
         }
     },
-    "forwardPorts": [3000],
-    "remoteEnv": {
-        "REGION_CLIENT_ID": "${localEnv:REGION_CLIENT_ID}",
-        "REGION_CLIENT_SECRET": "${localEnv:REGION_CLIENT_SECRET}"
-    }
+    "forwardPorts": [3000]
 }
