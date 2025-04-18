@@ -32,7 +32,6 @@ function updateOAuthCallback(newHost) {
         console.error('Error writing to the file:', err);
         return;
       }
-      console.log('data-host parameter updated successfully!');
     });
   });
 
@@ -54,7 +53,6 @@ function createConfigFile(configData) {
   
 
   fs.writeFileSync(configFilePath, words, 'utf-8');
-  console.log('config.json updated successfully!');
 }
 
 function removeTrailingSlash(string) {

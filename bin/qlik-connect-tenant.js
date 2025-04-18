@@ -45,19 +45,14 @@ const main = async () => {
     default: false
   });
 
-  if(createTenant) {
-    spinner.text = "tenant creation not implemented yet. you will need to supply a tenant URL."
-    await sleep(1500,spinner, "tenant creation not implemented yet. you will need to supply a tenant URL.")
-  }
-
   const tenant = await input({
     message: 'Input the URL to your tenant. Currently must be a US region Qlik Cloud tenant only',
   });
 
-    const tenantHostname = tenant
+    const tenantHostname = tenant;
     const codespaceName = `https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev/`;
 
-    const at = await getTenantAccessToken(tenantHostname);
+    const at = await getTenantAccessToken(tenantHostname, ["admin_classic"]);
 
     //get appId for Sales Analytics app on tenant.
     const appId = await getAppId(tenantHostname, at) || "NoAppFound";
@@ -69,11 +64,18 @@ const main = async () => {
     const clientId = await createTenantOAuthClient(tenantHostname, codespaceName, at);
     result = await sleep(1500, spinner, "Creating OAuth client on your tenant.");
     if(clientId) {
-        spinner.succeed(`OAuth clientId created with value: ${JSON.stringify(clientId)}`);
+        spinner.succeed(`OAuth clientId created with value: ${clientId}`);
     }
 
     spinner.start("Updating oauth-callback file");
     updateOAuthCallback(tenant);
+
+    sleep(1500, spinner, "Updating oauth-callback file");
+    spinner.succeed("oauth-callback file updated");
+
+    spinner.start("Creating config.js file");
+    sleep(1500, spinner, "Creating config.js file");
+
     const configData = {
         host: tenant,
         codespaceHostname: codespaceName,
@@ -82,8 +84,9 @@ const main = async () => {
         sheetId: "a8bdb8b2-525e-486e-91d1-7318d362acee"
     };
 
-    spinner.start("creating config.js file");
     createConfigFile(configData);
+    spinner.succeed("config.js file created");
+
 
     spinner.start("Checking for email on tenant.");
     const isUser = await userExists(tenantHostname, at, userInput);
@@ -109,24 +112,27 @@ const main = async () => {
         spinner.start("Check your email");
         result = await sleep(1500, spinner, "Check your email");
         spinner.succeed("Check your email");
-        process.exit();
     }
+
+    spinner.succeed("You can now start the workshop by entering npm run start at the prompt");
+    process.exit();
+
 };
 
 main();
 
-async function getTenantAccessToken(tenantHostname) {
+async function getTenantAccessToken(tenantHostname, scopes) {
 
+    let lambdaURL = "https://ubzt66e9je.execute-api.us-east-1.amazonaws.com/"
+    //"https://ubzt66e9je.execute-api.us-east-1.amazonaws.com/token/"
     const requestPayload = {
-        "client_id": regionClientId,
-        "client_secret": regionClientSecret,
-        "scope": ["admin_classic"],
-        "grant_type": "client_credentials"
+        "tenantHostname": tenantHostname,
+        "scopes": scopes
     };
 
     //get access token to tenant
     try {
-        const response = await fetch(`${tenantHostname}oauth/token`, {
+        const response = await fetch(`${lambdaURL}token/`, {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -140,9 +146,11 @@ async function getTenantAccessToken(tenantHostname) {
         }
 
         const atData = await response.json();
-        return atData.access_token;
+        console.log(atData);
+        return atData.accessToken;
     } catch (error) {
-        throw new Error('Failed to get access token', error);
+        console.error(`Failed to get access token: ${error}`);
+        throw new Error(`Failed to get access token: ${error}`);
     }
 }
 
@@ -167,7 +175,7 @@ async function createTenantOAuthClient(tenantHostname, codespaceHostname, access
             body: JSON.stringify(requestPayload)
         });
         const response = await spaClient.json();
-        return response;
+        return response.clientId;
     } catch(error) {
         throw new Error(`Failed to create OAuth client on ${tenantHostname}`, error)
     }
