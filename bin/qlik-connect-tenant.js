@@ -40,8 +40,6 @@ const main = async () => {
     })
   };
 
-  userInput.email = "jeffrey.p.goldberg+oem2025@gmail.com";
-
   const createTenant = await confirm({
     message: "Do you want to create a new tenant today?",
     default: false
@@ -71,11 +69,13 @@ const main = async () => {
 
     spinner.start("Updating oauth-callback file");
     updateOAuthCallback(tenant);
+
     sleep(1500, spinner, "Updating oauth-callback file");
     spinner.succeed("oauth-callback file updated");
 
     spinner.start("Creating config.js file");
     sleep(1500, spinner, "Creating config.js file");
+
     const configData = {
         host: tenant,
         codespaceHostname: codespaceName,
@@ -83,8 +83,10 @@ const main = async () => {
         appId: appId,
         sheetId: "a8bdb8b2-525e-486e-91d1-7318d362acee"
     };
+
     createConfigFile(configData);
     spinner.succeed("config.js file created");
+
 
     spinner.start("Checking for email on tenant.");
     const isUser = await userExists(tenantHostname, at, userInput);
@@ -114,6 +116,7 @@ const main = async () => {
 
     spinner.succeed("You can now start the workshop by entering npm run start at the prompt");
     process.exit();
+
 };
 
 main();
