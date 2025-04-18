@@ -55,7 +55,7 @@ const main = async () => {
     const at = await getTenantAccessToken(tenantHostname, ["admin_classic"]);
 
     //get appId for Sales Analytics app on tenant.
-    const appId = await getAppId(tenantHostname, at) || "NoAppFound";
+    const appId = await getAppId(tenantHostname, at);
     if(appId) {
         spinner.text = "The workshop app exists on the tenant"
     }
@@ -146,7 +146,6 @@ async function getTenantAccessToken(tenantHostname, scopes) {
         }
 
         const atData = await response.json();
-        console.log(atData);
         return atData.accessToken;
     } catch (error) {
         console.error(`Failed to get access token: ${error}`);
