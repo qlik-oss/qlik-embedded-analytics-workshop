@@ -1,18 +1,27 @@
 {
-    "image":"mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
     "portsAttributes": {
         "3000": {
-        "label": "Application",
-        "onAutoForward": "openPreview"
+            "label": "Application",
+            "onAutoForward": "openPreview"
         }
     },
-    "forwardPorts": [3000],
+    "forwardPorts": [
+        3000
+    ],
     "secrets": {
         "REGION_CLIENT_ID": {
             "description": "Qlik Region ClientID"
         },
         "REGION_CLIENT_SECRET": {
             "description": "Qlik Region Client Secret"
+        }
+    },
+    "customizations": {
+        "codespaces": {
+            "openFiles": [
+                ".tutorial/01-intro.md"
+            ]
         }
     }
 }
