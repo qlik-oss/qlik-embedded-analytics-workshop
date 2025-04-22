@@ -14,4 +14,4 @@ In the terminal or shell window, enter the command `npm run start` at the prompt
 
 When the Webview window appears, click on the green section of the address bar. This will reveal the Dev URL for the running web application. Record this value for later use.
 
-<img src="../img/configuration/replitdevurl.png" width="300px" alt="replit dev url"></img>
+[![Step 2 Badge](https://img.shields.io/badge/Step_2_-_Configure_the_Qlik_Cloud_tenant-green)](./02-config-qlik-cloud.md)

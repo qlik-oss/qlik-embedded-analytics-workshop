@@ -27,3 +27,6 @@ By the end of this workshop, you will have the skills to integrate powerful data
 > For more information on authentication and authorization for embedded applications [review the documentation](https://qlik.dev/authenticate) on [qlik.dev](https://qlik.dev).
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/CedLebQlik/qlik-embedded-analytics-workshop)
+
+
+[![Step 1 Badge](https://img.shields.io/badge/Step_1_-_Configure_your_environment-green)](./01-intro.md)
