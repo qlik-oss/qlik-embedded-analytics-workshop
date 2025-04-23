@@ -12,6 +12,6 @@ In the terminal or shell window, enter the command `npm run start` at the prompt
 
 ### 1.1.3 Obtain the web application address
 
-When the Webview window appears, click on the green section of the address bar. This will reveal the Dev URL for the running web application. Record this value for later use.
+When the Webview window appears, click on the green section of the address bar. This will reveal the Dev URL for the running web application. Record this value for later use.  
 
-[![Step 2 Badge](https://img.shields.io/badge/Step_2_-_Configure_the_Qlik_Cloud_tenant-green)](./02-config-qlik-cloud.md)
+[![Step 2 button](https://img.shields.io/badge/Step_2_--_Configure_the_Qlik_Cloud_tenant-green_>?style=for-the-badge)](.tutorial/02-config-qlik-cloud.md)

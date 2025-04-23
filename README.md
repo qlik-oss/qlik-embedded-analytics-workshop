@@ -15,6 +15,8 @@ By the end of this workshop, you will have the skills to integrate powerful data
 * A Github account
 
 > **Note:** This workshop is built to work on [Codespaces](https://github.com/features/codespaces/). If you're going through this workshop with another online IDE or a local development environment, your mileage may vary.
+>
+> [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/CedLebQlik/qlik-embedded-analytics-workshop)
 
 ## Requirements
 
@@ -24,6 +26,10 @@ By the end of this workshop, you will have the skills to integrate powerful data
 * You are logged into the tenant as a user with access to the Qlik Cloud Analytics application
 
 > **Note: This workshop does not cover authentication options for securing web applications with Qlik Cloud.**
-> For more information on authentication and authorization for embedded applications [review the documentation](https://qlik.dev/authenticate) on [qlik.dev](https://qlik.dev).
+> For more information on authentication and authorization for embedded applications [review the documentation](https://qlik.dev/authenticate) on [qlik.dev](https://qlik.dev).  
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/CedLebQlik/qlik-embedded-analytics-workshop)
+## Let's start
+
+Click the button to continue with the workshop.
+
+[![Step 1 button](https://img.shields.io/badge/Step_1_--_Configure_your_environment_>-green?style=for-the-badge)](.tutorial/01-intro.md)

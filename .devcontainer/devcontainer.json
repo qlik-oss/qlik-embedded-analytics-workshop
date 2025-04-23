@@ -20,15 +20,8 @@
     "customizations": {
         "codespaces": {
             "openFiles": [
-                ".tutorial/01-intro.md"
+                "README.md"
             ]
-        },
-        "vscode": {
-            "settings": {
-                "workbench.editorAssociations": {
-                    "*.md": "vscode.markdown.preview.editor"
-                }
-            }
         }
     }
 }
