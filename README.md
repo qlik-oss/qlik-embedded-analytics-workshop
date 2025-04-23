@@ -14,7 +14,7 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 * A Github account
 
-> **Note:** This workshop is built to work on [Codespaces](https://github.com/features/codespaces/). If you're going through this workshop with another online IDE or a local development environment, your mileage may vary.
+> **Note:** This workshop is built to work on [GitHub Codespaces](https://github.com/features/codespaces/). If you're going through this workshop with another online IDE or a local development environment, your mileage may vary.
 >
 > [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/CedLebQlik/qlik-embedded-analytics-workshop)
 
@@ -22,7 +22,7 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 * A Qlik Cloud tenant
 * An account on the tenant with the Tenant Admin role
-* A development environment such as Visual Studio Code or an online IDE like [repl.it](https://replit.com/).
+* A development environment such as Visual Studio Code or an online IDE like [GitHub Codespaces](https://github.com/features/codespaces).
 * You are logged into the tenant as a user with access to the Qlik Cloud Analytics application
 
 > **Note: This workshop does not cover authentication options for securing web applications with Qlik Cloud.**
