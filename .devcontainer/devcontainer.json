@@ -9,14 +9,6 @@
     "forwardPorts": [
         3000
     ],
-    "secrets": {
-        "REGION_CLIENT_ID": {
-            "description": "Qlik Region ClientID"
-        },
-        "REGION_CLIENT_SECRET": {
-            "description": "Qlik Region Client Secret"
-        }
-    },
     "customizations": {
         "codespaces": {
             "openFiles": [
