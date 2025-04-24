@@ -60,16 +60,16 @@ const main = async () => {
                 if (!tenantInput.endsWith("/")) {
                     return "Please enter a valid tenant URL. Must end with /"
                 }
-                if (tenantInput.includes("qlikcloud.com")) {
+                if (tenantInput.includes("us.qlikcloud.com")) {
                     return true;
                 } else {
-                    return "Please enter a valid tenant URL. Must be a Qlik Cloud tenant."
+                    return "Please enter a valid tenant URL. Must be a US region Qlik Cloud tenant."
                 }
             }
         })
     };
 
-    const tenantHostname = tenant;
+    const tenantHostname = tenant.tenantInput;
     const codespaceName = `https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev/`;
 
     const at = await getTenantAccessToken(tenantHostname, ["admin_classic"]);
@@ -88,7 +88,7 @@ const main = async () => {
     }
 
     spinner.start("Updating oauth-callback file");
-    updateOAuthCallback(tenant);
+    updateOAuthCallback(tenantHostname);
 
     sleep(1500, spinner, "Updating oauth-callback file");
     spinner.succeed("oauth-callback file updated");
@@ -97,7 +97,7 @@ const main = async () => {
     sleep(1500, spinner, "Creating config.js file");
 
     const configData = {
-        host: tenant,
+        host: tenantHostname,
         codespaceHostname: codespaceName,
         clientId: clientId.clientId,
         appId: appId,
