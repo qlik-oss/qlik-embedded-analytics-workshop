@@ -15,8 +15,6 @@ By the end of this workshop, you will have the skills to integrate powerful data
 * A Github account
 
 > **Note:** This workshop is built to work on [GitHub Codespaces](https://github.com/features/codespaces/). If you're going through this workshop with another online IDE or a local development environment, your mileage may vary.
->
-> [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/CedLebQlik/qlik-embedded-analytics-workshop)
 
 ## Requirements
 
@@ -30,6 +28,6 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 ## Let's start
 
-Click the button to continue with the workshop.
+Click the button to continue with the workshop using GitHub Codespaces.
 
-[![Step 1 button](https://img.shields.io/badge/Step_1_--_Configure_your_environment_>-green?style=for-the-badge)](.tutorial/01-intro.md)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/CedLebQlik/qlik-embedded-analytics-workshop)

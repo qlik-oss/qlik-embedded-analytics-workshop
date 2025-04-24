@@ -1,9 +1,9 @@
-# 6 qlik-embed bonus section
+# 4 qlik-embed bonus section
 
 One of the most common needs the users have during their analytics activities is to keep track of the
 selections they are applying to the data.
 
-## 6.1 Add the selection bar to the web application
+## 4.1 Add the selection bar to the web application
 
 Open the `index.html` file for editing. Search in the file for `selection-bar-entry`.
 
@@ -22,7 +22,7 @@ Save the `index.html` file.
 
 Refresh the web application and the selection bar appears at the top of the page. Click inside one of the embedded visualizations and make a selection. The selection bar will update with the current selections you've made.
 
-### 6.2 Apply a theme to the embedded application
+## 4.2 Apply a theme to the embedded application
 
 Open the `classic-app.html` file for editing.
 
@@ -39,7 +39,7 @@ To add a theme to the application you embedded, enter a new attribute within the
 
 Save the `classic-app.html` file and refresh the browser window showing the application.
 
-### 6.3 Set a bookmark for the embedded application
+## 4.3 Set a bookmark for the embedded application
 
 Open the `classic-app.html` file for editing.
 
@@ -57,7 +57,7 @@ Similar to adding a theme, you can add a reference to a bookmark from a Qlik Sen
 
 Save the `classic-app.html` file and refresh the browser window showing the application.
 
-### 6.4 Set a default selection for the embedded application
+## 4.4 Set a default selection for the embedded application
 
 Open the `classic-app.html` file for editing.
 
@@ -80,3 +80,5 @@ The updated `qlik-embed` element should look like this:
 ```
 
 Save the `classic-app.html` file and refresh the browser window showing the application.
+
+[![Step 5 button](https://img.shields.io/badge/Step_5_--_Trigger_events_on_analytics_data_>-green?style=for-the-badge)](05-trigger-events.md)
