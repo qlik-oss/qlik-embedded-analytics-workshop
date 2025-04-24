@@ -78,5 +78,4 @@ Click the `Add` button on the upper right side of the screen. Browse for the emb
 
 <img src="../img/configuration/themeupload.png" width="300px" alt="theme menu icon"></img>
 
-
 [![Step 3 Badge](https://img.shields.io/badge/Step_3_-_Configure_the_web_application-green)](./03-config-web-app.md)
