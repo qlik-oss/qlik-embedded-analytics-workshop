@@ -40,36 +40,43 @@ const main = async () => {
         })
     };
 
-    /*
     const createTenant = await confirm({
         message: "Do you want to create a new tenant today?",
         default: false
     });
-    */
 
-    const tenant = {
-        tenantInput: await input({
-            message: 'Input the URL to your tenant. Currently must be a US region Qlik Cloud tenant only',
-            validate: (tenantInput) => {
-                if (!tenantInput || !URL.canParse(tenantInput)) {
-                    return "Please enter a valid tenant URL."
-                }
-                if (!tenantInput.startsWith("https://")) {
-                    return "Please enter a valid tenant URL. Must start with https://"
-                }
-                if (!tenantInput.endsWith("/")) {
-                    return "Please enter a valid tenant URL. Must end with /"
-                }
-                if (tenantInput.includes("us.qlikcloud.com")) {
-                    return true;
-                } else {
-                    return "Please enter a valid tenant URL. Must be a US region Qlik Cloud tenant."
-                }
-            }
-        })
-    };
+    let tenantHostname = "";
 
-    const tenantHostname = tenant.tenantInput;
+    if (createTenant) {
+        // TBD
+    } else {
+        const tenant = {
+            tenantInput: await input({
+                message: 'Input the URL to your tenant. Currently must be a US region Qlik Cloud tenant only',
+                validate: (tenantInput) => {
+                    if (!tenantInput || !URL.canParse(tenantInput)) {
+                        return "Please enter a valid tenant URL."
+                    }
+                    if (!tenantInput.startsWith("https://")) {
+                        return "Please enter a valid tenant URL. Must start with https://"
+                    }
+                    if (!tenantInput.endsWith("/")) {
+                        return "Please enter a valid tenant URL. Must end with /"
+                    }
+                    if (tenantInput.includes("us.qlikcloud.com")) {
+                        return true;
+                    } else {
+                        return "Please enter a valid tenant URL. Must be a US region Qlik Cloud tenant."
+                    }
+                }
+            })
+        };
+
+        tenantHostname = tenant.tenantInput;
+    }
+
+    
+
     const codespaceName = `https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev/`;
 
     const at = await getTenantAccessToken(tenantHostname, ["admin_classic"]);
