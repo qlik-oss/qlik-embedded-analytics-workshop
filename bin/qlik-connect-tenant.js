@@ -1,18 +1,11 @@
 #!/usr/bin/env node
 
 import { input, confirm } from '@inquirer/prompts';
-import { triggerAsyncId } from 'async_hooks';
-import chalk from 'chalk';
-import { response } from 'express';
 import ora from 'ora';
 import validator from "email-validator";
-import { access } from 'fs';
-//import config from '../config.js.old';
+import workshopSettings from './workshop-settings.js';
 import randomstring from "randomstring";
 import { createConfigFile, updateOAuthCallback } from "./configure-workshop.js";
-
-//const regionClientId = process.env["REGION_CLIENT_ID"];
-//const regionClientSecret = process.env["REGION_CLIENT_SECRET"];
 
 const main = async () => {
     let result = "";
@@ -75,10 +68,7 @@ const main = async () => {
         tenantHostname = tenant.tenantInput;
     }
 
-    
-
     const codespaceName = `https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev/`;
-
     const at = await getTenantAccessToken(tenantHostname, ["admin_classic"]);
 
     //get appId for Sales Analytics app on tenant.
@@ -108,7 +98,7 @@ const main = async () => {
         codespaceHostname: codespaceName,
         clientId: clientId.clientId,
         appId: appId,
-        sheetId: "a8bdb8b2-525e-486e-91d1-7318d362acee"
+        sheetId: workshopSettings.sheetId
     };
 
     createConfigFile(configData);
@@ -149,7 +139,7 @@ main();
 
 async function getTenantAccessToken(tenantHostname, scopes) {
 
-    let lambdaURL = "https://ubzt66e9je.execute-api.us-east-1.amazonaws.com/"
+    let lambdaURL = workshopSettings.regionalOAuthLambaUrl;
     //"https://ubzt66e9je.execute-api.us-east-1.amazonaws.com/token/"
     const requestPayload = {
         "tenantHostname": tenantHostname,
@@ -293,7 +283,6 @@ async function userExists(tenantHostname, accessToken, userInput) {
         console.error(error.message);
         return false;
     }
-
 }
 
 async function getAppId(tenantHostname, accessToken) {
