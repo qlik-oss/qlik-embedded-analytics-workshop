@@ -19,7 +19,7 @@ const main = async () => {
     if (!confirmParticipation) {
         spinner.fail("You've decided not to participate. If you change your mind, run the script again.");
         process.exit();
-    }
+    };
 
     const userInput = {
         email: await input({
@@ -39,9 +39,18 @@ const main = async () => {
     });
 
     let tenantHostname = "";
+    let appId = "";
 
     if (createTenant) {
-        // TBD
+        const data = await createTenantAndAppId();
+        if (data) {
+            tenantHostname = "https://" + data.tenantHostname + "/";
+            appId = data.appId;
+            spinner.succeed(`Tenant created with URL: ${tenantHostname}`);
+        } else {
+            spinner.fail("Failed to create tenant.");
+            process.exit();
+        }
     } else {
         const tenant = {
             tenantInput: await input({
@@ -66,13 +75,14 @@ const main = async () => {
         };
 
         tenantHostname = tenant.tenantInput;
-    }
+    };
 
     const codespaceName = `https://${process.env["CODESPACE_NAME"]}-3000.app.github.dev/`;
     const at = await getTenantAccessToken(tenantHostname, ["admin_classic"]);
 
     //get appId for Sales Analytics app on tenant.
-    const appId = await getAppId(tenantHostname, at);
+    if (!appId)
+        appId = await getAppId(tenantHostname, at);
     if (appId) {
         spinner.text = "The workshop app exists on the tenant."
     }
@@ -103,7 +113,6 @@ const main = async () => {
 
     createConfigFile(configData);
     spinner.succeed("config.js file created");
-
 
     spinner.start("Checking for email on tenant.");
     const isUser = await userExists(tenantHostname, at, userInput);
@@ -137,9 +146,24 @@ const main = async () => {
 
 main();
 
+
+async function createTenantAndAppId() {
+    try {
+        const response = await fetch(workshopSettings.tenantCreationLambdaUrl, { method: "POST" });
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`)
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error(`Failed to create tenant: ${error}`);
+        throw new Error(`Failed to create tenant: ${error}`);
+    }
+}
+
 async function getTenantAccessToken(tenantHostname, scopes) {
 
-    let lambdaURL = workshopSettings.regionalOAuthLambaUrl;
     //"https://ubzt66e9je.execute-api.us-east-1.amazonaws.com/token/"
     const requestPayload = {
         "tenantHostname": tenantHostname,
@@ -148,7 +172,7 @@ async function getTenantAccessToken(tenantHostname, scopes) {
 
     //get access token to tenant
     try {
-        const response = await fetch(`${lambdaURL}token/`, {
+        const response = await fetch(workshopSettings.regionalOAuthLambaUrl, {
             method: "POST",
             headers: {
                 "Accept": "application/json",
