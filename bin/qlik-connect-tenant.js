@@ -172,6 +172,10 @@ async function getTenantAccessToken(tenantHostname, scopes) {
 
     //get access token to tenant
     try {
+        //console.log(`Requesting access token for ${tenantHostname} with scopes: ${scopes}`);
+        //console.log(`Calling ${workshopSettings.regionalOAuthLambaUrl}`);
+        //console.log(`Payload: ${JSON.stringify(requestPayload)}`);
+
         const response = await fetch(workshopSettings.regionalOAuthLambaUrl, {
             method: "POST",
             headers: {
