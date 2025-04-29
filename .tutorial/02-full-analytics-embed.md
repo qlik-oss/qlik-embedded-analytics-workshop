@@ -1,10 +1,8 @@
-# 4 Embed a complete analytics application
+# 2 Embed a complete analytics application
 
 In this section, you are going to embed a Qlik Analytics application into the web application using an `<qlik-embed>` tag.
 
-## 4.1 Collect application metadata
-
-### 4.1.1 Get the application Id
+## 2.1 Get the application Id
 
 In a web browser, navigate to your tenant and open the `Sales Analytics` app. This is the app you uploaded in step [2.3](#23-import-qlik-sense-app).
 
@@ -12,7 +10,7 @@ In a web browser, navigate to your tenant and open the `Sales Analytics` app. Th
 
 When the app overview appears, record the application Id from the address bar in your web browser. The application Id is thirty-six characters and looks like `ff345764-ee83-4488-8637-e93ddb7ccc47`.
 
-### 4.1.2 Get the sheet Id
+## 2.2 Get the sheet Id
 
 Select the Customer Overview sheet tile to open the analytics user experience.
 
@@ -22,7 +20,7 @@ In the address bar in your web browser, look for the word `sheet`. To the right 
 
 Record the sheet Id for later use.
 
-### 4.1.3 Embed Qlik Sense into the web application
+## 2.3 Embed Qlik Sense into the web application
 
 Open the file named `classic-app.html`. In this file, you will update a reference to a `qlik-embed` web component to render the Qlik Sense application in the web application.
 
@@ -37,3 +35,5 @@ Open the web application in its own tab by clicking on the square with arrow ico
 In the web application, click the analytics menu item on the left side of the screen. The Qlik Sense application appears embedded in the window of the web application set to the specified sheet.
 
 >**Note:** The application content will not render in the Webview because of cross-site scripting restrictions. This is why you need to open the web application in a separate window.
+
+[![Step 3 button](https://img.shields.io/badge/Step_3_--_Embed_charts_and_UI_objects_>-green?style=for-the-badge)](03-object-ui-embed.md)

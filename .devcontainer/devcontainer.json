@@ -1,10 +1,26 @@
 {
-    "image":"mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
     "portsAttributes": {
         "3000": {
-        "label": "Application",
-        "onAutoForward": "openPreview"
+            "label": "Application",
+            "onAutoForward": "openPreview"
         }
     },
-    "forwardPorts": [3000]
+    "forwardPorts": [
+        3000
+    ],
+    "customizations": {
+        "codespaces": {
+            "openFiles": [
+                ".tutorial/01-config-env.md"
+            ]
+        },
+        "vscode": {
+            "settings": {
+                "workbench.editorAssociations": {
+                    "*.md": "vscode.markdown.preview.editor"
+                }
+            }
+        }
+    }
 }

@@ -3,7 +3,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { dirname } from 'path';
-import { config } from 'process';
 const __dirname = dirname(new URL(import.meta.url).pathname);
 
 //data-host="https://0xnu8fry2fgj2i4.us.qlikcloud.com"
@@ -50,8 +49,6 @@ function createConfigFile(configData) {
   }
   export default config;
   `
-  
-
   fs.writeFileSync(configFilePath, words, 'utf-8');
 }
 

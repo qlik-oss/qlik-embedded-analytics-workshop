@@ -1,4 +1,2 @@
-node_modules/
-easybake-src/
-config.js
-easybake-config.js
+package-lock.json
+node_modules
