@@ -30,4 +30,4 @@ By the end of this workshop, you will have the skills to integrate powerful data
 
 Click the button to continue with the workshop using GitHub Codespaces.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/CedLebQlik/qlik-embedded-analytics-workshop)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/qlik-oss/qlik-embedded-analytics-workshop)
