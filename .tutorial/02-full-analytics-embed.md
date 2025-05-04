@@ -36,4 +36,4 @@ In the web application, click the analytics menu item on the left side of the sc
 
 >**Note:** The application content will not render in the Webview because of cross-site scripting restrictions. This is why you need to open the web application in a separate window.
 
-[![Step 3 button](https://img.shields.io/badge/Step_3_--_Embed_charts_and_UI_objects_>-green?style=for-the-badge)](03-object-ui-embed.md)
+[![Step 3 button](https://img.shields.io/badge/Step_3_--_Embed_charts_and_UI_objects_>-19426C?style=for-the-badge)](03-object-ui-embed.md)
