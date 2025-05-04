@@ -44,4 +44,4 @@ Save the `index.html` file.
 
 Refresh the web application and the button appears in the web application. When you click on it, the embedded visualizations will filter to show information associated with Italy.
 
-[![Step 6 button](https://img.shields.io/badge/Step_6_--_Set_charts_on_the_fly_>-green?style=for-the-badge)](06-set-charts-on-the-fly.md)
+[![Step 6 button](https://img.shields.io/badge/Step_6_--_Set_charts_on_the_fly_>-19426C?style=for-the-badge)](06-set-charts-on-the-fly.md)

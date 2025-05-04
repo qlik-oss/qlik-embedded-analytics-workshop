@@ -81,4 +81,4 @@ The updated `qlik-embed` element should look like this:
 
 Save the `classic-app.html` file and refresh the browser window showing the application.
 
-[![Step 5 button](https://img.shields.io/badge/Step_5_--_Trigger_events_on_analytics_data_>-green?style=for-the-badge)](05-trigger-events.md)
+[![Step 5 button](https://img.shields.io/badge/Step_5_--_Trigger_events_on_analytics_data_>-19426C?style=for-the-badge)](05-trigger-events.md)
