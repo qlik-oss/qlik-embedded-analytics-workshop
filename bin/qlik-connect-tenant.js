@@ -106,7 +106,7 @@ const main = async () => {
     const configData = {
         host: tenantHostname,
         codespaceHostname: codespaceName,
-        clientId: clientId.clientId,
+        clientId: clientId,
         appId: appId,
         sheetId: workshopSettings.sheetId
     };
