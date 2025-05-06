@@ -1,0 +1,201 @@
+/* Editor layout */
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 1024px) {
+    .editor-container {
+      flex-direction: row;
+    }
+  
+    .editor-panel, .preview-panel {
+      width: 50%;
+    }
+  }
+  
+  /* Code editor styles */
+  .editor-panel, .preview-panel {
+    width: 100%;
+  }
+  
+  .code-editor {
+    position: relative;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  .editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1f2937;
+    color: white;
+    padding: 0.5rem 1rem;
+  }
+  
+  .editor-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .editor-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .control-dot {
+    height: 0.75rem;
+    width: 0.75rem;
+    border-radius: 9999px;
+  }
+  
+  .dot-red { background-color: #ef4444; }
+  .dot-yellow { background-color: #f59e0b; }
+  .dot-green { background-color: #10b981; }
+  
+  .format-button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+  
+  .format-button:hover {
+    background-color: #2563eb;
+  }
+  
+  .editor-wrapper {
+    position: relative;
+    height: 700px;
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .line-numbers {
+    width: 40px;
+    height: 100%;
+    background-color: #1a202c;
+    color: #6b7280;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.875rem;
+    overflow: hidden;
+    text-align: right;
+    padding: 1rem 0.5rem 1rem 0;
+    user-select: none;
+    line-height: 1.5;
+  }
+  
+  .code-textarea {
+    flex: 1;
+    height: 100%;
+    padding: 1rem 1rem 1rem 0.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.875rem;
+    background-color: #111827;
+    color: #f3f4f6;
+    resize: none;
+    border: none;
+    line-height: 1.5;
+    tab-size: 2;
+  }
+  
+  .code-textarea:focus {
+    outline: none;
+  }
+  
+  .line-count {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    z-index: 10;
+  }
+  
+  /* Preview styles */
+  .preview-container {
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background-color: white;
+    height: 700px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .preview-header {
+    display: flex;
+    align-items: center;
+    background-color: #f3f4f6;
+    border-bottom: 1px solid #d1d5db;
+    padding: 0.5rem 1rem;
+    flex-shrink: 0;
+  }
+  
+  .preview-dots {
+    display: flex;
+    gap: 0.5rem;
+    margin-right: 1rem;
+  }
+  
+  .preview-dot {
+    height: 0.75rem;
+    width: 0.75rem;
+    border-radius: 9999px;
+    background-color: #d1d5db;
+  }
+  
+  .preview-title-container {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .preview-title {
+    font-size: 0.75rem;
+    color: #6b7280;
+    background-color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 9999px;
+    display: inline-block;
+  }
+  
+  .preview-content {
+    height: 600px;
+    flex: 1;
+    overflow: auto;
+    padding: 16px;
+    background-color: white;
+  }
+  
+  /* This ensures the preview content doesn't inherit styles from the parent page */
+  .preview-content * {
+    max-width: 100%;
+  }
+  
+  /* Scope preview styles to prevent them from affecting the main page */
+  .preview-content-wrapper {
+    all: initial;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #1f2937;
+    line-height: 1.5;
+    display: block;
+    margin-top: 25px;
+  }
+
+  .selections-container {
+
+    padding: 1rem;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  }
