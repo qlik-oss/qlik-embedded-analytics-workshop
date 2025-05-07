@@ -8,17 +8,11 @@
   const response = await fetch('/config');
   const config = await response.json();
 
-  let selectionsBar = document.getElementById('selections-bar');
-  if(selectionsBar) {
-    selectionsBar.setAttribute('app-id', config.appId);
-  }
-
   // Initial HTML example
   const initialHtml = `<qlik-embed
     id="visualization"
-    ui="analytics/chart"
+    ui="classic/app"
     app-id="${config.appId}"
-    object-id="ZxDKp"
     theme="breeze"
     disable-cell-padding="true"
   ></qlik-embed>`;
@@ -154,7 +148,7 @@
 
       // Update the preview content
       let newDiv = document.createElement('div');
-      newDiv.classList.add("viz");
+      newDiv.classList.add("app");
       newDiv.innerHTML = sanitizedHtml;
       previewContent.appendChild(newDiv);
 

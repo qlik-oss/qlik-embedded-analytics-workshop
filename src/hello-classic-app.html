@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/codeeditor.css" />
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.5/dist/purify.min.js"></script>
+    <style>
+      /* Container now stacks editor above preview */
+      .container {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 1rem;
+      }
+      /* Accordion styling for modern UX */
+      details.editor-accordion {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background: #fafafa;
+      }
+      details.editor-accordion summary {
+        cursor: pointer;
+        padding: 0.75rem 1rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        list-style: none;
+      }
+      details.editor-accordion summary::-webkit-details-marker {
+        display: none;
+      }
+      details.editor-accordion[open] {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      /* Preview panel full width and min-height */
+      .preview-panel {
+        width: 100%;
+        min-height: 720px;
+      }
+    </style>
+</head>
+<body>
+    <div class="tippy-top">
+        <div class="top-bar">hello qlik-embed</div>
+    </div>
+    <div class="main-app">
+      <div class="side-panel" id="side-panel">
+        <ul id="sheet-list"></ul>
+      </div>
+      <div class="content">
+          <div class="container">
+              <!-- Accordion-wrapped code editor -->
+              <details open class="editor-accordion">
+                <summary>HTML Editor</summary>
+                <div class="editor-container">
+                  <div class="editor-panel">
+                    <div class="code-editor" style="height:300px">
+                      <div class="editor-header">
+                        <span class="editor-title">HTML</span>
+                        <div class="editor-controls">
+                          <div class="control-dot dot-red"></div>
+                          <div class="control-dot dot-yellow"></div>
+                          <div class="control-dot dot-green"></div>
+                          <button id="formatButton" class="format-button">Format HTML</button>
+                        </div>
+                      </div>
+                      <div class="editor-wrapper" style="height:89%">
+                        <div id="lineNumbers" class="line-numbers"></div>
+                        <textarea id="htmlEditor" class="code-textarea" spellcheck="false" wrap="off"></textarea>
+                        <div id="lineCount" class="line-count">1 lines</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Preview panel below editor -->
+              <div class="preview-panel">
+                <h2>Preview</h2>
+                <div class="preview-container-app">
+                  <div class="preview-header">
+                    <div class="preview-dots">
+                      <div class="preview-dot"></div>
+                      <div class="preview-dot"></div>
+                      <div class="preview-dot"></div>
+                    </div>
+                    <div class="preview-title-container">
+                      <span class="preview-title">Preview</span>
+                    </div>
+                  </div>
+                  <div class="preview-content" id="preview-content-parent">
+                    <div id="previewContent" class="preview-content-wrapper">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <!-- Updated scripts with error handling -->
+    <script>
+      async function buildQlikEmbedHead() {
+        let appConfig;
+        try {
+          const response = await fetch("/config", { method: "GET", headers: { "Content-Type": "application/json" } });
+          if (!response.ok) {
+            throw new Error(`Failed to fetch config: ${response.status} ${response.statusText}`);
+          }
+          appConfig = await response.json();
+        } catch (error) {
+          console.error("Error loading Qlik embed config:", error);
+          return;
+        }
+        const qlikEmbedScript = document.createElement("script");
+        qlikEmbedScript.id = "qlik-embed-connection";
+        qlikEmbedScript.crossOrigin = "anonymous";
+        qlikEmbedScript.src = "https://cdn.jsdelivr.net/npm/@qlik/embed-web-components/dist/index.min.js";
+        qlikEmbedScript.dataset.host = appConfig.host;
+        qlikEmbedScript.dataset.clientId = appConfig.clientId;
+        qlikEmbedScript.dataset.accessTokenStorage = "session";
+        qlikEmbedScript.dataset.autoRedirect = "true";
+        qlikEmbedScript.dataset.authType = "Oauth2";
+        qlikEmbedScript.dataset.redirectUri = appConfig.redirectUri;
+        qlikEmbedScript.onload = () => console.log("Qlik embed script loaded successfully");
+        qlikEmbedScript.onerror = (e) => console.error("Error loading Qlik embed script:", e);
+        document.head.appendChild(qlikEmbedScript);
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        if (!document.getElementById("qlik-embed-connection")) {
+          buildQlikEmbedHead();
+        } else {
+          console.log("Qlik embed connection already exists");
+        }
+      });
+    </script>
+    <script type="module" src="js/classic-app.js"></script>
+    <script type="module">
+      import { auth, qix } from "https://cdn.jsdelivr.net/npm/@qlik/api/index.min.js";
+      (async () => {
+        let config;
+        try {
+          const response = await fetch("/config", { method: "GET", headers: { "Content-Type": "application/json" } });
+          if (!response.ok) {
+            throw new Error(`Failed to fetch config: ${response.status} ${response.statusText}`);
+          }
+          config = await response.json();
+        } catch (error) {
+          console.error("Error loading config:", error);
+          return;
+        }
+
+        try {
+          auth.setDefaultHostConfig({
+            host: config.host,
+            authType: "Oauth2",
+            clientId: config.clientId,
+            redirectUri: config.redirectUri,
+            accessTokenStorage: "session",
+            autoRedirect: true,
+          });
+        } catch (error) {
+          console.error("Error setting auth config:", error);
+          return;
+        }
+
+        let app;
+        try {
+          app = await qix.openAppSession({ appId: config.appId }).getDoc();
+        } catch (error) {
+          console.error("Error opening Qlik session:", error);
+          return;
+        }
+
+        let sheetArr = [];
+        let sheetList;
+        try {
+          sheetList = await app.getSheetList();
+        } catch (error) {
+          console.error("Error fetching sheet list:", error);
+          return;
+        }
+        console.log(sheetList);
+
+        const rootUl = document.getElementById("sheet-list");
+        if (!rootUl) {
+          console.error("Sheet list element not found");
+          return;
+        }
+
+        sheetList.forEach((sheet) => {
+          const sheetLi = document.createElement("li");
+          sheetLi.textContent = sheet.qMeta.title || "Untitled Sheet";
+          const objUl = document.createElement("ul");
+          (sheet.qData.cells || []).forEach((obj) => {
+            const objLi = document.createElement("li");
+            objLi.textContent = `${obj.name} (${obj.type}) `;
+            const btn = document.createElement("button");
+            btn.className = "copy-btn";
+            btn.dataset.id = obj.name;
+            btn.title = "Copy ID";
+            btn.textContent = "📋";
+            btn.addEventListener("click", () => {
+              navigator.clipboard.writeText(obj.name)
+                .then(() => {
+                  btn.textContent = "✅";
+                  setTimeout(() => (btn.textContent = "📋"), 1000);
+                })
+                .catch((err) => console.error("Failed to copy!", err));
+            });
+            objLi.appendChild(btn);
+            objUl.appendChild(objLi);
+          });
+          sheetLi.appendChild(objUl);
+          rootUl.appendChild(sheetLi);
+        });
+
+
+        //get theme list
+        let themeList;
+        try {
+          const response = await fetch("https://cdn.qlikcloud.com/qmfe/sense-client/8.443.0/assets/external/sense-themes-default/default-themes.json");
+          if (!response.ok) {
+            throw new Error(`Failed to fetch theme list: ${response.status} ${response.statusText}`);
+          }
+          themeList = await response.json();
+          themeList = themeList.default.map(theme => {
+            return theme.id
+          });
+          console.log(themeList);
+        } catch (error) {
+          console.error("Error fetching theme list:", error);
+          return;
+        }
+      })();
+    </script>
+</body>
+</html>

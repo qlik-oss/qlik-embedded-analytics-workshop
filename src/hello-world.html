@@ -136,6 +136,7 @@
 
       let sheetArr = [];
       const sheetList = await app.getSheetList();
+      console.log(sheetList)
       for(const sheet of sheetList) {
         const sheetObj = {
           name: sheet.qMeta.title
