@@ -4,7 +4,7 @@ In this section, you are going to embed a Qlik Analytics application into the we
 
 ## 2.1 Get the application Id
 
-In a web browser, navigate to your tenant and open the `Sales Analytics` app. This is the app you uploaded in step [2.3](#23-import-qlik-sense-app).
+In a web browser, navigate to your tenant and open the `Sales Analytics` app.
 
 <img src="../img/configuration/appcard.png" width="150px" alt="Qlik Analytics application ref"></img>
 

@@ -7,7 +7,7 @@ selections they are applying to the data.
 
 Open the `index.html` file for editing. Search in the file for `selection-bar-entry`.
 
-Create a new line below the comment and add the selection bar snippet, replacing `<app-id>` with the application id you you obtained in step [2.3](#23-import-qlik-sense-app).
+Create a new line below the comment and add the selection bar snippet, replacing `<app-id>` with the application id you you obtained in step [2.1](02-full-analytics-embed.md#2.1-Get-the-application-Id).
 
 ```html
 <div class="curr-selections" id="currentSelections" >
