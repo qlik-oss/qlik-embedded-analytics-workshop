@@ -87,4 +87,4 @@ According to [Qlik.dev](https://qlik.dev/embed/qlik-embed/why-qlik-embed/), Qlik
 * Make sure the `app-id` is correct for the object you're trying to embed when you're embedding from an analytics applicaiton.
 * Enable the browser console logs to diagnose preview issues.
 
-[![Step 3 button](https://img.shields.io/badge/Step_3--_Embed_a_complete_analytics_application_>-19426C?style=for-the-badge)](03-full-analytics-embed.md)
+[![Step 3 button](https://img.shields.io/badge/Step_3--_Embed_a_complete_analytics_application_>-19426C?style=for-the-badge)](03-hello-classicapp.md)
