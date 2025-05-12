@@ -2,7 +2,7 @@
 
 In this section, you are going to learn how to embed individual visualizations into the web application using `qlik-embed`. 
 
-Retrieve the application id you obtained in step [2.3](#23-import-qlik-sense-app).
+Retrieve the application id you obtained in the previous step [2.1](02-full-analytics-embed.md#2.1-Get-the-application-Id).
 Open the `index.html` file
 
 ## 3.1 Embed objects from Qlik Sense applications

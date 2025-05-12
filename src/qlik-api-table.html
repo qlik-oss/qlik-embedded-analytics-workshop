@@ -12,14 +12,13 @@
     <title>ABC - Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
-
     <link rel="stylesheet" href="qlik/mashup.css">
 
 </head>
@@ -28,6 +27,7 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
+
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -48,13 +48,6 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="self-service.html">
-                    <span>Self Service</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
                 <a class="nav-link" href="classic-app.html">
                     <span>qlik-embed classic/app</span>
                 </a>
@@ -62,15 +55,15 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="qlik-api-table.html">
-                    <span>qlik-api createCube</span>
+                <a class="nav-link" href="charts.html">
+                    <span>On The Fly</span>
                 </a>
             </li>
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="charts.html">
-                    <span>On The Fly</span>
+                <a class="nav-link" href="qlik-api-table.html">
+                    <span>qlik-api createCube</span>
                 </a>
             </li>
 
@@ -282,16 +275,20 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Self Service Analytics</h1>
+                        <h1 class="h3 mb-0 text-gray-800">qlik-api createCube</h1>
                     </div>
-
 
                 </div>
                 <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
-
+            <!-- begin classic/app exercise -->
+            <div class="classic-app">
+                <div id="chart-data">
+                </div>
+            </div>
+            <!-- end classic/app exercise -->
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -313,9 +310,8 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script> -->
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
@@ -323,8 +319,121 @@
     <script src="js/sb-admin-2.min.js"></script>
 
 
-
-
 </body>
+<script type="module">
+    import { auth, qix } from "https://cdn.jsdelivr.net/npm/@qlik/api/index.js";
+    import { createCube } from "/qlik/createCube.js";
+    const config = await fetch("config").then((response) => response.json());
+
+    // Replace with your host configuration
+    auth.setDefaultHostConfig({
+        host: config.host,
+        authType: "oauth2",
+        clientId: config.clientId,
+        redirectUri: config.redirectUri,
+    });
+
+    // Set the appId, open a session, and get the doc.
+    const appId = config.appId;
+    const app = await qix.openAppSession(appId).getDoc();
+
+    const cubeDef = {
+        qInfo: {
+            qId: 'sessionChart',
+            qType: 'qHyperCubeDef'
+        },
+        qHyperCubeDef: {
+            qDimensions: [
+                {
+                    qLibraryId: 'FFQHMq',
+                },
+                {
+                    qLibraryId: 'KFmTudV',
+                }
+            ],
+            qMeasures: [
+                {
+                    qDef: { qDef: "=SUM(Sales)", qLabel: "Total Sales" },
+                },
+            ],
+            qInitialDataFetch: [
+                {
+                    qLeft: 0,
+                    qTop: 0,
+                    qHeight: 100,
+                    qWidth: 3,
+                },
+            ],
+        },
+    };
+
+
+    // Add the createCube function to the doc reference.
+    // app.createCube is like adding a prototype method.
+    app.createCube = createCube;
+    const myCube = await app.createCube(cubeDef, function (cubeData) {
+        // console out the first page of the hypercube.
+        console.log(cubeData.qHyperCube.qDataPages[0].qMatrix);
+        paintChart(cubeData.qHyperCube.qDataPages[0].qMatrix, table, tBody);
+    });
+
+    /// In this example, calling a getLayout request one time
+    // to get the columns and build the base table structure.
+    // You have flexibility to make this better so go for it!
+    let dataLayout = await myCube.getLayout();
+
+    // The html used in the example has a <div/> element
+    // named chart-data. The table will be appended to this
+    // element.
+    let container = document.getElementById("chart-data");
+    let table = document.createElement("table");
+
+    // This section builds out the table headers by getting
+    // the columns from the dataLayout variable. Depending
+    // on your hypercube, you will need to adjust the code.
+    let cols = [dataLayout.qHyperCube.qDimensionInfo[0].title,
+    dataLayout.qHyperCube.qDimensionInfo[1].title,
+    dataLayout.qHyperCube.qMeasureInfo[0].title];
+    let thead = document.createElement("thead");
+    let tr = document.createElement("tr");
+    cols.forEach((item) => {
+        let th = document.createElement("th");
+        th.textContent = item;
+        tr.appendChild(th);
+    });
+    thead.appendChild(tr);
+    table.appendChild(thead);
+    let tBody = document.createElement("tbody");
+    table.appendChild(tBody);
+    container.appendChild(table);
+
+    // After the table is set up, call the paintChart function
+    // to populate the data the first time the page renders.
+    paintChart(dataLayout.qHyperCube.qDataPages[0].qMatrix, table, tBody);
+
+    // The paintChart function loops through the hypercube data
+    // and updates the rows of the table body to reflect the current
+    // hypercube layout.
+
+    function paintChart(theCube, table, tBody) {
+        let newTBody = document.createElement("tbody");
+        theCube.forEach((item) => {
+            let tr = document.createElement("tr");
+            let vals = Object.values(item);
+            vals.forEach((elem) => {
+                let td = document.createElement("td");
+                td.textContent = elem.qText;
+                tr.appendChild(td);
+            });
+            newTBody.appendChild(tr);
+        });
+        if (tBody != null) {
+            table.replaceChild(newTBody, table.tBodies[0]);
+        } else {
+            table.appendChild(newTBody);
+        }
+    }
+
+</script>
 
 </html>
