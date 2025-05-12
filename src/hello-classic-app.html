@@ -21,14 +21,30 @@
     </div>
     <div class="main-app">
       <div class="side-panel" id="side-panel">
+        <div>
+          <p id="app-id"></p>
+        </div>
         <ul id="sheet-list"></ul>
         <ul id="theme-list"></ul>
       </div>
       <div class="content">
           <div class="container">
-              <!-- Accordion-wrapped code editor -->
-              <details open class="editor-accordion">
-                <summary>HTML Editor</summary>
+            <div class="intro-header">
+              <div class="welcome">
+                <h2>Welcome to qlik-embed</h2>
+                <p>
+                  With qlik-embed you can embed entire Qlik product user experiences to give your user a fully integrated experiences
+                  without having to code full UIs. In this qlik-embed code snippet, the entire Qlik Sense client is embedded.
+                </p>
+              </div>
+
+              <!-- moved from the bottom into this intro-header -->
+              <div>
+                <a href="classic-app.html">
+                  <img src="https://img.shields.io/badge/Step_4--_Embed_a_complete_analytics_application_>-19426C?style=for-the-badge"></img>
+                </a>
+              </div>
+            </div>
                 <div class="editor-container">
                   <div class="editor-panel">
                     <div class="code-editor" style="height:300px">
@@ -49,11 +65,9 @@
                     </div>
                   </div>
                 </div>
-              </details>
 
               <!-- Preview panel below editor -->
               <div class="preview-panel">
-                <h2>Preview</h2>
                 <div class="preview-container-app">
                   <div class="preview-header">
                     <div class="preview-dots">
@@ -72,7 +86,7 @@
                 </div>
               </div>
           </div>
-      </div>
+        </div>
     </div>
     <!-- Updated scripts with error handling -->
     <script>
@@ -148,6 +162,9 @@
           console.error("Error opening Qlik session:", error);
           return;
         }
+
+        const appDiv = document.getElementById("app-id");
+        appDiv.innerHTML = `Your app Id is:<br>${config.appId}`;
 
         let sheetArr = [];
         let sheetList;

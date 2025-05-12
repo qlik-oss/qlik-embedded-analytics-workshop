@@ -21,4 +21,4 @@ In the terminal or shell window, enter the command `npm run start` at the prompt
 Click the button to continue to the next step.  
 <br />
 
-[![Step 2 button](https://img.shields.io/badge/Step_2_--_Using_qlik-embed_to_Render_Visualizations_in_Real_Time_>-19426C?style=for-the-badge)](02-hello-qlikembed.md)
+[![Step 2 button](https://img.shields.io/badge/Step_2_--_Using_qlik--embed_to_Render_Visualizations_in_Real_Time_>-19426C?style=for-the-badge)](02-hello-qlikembed.md)

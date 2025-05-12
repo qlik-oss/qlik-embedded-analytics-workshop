@@ -9,11 +9,14 @@ const __dirname = path.dirname(__filename); // get the name of the directory
 const port = 3000;
 const app = express();
 
-app.use(express.static("src"));
+app.use(express.static("src", {
+  index: `${__dirname}/src/hello-world.html`
+}));
 
 
 app.get("/", (request, response) => {
-  response.sendFile(`${__dirname}/src/index.html`);
+
+  response.sendFile(`${__dirname}/src/hello-world.html`);
 });
 
 app.get("/config", (request, response) => {

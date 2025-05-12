@@ -16,13 +16,32 @@
     </div>
     <div class="main-app">
       <div class="side-panel" id="side-panel">
+        <div>
+          <p id="app-id"></p>
+        </div>
         <ul id="sheet-list"></ul>
       </div>
       <div class="content">
           <div class="container">
+            <div class="intro-header">
+              <div class="welcome">
+                <h2>Welcome to qlik-embed</h2>
+                <p>
+                  qlik-embed is a powerful tool that allows you to seamlessly integrate Qlik Sense visualizations 
+                  into web apps using just a few lines of HTML. It leverages modern web standards, minimal setup, 
+                  and native embedding syntax to enable real-time, low-code integration with Qlik’s visualization engine.
+                </p>
+              </div>
+
+              <!-- moved from the bottom into this intro-header -->
+              <div>
+                <a href="hello-classic-app.html">
+                  <img src="https://img.shields.io/badge/Step_3--_Embed_a_complete_analytics_application_>-19426C?style=for-the-badge"></img>
+                </a>
+              </div>
+            </div>
               <div class="editor-container">
                   <div class="editor-panel">
-                    <h2>HTML Editor</h2>
                     <div class="code-editor">
                       <div class="editor-header">
                         <span class="editor-title">HTML</span>
@@ -42,7 +61,6 @@
                   </div>
       
                   <div class="preview-panel">
-                    <h2>Preview</h2>
                     <div class="preview-container">
                       <div class="preview-header">
                         <div class="preview-dots">
@@ -69,7 +87,6 @@
                   </div>
                 </div>
           </div>
-          
       </div>
     </div>
     <script type="module">
@@ -133,6 +150,9 @@
       const app = await qix.openAppSession({
         appId: config.appId
       }).getDoc();
+
+      const appDiv = document.getElementById("app-id");
+      appDiv.innerHTML = `Your app Id is:<br>${config.appId}`;
 
       let sheetArr = [];
       const sheetList = await app.getSheetList();

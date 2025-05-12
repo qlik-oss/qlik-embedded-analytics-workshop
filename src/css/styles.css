@@ -62,7 +62,6 @@
     font-size: 14px;
     background-color: #f5f5f5;
     color: #333;
-    height: 100%;
     width: 100%;
   }
   
@@ -75,8 +74,6 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    margin-top: 50px;
-    padding-top: 50px;
   }
   
   .sub-container {
@@ -114,7 +111,6 @@
     flex: 0 1 auto;
     border-right: 1px solid #bbb;
     overflow:hidden;
-    height:100%;
   }
 /*   
   .side-panel ul {
@@ -207,3 +203,17 @@
   }
 
   .copy-btn:hover { color: #007bff; }
+  
+  /* make that header area a flex container */
+.intro-header {
+  display: flex;
+  justify-content: space-between; /* welcome on left, button on right */
+  align-items: flex-start;        /* align text and button at their tops */
+  gap: 1rem;
+  margin-bottom: 2rem;            /* space before the editor/preview panels */
+}
+
+/* optional: constrain the width of your welcome text */
+.intro-header .welcome {
+  flex: 1;
+}
