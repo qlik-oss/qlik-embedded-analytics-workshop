@@ -71,4 +71,4 @@ Paste that GUID into your `<qlik-embed>` tag:
 
 **Tip:** If you don’t need the Qlik Sense client, try `ui="analytics/chart"` or `ui="analytics/sheet"`. Those modes embed only the charts or sheets without the full toolbar and story panels—ideal for more focused dashboards.
 
-[![Step 4 button](https://img.shields.io/badge/Step_4--_embed_in_a_web_application_>-19426C?style=for-the-badge)](04-full-analytics-embed.md)
+[![Step 4 button](https://img.shields.io/badge/Step_4--_configure_menus_for_embedded_objects_>-19426C?style=for-the-badge)](04-configure-context-menu.md)
