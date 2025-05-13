@@ -1,14 +1,20 @@
-# 6 Set charts on the fly
+# 8 Set charts on the fly
 
-Qlik-embed has functionality to create charts and visualizations on the fly. You made charts on the fly work in step [5.3](#53-embed-visualizations-using-expressions) when you supplied expressions for dimensions and measures.
+Qlik-embed has functionality to create charts and visualizations on the fly. You made charts on the fly work in step [6.2](#62-embed-visualizations-using-expressions) when you supplied expressions for dimensions and measures.
 
 In this example, you can make changes to the chart definition dynamically using javascript and the document object model (DOM) for the web page.
 
-In previous sections of this workshop, you didn't have to supply the initialization script at the top of the page. However, for charts on the fly to work on this page you need to add the initialization script manually using the values you placed into the `config.js` file from [3.1.1](311-set-the-qlik-embed-configuration).
+In previous sections of this workshop, you didn't have to supply the initialization script at the top of the page. However, for charts on the fly to work on this page you need to add the initialization script manually to the code.
 
-## 6.1 Add configuration script template to charts.html page
+## 8.1 Obtain the configuration script
 
-Open the `charts.html` page located in the `src` directory. Locate the section `qlik-embed script configuration` and copy/paste the script snippet to the file.
+Click the **cheat sheet** button in the side panel of the web application.
+
+Click the **Copy configuration** button to store the configuration to your clipboard.
+
+## 8.2 Add configuration script template to charts.html page
+
+Open the `charts.html` page located in the `src` directory. Locate the section `qlik-embed script configuration` and copy/paste the script snippet from the clipboard to the file. It will look similar to the example.
 
 ```html
 <script
@@ -24,19 +30,15 @@ Open the `charts.html` page located in the `src` directory. Locate the section `
 ></script>
 ```
 
-### 6.1.1 Configure the script
+## 8.3 Update the app id for the qlik-embed element
 
-Supply the following values in the specified attributes:
+Click the **cheat sheet** button in the side panel of the web application.
 
-- `data-host`: The full hostname of your Qlik Cloud tenant. For example, if your tenant is named "example" and runs in the "US" region, then the hostname you enter is `https://example.us.qlikcloud.com`.
-- `data-client-id`: The OAuth client id from the OAuth client you configured in [2.1](#21-create-a-single-page-application-oauth-client).
-- `data-redirect-uri`: The URL for the oauth-callback.html page used in the application. This is Dev URL you obtained in step [1.1.3](#113-obtain-the-web-application-address) with `/oauth-callback.html` added to the end of the URL.
-
-## 6.2 Update the app id for the qlik-embed element
+Click the **Copy appId** button to store the appId to your clipboard.
 
 Open the `charts.html` page located in the `src` directory. Locate `charts-on-the-fly-element` in the file.
 
-In the `qlik-embed` element, update the `app-id` attribute to the id for the Sales Analytics application on your tenant you uploaded in [2.3](#23-import-qlik-sense-app).
+In the `qlik-embed` element, update the `app-id` attribute to the id for the Sales Analytics you got from the cheat sheet.
 
 ```html
 <qlik-embed
@@ -49,7 +51,7 @@ In the `qlik-embed` element, update the `app-id` attribute to the id for the Sal
 
 Refresh the application web page. You should see the drop-down items populate with dimensions and measures. You can select from the drop-downs and see the chart update. In addition, you can click on one of the icons to change the chart type.
 
-## 6.3 How dynamic charts on the fly works
+## 8.4 How dynamic charts on the fly works
 
 With `qlik-embed` it's possible to get a handle of an embedded chart object. With this handle, you can gain access to the underlying metadata of the object and a connection to all of the metadata in the application. Here's how to get a handle of a `qlik-embed` object.
 

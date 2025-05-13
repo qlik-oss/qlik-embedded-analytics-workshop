@@ -217,3 +217,60 @@
 .intro-header .welcome {
   flex: 1;
 }
+
+dialog {
+  border: none;
+  border-radius: 8px;
+  padding: 0;
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+.modal-content {
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 8px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-family: sans-serif;
+}
+.modal-content h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+input, textarea {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+#okBtn {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #6c757d;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#okBtn:hover {
+  background: #5a6268;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}

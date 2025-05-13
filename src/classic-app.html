@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
     <link rel="stylesheet" href="qlik/mashup.css">
+    <link href="css/styles.css" rel="stylesheet">
   
 </head>
 
@@ -57,6 +58,13 @@
             <li class="nav-item active">
                 <a class="nav-link" href="charts.html">
                     <span>On The Fly</span>
+                </a>
+            </li>
+
+                  <!-- Cheat sheet-->
+            <li class="nav-item active">
+                <a class="nav-link" id="cheatButton">
+                <span>Cheat sheet</span>
                 </a>
             </li>
 
@@ -292,6 +300,30 @@
                 </qlik-embed>
             </div>
 <!-- end classic/app exercise -->
+
+              <dialog id="cheatModal">
+          <form method="dialog" class="modal-content">
+            <h2>App Configuration</h2>
+
+            <div class="field">
+              <label for="appIdInput">App ID</label>
+              <div class="input-group" id="appCheat">
+                <input id="appIdInput" type="text" readonly />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="hostConfigTextarea">Host Config</label>
+              <div class="input-group" id="hostConfigCheat">
+                <textarea id="hostConfigTextarea" rows="6" readonly></textarea>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="button" id="okBtn">OK</button>
+            </div>
+          </form>
+        </dialog>
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -321,7 +353,8 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-
+    <!-- modal section-->
+    <script type="module" src="js/cheat-sheet.js"></script>
 </body>
     <script type="module">
           async function buildQlikEmbedHead() {

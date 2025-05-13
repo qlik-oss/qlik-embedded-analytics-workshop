@@ -69,4 +69,4 @@ The `measures` property specifies the calculation expression or governed measure
 
 The `properties` property allow you to set specific properties available for the chart. Supply the value as a `JSON` string.
 
-[![Step 7 button](https://img.shields.io/badge/Step_7_--_qlik--embed_bonus_section_>-19426C?style=for-the-badge)](07-trigger-events.md)
+[![Step 7 button](https://img.shields.io/badge/Step_7_--_triggering_events_>-19426C?style=for-the-badge)](07-trigger-events.md)
