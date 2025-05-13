@@ -14,6 +14,7 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
 
   <!-- style and js for embedded analytics-->
   <!-- <script src="qlik/mashup.js"></script> -->
@@ -56,6 +57,13 @@
       <li class="nav-item active">
         <a class="nav-link" href="charts.html">
           <span>On The Fly</span>
+        </a>
+      </li>
+
+      <!-- Cheat sheet-->
+      <li class="nav-item active">
+        <a class="nav-link" id="cheatButton">
+          <span>Cheat sheet</span>
         </a>
       </li>
 
@@ -575,6 +583,29 @@
         </div>
         <!-- /.container-fluid -->
 
+        <dialog id="cheatModal">
+          <form method="dialog" class="modal-content">
+            <h2>App Configuration</h2>
+
+            <div class="field">
+              <label for="appIdInput">App ID</label>
+              <div class="input-group" id="appCheat">
+                <input id="appIdInput" type="text" readonly />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="hostConfigTextarea">Host Config</label>
+              <div class="input-group" id="hostConfigCheat">
+                <textarea id="hostConfigTextarea" rows="6" readonly></textarea>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="button" id="okBtn">OK</button>
+            </div>
+          </form>
+        </dialog>
       </div>
       <!-- End of Main Content -->
 
@@ -611,7 +642,7 @@
   <script type="module">
   import { auth, qix } from "https://cdn.jsdelivr.net/npm/@qlik/api@1.8.0/index.js";
 
-    const appConfig = await fetch("/config", {
+  const appConfig = await fetch("/config", {
       method: "GET",
       headers: {
       "Content-Type": "application/json"
@@ -636,7 +667,7 @@
     }).getDoc();
     // add more functions here if you want
       let appLayout = await app.getAppLayout();
-      console.log(appLayout);
+      //console.log(appLayout);
     }  
     else {
     console.log("Please provide an application id to the `clear-all` script");
@@ -669,11 +700,13 @@
       makeSelection();
     });
 
-  
+    
   </script>
-
+  <!-- modal section-->
+  <script type="module" src="js/cheat-sheet.js"></script>
 </body>
   <script type="module">
+      
       async function buildQlikEmbedHead() {
         const appConfig = await fetch("/config", {
           method: "GET",

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello qlik-embed classic/app</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/codeeditor.css" />
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.5/dist/purify.min.js"></script>
+    <style>
+      /* Preview panel full width and min-height */
+      .preview-panel {
+        width: 100%;
+        min-height: 720px;
+      }
+    </style>
+</head>
+<body>
+    <div class="tippy-top">
+        <div class="top-bar">hello qlik-embed classic/app</div>
+    </div>
+    <div class="main-app">
+      <div class="side-panel" id="side-panel">
+        <div>
+          <p id="app-id"></p>
+        </div>
+        <ul id="sheet-list"></ul>
+        <ul id="theme-list"></ul>
+      </div>
+      <div class="content">
+          <div class="container">
+            <div class="intro-header">
+              <div class="welcome">
+                <h2>Welcome to qlik-embed</h2>
+                <p>
+                  With qlik-embed you can embed entire Qlik product user experiences to give your user a fully integrated experiences
+                  without having to code full UIs. In this qlik-embed code snippet, the entire Qlik Sense client is embedded.
+                </p>
+              </div>
+
+              <!-- moved from the bottom into this intro-header -->
+              <div>
+                <a href="classic-app.html">
+                  <img src="https://img.shields.io/badge/Step_4--_Embed_a_complete_analytics_application_>-19426C?style=for-the-badge"></img>
+                </a>
+              </div>
+            </div>
+                <div class="editor-container">
+                  <div class="editor-panel">
+                    <div class="code-editor" style="height:300px">
+                      <div class="editor-header">
+                        <span class="editor-title">HTML</span>
+                        <div class="editor-controls">
+                          <div class="control-dot dot-red"></div>
+                          <div class="control-dot dot-yellow"></div>
+                          <div class="control-dot dot-green"></div>
+                          <button id="formatButton" class="format-button">Format HTML</button>
+                        </div>
+                      </div>
+                      <div class="editor-wrapper" style="height:89%">
+                        <div id="lineNumbers" class="line-numbers"></div>
+                        <textarea id="htmlEditor" class="code-textarea" spellcheck="false" wrap="off"></textarea>
+                        <div id="lineCount" class="line-count">1 lines</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <!-- Preview panel below editor -->
+              <div class="preview-panel">
+                <div class="preview-container-app">
+                  <div class="preview-header">
+                    <div class="preview-dots">
+                      <div class="preview-dot"></div>
+                      <div class="preview-dot"></div>
+                      <div class="preview-dot"></div>
+                    </div>
+                    <div class="preview-title-container">
+                      <span class="preview-title">Preview</span>
+                    </div>
+                  </div>
+                  <div class="preview-content" id="preview-content-parent">
+                    <div id="previewContent" class="preview-content-wrapper">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+    <!-- Updated scripts with error handling -->
+    <script>
+      async function buildQlikEmbedHead() {
+        let appConfig;
+        try {
+          const response = await fetch("/config", { method: "GET", headers: { "Content-Type": "application/json" } });
+          if (!response.ok) {
+            throw new Error(`Failed to fetch config: ${response.status} ${response.statusText}`);
+          }
+          appConfig = await response.json();
+        } catch (error) {
+          console.error("Error loading Qlik embed config:", error);
+          return;
+        }
+        const qlikEmbedScript = document.createElement("script");
+        qlikEmbedScript.id = "qlik-embed-connection";
+        qlikEmbedScript.crossOrigin = "anonymous";
+        qlikEmbedScript.src = "https://cdn.jsdelivr.net/npm/@qlik/embed-web-components/dist/index.min.js";
+        qlikEmbedScript.dataset.host = appConfig.host;
+        qlikEmbedScript.dataset.clientId = appConfig.clientId;
+        qlikEmbedScript.dataset.accessTokenStorage = "session";
+        qlikEmbedScript.dataset.autoRedirect = "true";
+        qlikEmbedScript.dataset.authType = "Oauth2";
+        qlikEmbedScript.dataset.redirectUri = appConfig.redirectUri;
+        qlikEmbedScript.onload = () => console.log("Qlik embed script loaded successfully");
+        qlikEmbedScript.onerror = (e) => console.error("Error loading Qlik embed script:", e);
+        document.head.appendChild(qlikEmbedScript);
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        if (!document.getElementById("qlik-embed-connection")) {
+          buildQlikEmbedHead();
+        } else {
+          console.log("Qlik embed connection already exists");
+        }
+      });
+    </script>
+    <script type="module" src="js/classic-app.js"></script>
+    <script type="module">
+      import { auth, qix } from "https://cdn.jsdelivr.net/npm/@qlik/api/index.min.js";
+      (async () => {
+        let config;
+        try {
+          const response = await fetch("/config", { method: "GET", headers: { "Content-Type": "application/json" } });
+          if (!response.ok) {
+            throw new Error(`Failed to fetch config: ${response.status} ${response.statusText}`);
+          }
+          config = await response.json();
+        } catch (error) {
+          console.error("Error loading config:", error);
+          return;
+        }
+
+        try {
+          auth.setDefaultHostConfig({
+            host: config.host,
+            authType: "Oauth2",
+            clientId: config.clientId,
+            redirectUri: config.redirectUri,
+            accessTokenStorage: "session",
+            autoRedirect: true,
+          });
+        } catch (error) {
+          console.error("Error setting auth config:", error);
+          return;
+        }
+
+        let app;
+        try {
+          app = await qix.openAppSession({ appId: config.appId }).getDoc();
+        } catch (error) {
+          console.error("Error opening Qlik session:", error);
+          return;
+        }
+
+        const appDiv = document.getElementById("app-id");
+        appDiv.innerHTML = `Your app Id is:<br>${config.appId}`;
+
+        let sheetArr = [];
+        let sheetList;
+        try {
+          sheetList = await app.getSheetList();
+        } catch (error) {
+          console.error("Error fetching sheet list:", error);
+          return;
+        }
+
+        const sheetUl = document.getElementById("sheet-list");
+        sheetUl.textContent = "Sheet List";
+        if (!sheetUl) {
+          console.error("Sheet list element not found");
+          return;
+        }
+
+        sheetList.forEach((sheet) => {
+          const sheetLi = document.createElement("li");
+          sheetLi.textContent = sheet.qMeta.title || "Untitled Sheet";
+          const btn = createButton(sheet.qInfo.qId);
+          sheetLi.appendChild(btn);
+          sheetUl.appendChild(sheetLi);
+        });
+
+        //get theme list
+        const themeUl = document.getElementById("theme-list");
+        themeUl.textContent = "Theme List";
+        if (!themeUl) {
+          console.error("Theme list element not found");
+          return;
+        }
+        let themeList;
+        try {
+          const response = await fetch("https://cdn.qlikcloud.com/qmfe/sense-client/8.443.0/assets/external/sense-themes-default/default-themes.json");
+          if (!response.ok) {
+            throw new Error(`Failed to fetch theme list: ${response.status} ${response.statusText}`);
+          }
+          themeList = await response.json();
+          themeList = themeList.default.map(theme => {
+            const themeLi = document.createElement("li");
+            themeLi.textContent = theme.id || "Untitled Theme";
+            const btn = createButton(theme.id);
+            themeLi.appendChild(btn);
+            themeUl.appendChild(themeLi);
+          });
+        } catch (error) {
+          console.error("Error fetching theme list:", error);
+          return;
+        }
+
+        function createButton(id) { 
+          const btn = document.createElement("button");
+          btn.className = "copy-btn";
+          btn.dataset.id = id;
+          btn.title = "Copy ID";
+          btn.textContent = "📋";
+          btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(id)
+              .then(() => {
+                btn.textContent = "✅";
+                setTimeout(() => (btn.textContent = "📋"), 1000);
+              })
+              .catch((err) => console.error("Failed to copy!", err));
+          });
+          return btn;
+        }
+
+      })();
+    </script>
+</body>
+</html>
