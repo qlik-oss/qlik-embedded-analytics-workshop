@@ -45,7 +45,8 @@ function createConfigFile(configData) {
     clientId: "${configData.clientId}",
     redirectUri: "${configData.codespaceHostname}oauth-callback.html",
     appId: "${configData.appId}",
-    sheetId: "${configData.sheetId}"
+    sheetId: "${configData.sheetId}",
+    assistantId: "${configData.assistantId}",
   }
   export default config;
   `

@@ -26,17 +26,7 @@
         err.detail;
         throw err;
       }
-    </script>
-    <script
-    crossorigin="anonymous"
-    type="application/javascript"
-    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/index.min.js"
-    data-host="https://oauth-patterns.us.qlikcloud.com"
-    data-client-id="ae00f7fffa7ceafa7ae022cde4a9f926"
-    data-auth-type="Oauth2"
-    data-access-token-storage="session"
-    data-get-access-token="getAccessToken"></script>
-    
+    </script>    
 </head>
 <body>
     <div class="tippy-top">
@@ -69,16 +59,58 @@
               </div>
             </div>
             <div id="answers-container">
-              <qlik-embed
-                ui="ai/assistant"
-                assistant-id="d57bb148-2499-4f2a-83b3-7a6597cd5e60"
-                appearance="qlik-light"
-              ></qlik-embed>
+              
             </div>
 
           </div>
       </div>
     </div>
+    <!-- Updated scripts with error handling -->
+    <script>
+      async function buildQlikEmbedHead() {
+        let appConfig;
+        try {
+          const response = await fetch("/config", { method: "GET", headers: { "Content-Type": "application/json" } });
+          if (!response.ok) {
+            throw new Error(`Failed to fetch config: ${response.status} ${response.statusText}`);
+          }
+          appConfig = await response.json();
+        } catch (error) {
+          console.error("Error loading Qlik embed config:", error);
+          return;
+        }
+        const qlikEmbedScript = document.createElement("script");
+        qlikEmbedScript.id = "qlik-embed-connection";
+        qlikEmbedScript.crossOrigin = "anonymous";
+        qlikEmbedScript.src = "https://cdn.jsdelivr.net/npm/@qlik/embed-web-components/dist/index.min.js";
+        qlikEmbedScript.dataset.host = appConfig.host;
+        qlikEmbedScript.dataset.clientId = appConfig.clientId;
+        qlikEmbedScript.dataset.accessTokenStorage = "session";
+        qlikEmbedScript.dataset.autoRedirect = "true";
+        qlikEmbedScript.dataset.authType = "Oauth2";
+        qlikEmbedScript.dataset.redirectUri = appConfig.redirectUri;
+        qlikEmbedScript.onload = () => console.log("Qlik embed script loaded successfully");
+        qlikEmbedScript.onerror = (e) => console.error("Error loading Qlik embed script:", e);
+        document.head.appendChild(qlikEmbedScript);
+
+      const answersDiv = document.getElementById("answers-container");
+      answersDiv.innerHTML = `<qlik-embed
+        ui="ai/assistant"
+        assistant-id="${appConfig.assistantId}"
+        appearance="qlik-light"
+      ></qlik-embed>`
+      }
+
+
+
+      window.addEventListener("DOMContentLoaded", () => {
+        if (!document.getElementById("qlik-embed-connection")) {
+          buildQlikEmbedHead();
+        } else {
+          console.log("Qlik embed connection already exists");
+        }
+      });
+    </script>
 </body>
 
 </html>
