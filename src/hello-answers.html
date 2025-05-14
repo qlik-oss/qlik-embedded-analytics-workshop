@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello qlik-embed analytics/chart</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/codeeditor.css" />
+    <script src="
+    https://cdn.jsdelivr.net/npm/dompurify@3.2.5/dist/purify.min.js
+    "></script>
+    <script>
+      async function getAccessToken() {
+        const response = await fetch("/access-token", {
+          method: "GET",
+          credentials: "include",
+          mode: "same-origin",
+          redirect: "follow",
+        });
+        if (response.status === 200) {
+          const token = await response.text();
+          return token;
+        }
+        const err = new Error("Unexpected serverside authentication error");
+        err.status = response.status;
+        err.detail;
+        throw err;
+      }
+    </script>    
+</head>
+<body>
+    <div class="tippy-top">
+        <div class="top-bar">hello qlik-embed analytics/chart</div>
+    </div>
+    <div class="main-app">
+      <div class="side-panel" id="side-panel">
+        <div>
+          <p id="app-id"></p>
+        </div>
+        <ul id="sheet-list"></ul>
+      </div>
+      <div class="content">
+          <div class="container">
+            <div class="intro-header">
+              <div class="welcome">
+                <h2>Welcome to qlik-embed</h2>
+                <p>
+                  qlik-embed is a powerful tool that allows you to seamlessly integrate Qlik user interfaces 
+                  into web apps using just a few lines of HTML. It leverages modern web standards, minimal setup, 
+                  and native embedding syntax to enable real-time, low-code integration with Qlik products.
+                </p>
+              </div>
+
+              <!-- moved from the bottom into this intro-header -->
+              <div>
+                <a href="hello-world.html">
+                  <img src="https://img.shields.io/badge/Step_3--_Using_qlik--embed_to_Render_Visualizations_in_Real_Time_>-19426C?style=for-the-badge"></img>
+                </a>
+              </div>
+            </div>
+            <div id="answers-container">
+              
+            </div>
+
+          </div>
+      </div>
+    </div>
+    <!-- Updated scripts with error handling -->
+    <script>
+      async function buildQlikEmbedHead() {
+        let appConfig;
+        try {
+          const response = await fetch("/config", { method: "GET", headers: { "Content-Type": "application/json" } });
+          if (!response.ok) {
+            throw new Error(`Failed to fetch config: ${response.status} ${response.statusText}`);
+          }
+          appConfig = await response.json();
+        } catch (error) {
+          console.error("Error loading Qlik embed config:", error);
+          return;
+        }
+        const qlikEmbedScript = document.createElement("script");
+        qlikEmbedScript.id = "qlik-embed-connection";
+        qlikEmbedScript.crossOrigin = "anonymous";
+        qlikEmbedScript.src = "https://cdn.jsdelivr.net/npm/@qlik/embed-web-components/dist/index.min.js";
+        qlikEmbedScript.dataset.host = appConfig.host;
+        qlikEmbedScript.dataset.clientId = appConfig.clientId;
+        qlikEmbedScript.dataset.accessTokenStorage = "session";
+        qlikEmbedScript.dataset.autoRedirect = "true";
+        qlikEmbedScript.dataset.authType = "Oauth2";
+        qlikEmbedScript.dataset.redirectUri = appConfig.redirectUri;
+        qlikEmbedScript.onload = () => console.log("Qlik embed script loaded successfully");
+        qlikEmbedScript.onerror = (e) => console.error("Error loading Qlik embed script:", e);
+        document.head.appendChild(qlikEmbedScript);
+
+      const answersDiv = document.getElementById("answers-container");
+      answersDiv.innerHTML = `<qlik-embed
+        ui="ai/assistant"
+        assistant-id="${appConfig.assistantId}"
+        appearance="qlik-light"
+      ></qlik-embed>`
+      }
+
+
+
+      window.addEventListener("DOMContentLoaded", () => {
+        if (!document.getElementById("qlik-embed-connection")) {
+          buildQlikEmbedHead();
+        } else {
+          console.log("Qlik embed connection already exists");
+        }
+      });
+    </script>
+</body>
+
+</html>

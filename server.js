@@ -10,18 +10,24 @@ const port = 3000;
 const app = express();
 
 app.use(express.static("src", {
-  index: `${__dirname}/src/hello-world.html`
+  index: `${__dirname}/src/hello-answers.html`
 }));
 
 
 app.get("/", (request, response) => {
 
-  response.sendFile(`${__dirname}/src/hello-world.html`);
+  response.sendFile(`${__dirname}/src/hello-answers.html`);
 });
 
 app.get("/config", (request, response) => {
   response.json(config);
   response.end;
+});
+
+app.get("/access-token", async (request, response) => {
+  const accessToken = await fetch("https://awkoia47z5.execute-api.us-east-1.amazonaws.com/default/oauth-patterns-access-token");
+  const token = await accessToken.text();
+  response.send(token);
 });
 
 // app.get("/theme", (request, response) => {

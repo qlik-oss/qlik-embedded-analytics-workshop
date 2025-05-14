@@ -40,6 +40,7 @@ const main = async () => {
 
     let tenantHostname = "";
     let appId = "";
+    let assistantId = "";
 
     if (createTenant) {
         const data = await createTenantAndAppId();
@@ -87,6 +88,13 @@ const main = async () => {
         spinner.text = "The workshop app exists on the tenant."
     }
 
+    //get assistant Id for chatty
+    if (!assistantId)
+        assistantId = await getAssistantId(tenantHostname, at);
+    if (assistantId) {
+        spinner.text = "The workshop assistant exists on the tenant."
+    }
+
     spinner.start("Creating OAuth client on your tenant.")
     const clientId = await createTenantOAuthClient(tenantHostname, codespaceName, at);
     result = await sleep(1500, spinner, "Creating OAuth client on your tenant.");
@@ -108,7 +116,8 @@ const main = async () => {
         codespaceHostname: codespaceName,
         clientId: clientId,
         appId: appId,
-        sheetId: workshopSettings.sheetId
+        sheetId: workshopSettings.sheetId,
+        assistantId: assistantId
     };
 
     createConfigFile(configData);
@@ -318,6 +327,32 @@ async function getAppId(tenantHostname, accessToken) {
     const params = new URLSearchParams();
     params.append("name", "sales analytics");
     params.append("resourceType", "app");
+
+    try {
+        const response = await fetch(`${tenantHostname}api/v1/items?${params}`, {
+            headers: {
+                "Authorization": `Bearer ${accessToken}`
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`)
+        }
+        const data = await response.json();
+        if (data.data.length == 1) {
+            return data.data[0].resourceId;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error(error.message);
+        return false;
+    }
+}
+
+async function getAssistantId(tenantHostname, accessToken) {
+    const params = new URLSearchParams();
+    params.append("name", "chatty");
+    params.append("resourceType", "assistant");
 
     try {
         const response = await fetch(`${tenantHostname}api/v1/items?${params}`, {

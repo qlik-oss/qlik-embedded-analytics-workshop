@@ -1,4 +1,4 @@
-# 8 Set charts on the fly
+# 9 Set charts on the fly
 
 Qlik-embed has functionality to create charts and visualizations on the fly. You made charts on the fly work in step [6.2](#62-embed-visualizations-using-expressions) when you supplied expressions for dimensions and measures.
 
@@ -6,13 +6,13 @@ In this example, you can make changes to the chart definition dynamically using 
 
 In previous sections of this workshop, you didn't have to supply the initialization script at the top of the page. However, for charts on the fly to work on this page you need to add the initialization script manually to the code.
 
-## 8.1 Obtain the configuration script
+## 9.1 Obtain the configuration script
 
 Click the **cheat sheet** button in the side panel of the web application.
 
 Click the **Copy configuration** button to store the configuration to your clipboard.
 
-## 8.2 Add configuration script template to charts.html page
+## 9.2 Add configuration script template to charts.html page
 
 Open the `charts.html` page located in the `src` directory. Locate the section `qlik-embed script configuration` and copy/paste the script snippet from the clipboard to the file. It will look similar to the example.
 
@@ -30,7 +30,7 @@ Open the `charts.html` page located in the `src` directory. Locate the section `
 ></script>
 ```
 
-## 8.3 Update the app id for the qlik-embed element
+## 9.3 Update the app id for the qlik-embed element
 
 Click the **cheat sheet** button in the side panel of the web application.
 
@@ -51,7 +51,7 @@ In the `qlik-embed` element, update the `app-id` attribute to the id for the Sal
 
 Refresh the application web page. You should see the drop-down items populate with dimensions and measures. You can select from the drop-downs and see the chart update. In addition, you can click on one of the icons to change the chart type.
 
-## 8.4 How dynamic charts on the fly works
+## 9.4 How dynamic charts on the fly works
 
 With `qlik-embed` it's possible to get a handle of an embedded chart object. With this handle, you can gain access to the underlying metadata of the object and a connection to all of the metadata in the application. Here's how to get a handle of a `qlik-embed` object.
 
