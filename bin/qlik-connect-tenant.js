@@ -36,24 +36,12 @@ const main = async () => {
     }),
   };
 
-  const createTenant = await confirm({
-    message: "Do you want to create a new tenant today?",
-    default: true,
-  });
-
-  if (!createTenant) {
-    spinner.fail(
-      "You've decided not to participate. If you change your mind, run the script again."
-    );
-    process.exit();
-  }
-
   let tenantHostname = "";
   let appId = "";
   let assistantId = "";
 
-  if (createTenant) {
-    const data = await assignTenant(email);
+  if (userInput) {
+    const data = await assignTenant(userInput.email);
     if (data) {
       tenantHostname = data;
       spinner.succeed(`Tenant created with URL: ${tenantHostname}`);
@@ -178,7 +166,6 @@ async function assignTenant(email) {
 }
 
 async function getTenantAccessToken(tenantHostname, scopes) {
-  //"https://ubzt66e9je.execute-api.us-east-1.amazonaws.com/token/"
   const requestPayload = {
     tenantHostname: tenantHostname,
     scopes: scopes,
@@ -186,9 +173,6 @@ async function getTenantAccessToken(tenantHostname, scopes) {
 
   //get access token to tenant
   try {
-    //console.log(`Requesting access token for ${tenantHostname} with scopes: ${scopes}`);
-    //console.log(`Calling ${workshopSettings.regionalOAuthLambaUrl}`);
-    //console.log(`Payload: ${JSON.stringify(requestPayload)}`);
 
     const response = await fetch(workshopSettings.regionalOAuthLambaUrl, {
       method: "POST",
