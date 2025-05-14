@@ -1,13 +1,13 @@
-# 6 Embed charts and UI objects
+# 7 Embed charts and UI objects
 
 In this section, you are going to learn how to embed individual visualizations into the web application using `qlik-embed`. 
 
 Retrieve the application id you've been using in the previous exercises of the workshop.
 Open the `index.html` file
 
-## 6.1 Embed objects from Qlik Sense applications
+## 7.1 Embed objects from Qlik Sense applications
 
-### 6.1.1 Configure KPI01
+### 7.1.1 Configure KPI01
 
 In the html file, search for `KPI01`. You should land in the `<qlik-embed>` element with this id.
 
@@ -27,7 +27,7 @@ Update the following properties:
 - `app-id`: The application id containing the visualization.
 - `object-id`: The unique identifier for the visualization to embed. Enter this object id as the value for this property: `ejNeB`.
 
-### 6.1.2 Configure additional embedded objects
+### 7.1.2 Configure additional embedded objects
 
 Repeat step 5.1.1 searching for the element id, using the application id and entering the corresponding object-id in the appropriate property fields.
 
@@ -42,7 +42,7 @@ Repeat step 5.1.1 searching for the element id, using the application id and ent
 
 Refresh the web application and navigate to the `qlik-embed objects` page to see it updated with the embedded visualizations.
 
-## 6.2 Embed visualizations using expressions
+## 7.2 Embed visualizations using expressions
 
 In addition to rendering visualizations that exist in a Qlik Sense application, you can create visualizations dynamically on-the-fly using expressions.
 
@@ -69,4 +69,4 @@ The `measures` property specifies the calculation expression or governed measure
 
 The `properties` property allow you to set specific properties available for the chart. Supply the value as a `JSON` string.
 
-[![Step 7 button](https://img.shields.io/badge/Step_7_--_triggering_events_>-19426C?style=for-the-badge)](07-trigger-events.md)
+[![Step 8 button](https://img.shields.io/badge/Step_8_--_triggering_events_>-19426C?style=for-the-badge)](08-trigger-events.md)

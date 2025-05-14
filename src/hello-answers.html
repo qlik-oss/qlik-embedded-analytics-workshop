@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello qlik-embed analytics/chart</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/codeeditor.css" />
+    <script src="
+    https://cdn.jsdelivr.net/npm/dompurify@3.2.5/dist/purify.min.js
+    "></script>
+    <script>
+      async function getAccessToken() {
+        const response = await fetch("/access-token", {
+          method: "GET",
+          credentials: "include",
+          mode: "same-origin",
+          redirect: "follow",
+        });
+        if (response.status === 200) {
+          const token = await response.text();
+          return token;
+        }
+        const err = new Error("Unexpected serverside authentication error");
+        err.status = response.status;
+        err.detail;
+        throw err;
+      }
+    </script>
+    <script
+    crossorigin="anonymous"
+    type="application/javascript"
+    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/index.min.js"
+    data-host="https://oauth-patterns.us.qlikcloud.com"
+    data-client-id="ae00f7fffa7ceafa7ae022cde4a9f926"
+    data-auth-type="Oauth2"
+    data-access-token-storage="session"
+    data-get-access-token="getAccessToken"></script>
+    
+</head>
+<body>
+    <div class="tippy-top">
+        <div class="top-bar">hello qlik-embed analytics/chart</div>
+    </div>
+    <div class="main-app">
+      <div class="side-panel" id="side-panel">
+        <div>
+          <p id="app-id"></p>
+        </div>
+        <ul id="sheet-list"></ul>
+      </div>
+      <div class="content">
+          <div class="container">
+            <div class="intro-header">
+              <div class="welcome">
+                <h2>Welcome to qlik-embed</h2>
+                <p>
+                  qlik-embed is a powerful tool that allows you to seamlessly integrate Qlik user interfaces 
+                  into web apps using just a few lines of HTML. It leverages modern web standards, minimal setup, 
+                  and native embedding syntax to enable real-time, low-code integration with Qlik products.
+                </p>
+              </div>
+
+              <!-- moved from the bottom into this intro-header -->
+              <div>
+                <a href="hello-world.html">
+                  <img src="https://img.shields.io/badge/Step_3--_Using_qlik--embed_to_Render_Visualizations_in_Real_Time_>-19426C?style=for-the-badge"></img>
+                </a>
+              </div>
+            </div>
+            <div id="answers-container">
+              <qlik-embed
+                ui="ai/assistant"
+                assistant-id="d57bb148-2499-4f2a-83b3-7a6597cd5e60"
+                appearance="qlik-light"
+              ></qlik-embed>
+            </div>
+
+          </div>
+      </div>
+    </div>
+</body>
+
+</html>
