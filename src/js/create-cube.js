@@ -9,17 +9,42 @@
   const config = await response.json();
 
   // Initial HTML example
-  const initialHtml = `<qlik-embed
-    id="visualization"
-    ui="analytics/chart"
-    app-id="${config.appId}"
-    object-id="ZxDKp"
-    theme="breeze"
-    disable-cell-padding="true"
-  ></qlik-embed>`;
+  const initialHtml = `{
+    "qInfo": {
+        "qId": "sessionChart",
+        "qType": "HyperCubeDef"
+    },
+    "qHyperCubeDef": {
+        "qDimensions": [
+            {
+                "qLibraryId": "FFQHMq"
+            },
+            {
+                "qLibraryId": "KFmTudV"
+            }
+        ],
+        "qMeasures": [
+            {
+                "qDef": {
+                    "qDef": "=SUM(Sales)",
+                    "qLabel": "Total Sales"
+                }
+            }
+        ],
+        "qInitialDataFetch": [
+            {
+                "qLeft": 0,
+                "qTop": 0,
+                "qHeight": 100,
+                "qWidth": 3
+            }
+        ]
+    }
+}`;
 
   // DOM elements
   const htmlEditor = document.getElementById('htmlEditor');
+  
   const lineNumbers = document.getElementById('lineNumbers');
   const previewContent = document.getElementById('previewContent');
   const lineCount = document.getElementById('lineCount');
@@ -42,10 +67,6 @@
   htmlEditor.addEventListener('scroll', () => {
     // Sync line numbers scroll position with textarea
     lineNumbers.scrollTop = htmlEditor.scrollTop;
-  });
-
-  formatButton.addEventListener('click', () => {
-    formatHtml();
   });
 
   // Update line count
@@ -138,33 +159,58 @@
 
   // Update preview with sanitized HTML
   function updatePreview() {
-    try {
+    // try {
       const html = htmlEditor.value;
-      const sanitizedHtml = sanitizeHtml(html);
+//      const sanitizedHtml = sanitizeHtml(html);
 
-      // delete children from previewContent
-      while (previewContent.firstChild) {
-        previewContent.removeChild(previewContent.firstChild);
-      }
+      // // delete children from previewContent
+      // while (previewContent.firstChild) {
+      //   previewContent.removeChild(previewContent.firstChild);
+      // }
 
-      // Update the preview content
-      let newDiv = document.createElement('div');
-      newDiv.id = "embed-content";
-      newDiv.classList.add("viz");
-      newDiv.innerHTML = sanitizedHtml;
-      previewContent.appendChild(newDiv);
+      // // Update the preview content
+      // let newDiv = document.createElement('div');
+      // newDiv.id = "embed-content";
+      // newDiv.classList.add("viz");
+      // newDiv.innerHTML = html;
+      // previewContent.appendChild(newDiv);
 
       // Make links non-functional to prevent navigation
-      const links = previewContent.querySelectorAll('a');
-      links.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-        });
-      });
+    //   const links = previewContent.querySelectorAll('a');
+    //   links.forEach(link => {
+    //     link.addEventListener('click', (e) => {
+    //       e.preventDefault();
+    //     });
+    //   });
 
-    } catch (error) {
-      console.error('Error updating preview:', error);
-      previewContent.innerHTML = `<div style="color: red; padding: 10px;">Error rendering HTML: ${error.message}</div>`;
-    }
+    // } catch (error) {
+    //   console.error('Error updating preview:', error);
+    //   previewContent.innerHTML = `<div style="color: red; padding: 10px;">Error rendering HTML: ${error.message}</div>`;
+    // }
   }
 })();
+
+
+async function createCube(hyperCubeDef, callback) {
+  const app = this;
+  const okFunc = await callback
+    ? async function(data) {
+      await callback(data, app);
+    }
+    : function() { };
+
+    console.log(hyperCubeDef);
+  const theData = await app.createSessionObject(hyperCubeDef);
+  let dataLayout;
+
+  theData.on("changed", async () => {
+    dataLayout = await theData.getLayout();
+    await okFunc(dataLayout);
+    return theData;
+
+  });
+
+  return theData;
+}
+
+export { createCube };

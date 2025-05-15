@@ -12,15 +12,15 @@
 </head>
 <body>
     <div class="tippy-top">
-        <div class="top-bar">hello qlik-embed analytics/chart</div>
+        <div class="top-bar">hello create cube from qlik-api</div>
     </div>
     <div class="main-app">
       <div class="side-panel" id="side-panel">
         <div>
           <p id="app-id"></p>
         </div>
-        <ul id="sheet-list"></ul>
-        <ul id="theme-list"></ul>
+        <ul id="dim-list"></ul>
+        <ul id="measure-list"></ul>
       </div>
       <div class="content">
           <div class="container">
@@ -36,30 +36,29 @@
 
               <!-- moved from the bottom into this intro-header -->
               <div>
-                <a href="hello-classic-app.html">
-                  <img src="https://img.shields.io/badge/Step_3--_Embed_a_complete_analytics_application_>-19426C?style=for-the-badge"></img>
+                <a href="hello-create-cube.html">
+                  <img src="https://img.shields.io/badge/Step_4--_Get_data_without_visualization__>-19426C?style=for-the-badge"></img>
                 </a>
               </div>
             </div>
               <div class="editor-container">
-                  <div class="editor-panel">
-                    <div class="code-editor">
-                      <div class="editor-header">
-                        <span class="editor-title">HTML</span>
-                        <div class="editor-controls">
-                          <div class="control-dot dot-red"></div>
-                          <div class="control-dot dot-yellow"></div>
-                          <div class="control-dot dot-green"></div>
-                          <button id="formatButton" class="format-button">Format HTML</button>
+                    <div class="editor-panel">
+                      <div class="code-editor">
+                        <div class="editor-header">
+                          <span class="editor-title">Javascript</span>
+                          <div class="editor-controls">
+                            <div class="control-dot dot-red"></div>
+                            <div class="control-dot dot-yellow"></div>
+                            <div class="control-dot dot-green"></div>
+                          </div>
+                        </div>
+                        <div class="editor-wrapper">
+                          <div id="lineNumbers" class="line-numbers"></div>
+                          <textarea id="htmlEditor" class="code-textarea" spellcheck="false" wrap="off"></textarea>
+                          <div id="lineCount" class="line-count">1 lines</div>
                         </div>
                       </div>
-                      <div class="editor-wrapper">
-                        <div id="lineNumbers" class="line-numbers"></div>
-                        <textarea id="htmlEditor" class="code-textarea" spellcheck="false" wrap="off"></textarea>
-                        <div id="lineCount" class="line-count">1 lines</div>
-                      </div>
-                    </div>
-                  </div>
+                    </div>                  
       
                   <div class="preview-panel">
                     <div class="preview-container">
@@ -74,14 +73,10 @@
                         </div>
                       </div>
                       <div class="preview-content" id="preview-content-parent">
-                        <div class="selections-container">
-                          <qlik-embed
-                            id="selections-bar"
-                            ui="selections"
-                            app-id="">
-                          </qlik-embed>
-                        </div>
                         <div id="previewContent" class="preview-content-wrapper">
+                        </div>                    
+                        <div id="chart-data">
+
                         </div>
                       </div>
                     </div>
@@ -128,9 +123,10 @@
   
         });
     </script>
-    <script type="module" src="js/html-preview.js"></script>
+    <script type="module" src="js/create-cube.js"></script>
     <script type="module">
       import { auth, qix } from "https://cdn.jsdelivr.net/npm/@qlik/api/index.min.js";
+      import { createCube } from "./js/create-cube.js";
 
       const config = await fetch("/config", {
         method: "GET",
@@ -155,90 +151,146 @@
       const appDiv = document.getElementById("app-id");
       appDiv.innerHTML = `Your app Id is:<br>${config.appId}`;
 
-      let sheetArr = [];
-      const sheetList = await app.getSheetList();
-      console.log(sheetList)
-      for(const sheet of sheetList) {
-        const sheetObj = {
-          name: sheet.qMeta.title
-        };
-        const objectList = sheet.qData.cells;
-        sheetObj.objects= objectList;
-        sheetArr.push(sheetObj);
-      }
+      //create dimension list
 
-      const rootUl = document.getElementById('sheet-list');
+      const rootUl = document.getElementById('dim-list');
+      rootUl.textContent = "Dimension List";
+
+      let dimArr = [];
+      const dimList = await app.getDimensionList();
+      console.log(dimList);
+
+      for(const dim of dimList) {
+        const dimObj = {
+          name: dim.qMeta.title,
+          id: dim.qInfo.qId
+        };
+        dimArr.push(dimObj);
+      }
 
     // Loop over each sheet to create its title and nested list
-    for (let i = 0; i < sheetArr.length; i++) {
-      const sheet = sheetArr[i];
+    for (let i = 0; i < dimArr.length; i++) {
+      const dim = dimArr[i];
 
-      // Sheet title list item
-      const sheetLi = document.createElement('li');
-      sheetLi.textContent = sheet.name;
-
-      // Nested UL for objects
-      const objUl = document.createElement('ul');
-
-      // Loop over each object
-      for (let j = 0; j < sheet.objects.length; j++) {
-        const obj = sheet.objects[j];
-        const objLi = document.createElement('li');
-        objLi.textContent = `${obj.name} (${obj.type}) `;
-
-        // Copy‑to‑clipboard button
-
-        const btn = createButton(obj.name);
-        objLi.appendChild(btn);
-        objUl.appendChild(objLi);
-      }
-
-      sheetLi.appendChild(objUl);
-      rootUl.appendChild(sheetLi);
+      const dimLi = document.createElement('li');
+      dimLi.textContent = dim.name;
+      const btn = createButton(dim.id);
+        dimLi.appendChild(btn);
+        rootUl.appendChild(dimLi);
     }
 
-    //get theme list
-        const themeUl = document.getElementById("theme-list");
-        themeUl.textContent = "Theme List";
-        if (!themeUl) {
-          console.error("Theme list element not found");
-        }
-        let themeList;
-        try {
-          const response = await fetch("https://cdn.qlikcloud.com/qmfe/sense-client/8.443.0/assets/external/sense-themes-default/default-themes.json");
-          if (!response.ok) {
-            throw new Error(`Failed to fetch theme list: ${response.status} ${response.statusText}`);
-          }
-          themeList = await response.json();
-          themeList = themeList.default.map(theme => {
-            const themeLi = document.createElement("li");
-            themeLi.textContent = theme.id || "Untitled Theme";
-            const btn = createButton(theme.id);
-            themeLi.appendChild(btn);
-            themeUl.appendChild(themeLi);
-          });
-        } catch (error) {
-          console.error("Error fetching theme list:", error);
-        }
+    //end dimension section
 
-        function createButton(id) { 
-          const btn = document.createElement("button");
-          btn.className = "copy-btn";
-          btn.dataset.id = id;
-          btn.title = "Copy ID";
-          btn.textContent = "📋";
-          btn.addEventListener("click", () => {
-            navigator.clipboard.writeText(id)
-              .then(() => {
-                btn.textContent = "✅";
-                setTimeout(() => (btn.textContent = "📋"), 1000);
-              })
-              .catch((err) => console.error("Failed to copy!", err));
-          });
-          return btn;
-        }
+    //begin measure section
+    const measureUl = document.getElementById('measure-list');
+    measureUl.textContent = "Measure List";
+
+    let measureArr = [];
+      const measureList = await app.getMeasureList();
+      console.log(measureList);
+
+      for(const measure of measureList) {
+        const measureObj = {
+          name: measure.qMeta.title,
+          id: measure.qInfo.qId
+        };
+        measureArr.push(measureObj);
+      }
+
+    // Loop over each sheet to create its title and nested list
+    for (let i = 0; i < measureArr.length; i++) {
+      const measure = measureArr[i];
+
+      const measureLi = document.createElement('li');
+      measureLi.textContent = measure.name;
+      const btn = createButton(measure.id);
+        measureLi.appendChild(btn);
+        measureUl.appendChild(measureLi);
+    }
+
+    let cubeDef
+
+    const htmlEditor = document.getElementById("htmlEditor");
+        cubeDef = JSON.parse(htmlEditor.value);
+
+    app.createCube = createCube;
+    let myCube = await app.createCube(cubeDef, function(cubeData) {
+      paintChart(cubeData.qHyperCube.qDataPages[0].qMatrix, table, tBody);
+    });
+    htmlEditor.addEventListener("change", async() => {
+      console.log(htmlEditor);
+      cubeDef = JSON.parse(htmlEditor.value);
+      myCube =  await app.createCube(cubeDef, function(cubeData) {
+        paintChart(cubeData.qHyperCube.qDataPages[0].qMatrix, table, tBody);
+      });
+    })
+
+
+    let curr = await app.getCurrentSelectionObject();
+    let currLayout = await curr.getLayout();
+    console.log(currLayout);
+
+    let dataLayout = await myCube.getLayout();
+
+    //create the table parts
+    let container = document.getElementById("chart-data");
+    let table = document.createElement("table");
+    
+    let cols = [dataLayout.qHyperCube.qDimensionInfo[0].title,
+                dataLayout.qHyperCube.qDimensionInfo[1].title,
+                dataLayout.qHyperCube.qMeasureInfo[0].title];
+    let thead = document.createElement("thead");
+    let tr = document.createElement("tr");
+    cols.forEach((item) => {
+      let th = document.createElement("th");
+      th.textContent = item;
+      tr.appendChild(th);
+    });
+    thead.appendChild(tr);
+    table.appendChild(thead);
+    let tBody = document.createElement("tbody");
+    table.appendChild(tBody);
+    container.appendChild(table);
+    paintChart(dataLayout.qHyperCube.qDataPages[0].qMatrix, table, tBody);
+    
+    function paintChart(theCube, table, tBody) {
+      let newTBody = document.createElement("tbody");
+      theCube.forEach((item) => {
+        let tr = document.createElement("tr");
+        let vals = Object.values(item);
+        vals.forEach((elem) => {
+          let td = document.createElement("td");
+          td.textContent = elem.qText;
+          tr.appendChild(td);
+        });
+        newTBody.appendChild(tr);
+      });
+      if (tBody != null) {
+        table.replaceChild(newTBody, table.tBodies[0]);
+      } else {
+        table.appendChild(newTBody);
+      }
+    }
+
+    function createButton(id) { 
+      const btn = document.createElement("button");
+      btn.className = "copy-btn";
+      btn.dataset.id = id;
+      btn.title = "Copy ID";
+      btn.textContent = "📋";
+      btn.addEventListener("click", () => {
+        navigator.clipboard.writeText(id)
+          .then(() => {
+            btn.textContent = "✅";
+            setTimeout(() => (btn.textContent = "📋"), 1000);
+          })
+          .catch((err) => console.error("Failed to copy!", err));
+      });
+      return btn;
+    }
 
     </script>
+
 </body>
 
 </html>
