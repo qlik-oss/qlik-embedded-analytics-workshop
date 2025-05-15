@@ -15,12 +15,14 @@
 
   // Initial HTML example
   const initialHtml = `<qlik-embed
-    id="visualization"
+    id="dynamic-chart"
     ui="analytics/chart"
     app-id="${config.appId}"
-    object-id="ZxDKp"
-    theme="breeze"
-    disable-cell-padding="true"
+    type="table"
+    dimensions='["[CategoryName]"]'
+    measures='["[#Customers]"]'
+    properties='{ orientation: "vertical", barGrouping: { grouping: "stacked" } }'
+    theme='breeze'
   ></qlik-embed>`;
 
   // DOM elements

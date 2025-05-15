@@ -19,7 +19,8 @@
         <div>
           <p id="app-id"></p>
         </div>
-        <ul id="sheet-list"></ul>
+        <ul id="dim-list"></ul>
+        <ul id="measure-list"></ul>
         <ul id="theme-list"></ul>
       </div>
       <div class="content">
@@ -30,14 +31,14 @@
                 <p>
                   qlik-embed is a powerful tool that allows you to seamlessly integrate Qlik Sense visualizations 
                   into web apps using just a few lines of HTML. It leverages modern web standards, minimal setup, 
-                  and native embedding syntax to enable real-time, low-code integration with Qlik’s visualization engine.
+                  and native embedding syntax to enable real-time, low-code integration with Qlik's visualization engine.
                 </p>
               </div>
 
               <!-- moved from the bottom into this intro-header -->
               <div>
-                <a href="hello-classic-app.html">
-                  <img src="https://img.shields.io/badge/Step_3--_Embed_a_complete_analytics_application_>-19426C?style=for-the-badge"></img>
+                <a href="hello-get-data.html">
+                  <img src="https://img.shields.io/badge/Step_3--_Get_data_from_an_embedded_visualization__>-19426C?style=for-the-badge"></img>
                 </a>
               </div>
             </div>
@@ -74,6 +75,31 @@
                         </div>
                       </div>
                       <div class="preview-content" id="preview-content-parent">
+                        <!-- <div id="chart-on-fly" class="container">
+                          <div class="sub-container">
+                            <div class="viz">
+                              <div class="drop-list-vert">
+                                <select id="chart-type-drop" name="chartTypeList" class="sheet-drop">
+                                  <option value="barchart">Bar chart</option>
+                                  <option value="linechart">Line chart</option>
+                                  <option value="piechart">Pie chart</option>
+                                </select>
+                                <select id="dim-drop" name="dimensionList" class="sheet-drop">
+                                  <option value="Segment">Segment</option>
+                                  <option value="Region">Region</option>
+                                </select>
+                                <select id="measure-drop" name="measureList" class="sheet-drop">
+                                  <option value="# of Customers"># of Customers</option>
+                                  <option value="# of Products"># of Products</option>
+                                </select>
+                              </div>
+                              <div>
+                              <pre><code id="dynamic-chart-code" class="language-html a11y-light code-snippet">
+                              </code></pre>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
                         <div class="selections-container">
                           <qlik-embed
                             id="selections-bar"
@@ -128,7 +154,7 @@
   
         });
     </script>
-    <script type="module" src="js/html-preview.js"></script>
+    <script type="module" src="js/chart-on-fly.js"></script>
     <script type="module">
       import { auth, qix } from "https://cdn.jsdelivr.net/npm/@qlik/api/index.min.js";
 
@@ -155,46 +181,61 @@
       const appDiv = document.getElementById("app-id");
       appDiv.innerHTML = `Your app Id is:<br>${config.appId}`;
 
-      let sheetArr = [];
-      const sheetList = await app.getSheetList();
-      console.log(sheetList)
-      for(const sheet of sheetList) {
-        const sheetObj = {
-          name: sheet.qMeta.title
-        };
-        const objectList = sheet.qData.cells;
-        sheetObj.objects= objectList;
-        sheetArr.push(sheetObj);
-      }
+     //create dimension list
 
-      const rootUl = document.getElementById('sheet-list');
+      const rootUl = document.getElementById('dim-list');
+      rootUl.textContent = "Dimension List";
+
+      let dimArr = [];
+      const dimList = await app.getDimensionList();
+      console.log(dimList);
+
+      for(const dim of dimList) {
+        const dimObj = {
+          name: dim.qMeta.title,
+          id: dim.qInfo.qId
+        };
+        dimArr.push(dimObj);
+      }
 
     // Loop over each sheet to create its title and nested list
-    for (let i = 0; i < sheetArr.length; i++) {
-      const sheet = sheetArr[i];
+    for (let i = 0; i < dimArr.length; i++) {
+      const dim = dimArr[i];
 
-      // Sheet title list item
-      const sheetLi = document.createElement('li');
-      sheetLi.textContent = sheet.name;
+      const dimLi = document.createElement('li');
+      dimLi.textContent = dim.name;
+      const btn = createButton(dim.name);
+        dimLi.appendChild(btn);
+        rootUl.appendChild(dimLi);
+    }
 
-      // Nested UL for objects
-      const objUl = document.createElement('ul');
+    //end dimension section
 
-      // Loop over each object
-      for (let j = 0; j < sheet.objects.length; j++) {
-        const obj = sheet.objects[j];
-        const objLi = document.createElement('li');
-        objLi.textContent = `${obj.name} (${obj.type}) `;
+    //begin measure section
+    const measureUl = document.getElementById('measure-list');
+    measureUl.textContent = "Measure List";
 
-        // Copy‑to‑clipboard button
+    let measureArr = [];
+      const measureList = await app.getMeasureList();
+      console.log(measureList);
 
-        const btn = createButton(obj.name);
-        objLi.appendChild(btn);
-        objUl.appendChild(objLi);
+      for(const measure of measureList) {
+        const measureObj = {
+          name: measure.qMeta.title,
+          id: measure.qInfo.qId
+        };
+        measureArr.push(measureObj);
       }
 
-      sheetLi.appendChild(objUl);
-      rootUl.appendChild(sheetLi);
+    // Loop over each sheet to create its title and nested list
+    for (let i = 0; i < measureArr.length; i++) {
+      const measure = measureArr[i];
+
+      const measureLi = document.createElement('li');
+      measureLi.textContent = measure.name;
+      const btn = createButton(measure.name);
+        measureLi.appendChild(btn);
+        measureUl.appendChild(measureLi);
     }
 
     //get theme list
@@ -239,6 +280,64 @@
         }
 
     </script>
+    <script type="module">
+    // dynamic-chart event construction
+   // import { formatQlikEmbed, formatChartJs } from './js/formatQlikEmbed.js';
+      let dynamic = document.getElementById("dynamic-chart");
+      let chartType = document.getElementById("chart-type-drop");
+      let dim = document.getElementById("dim-drop");
+      let measure = document.getElementById("measure-drop");
+
+      chartType.addEventListener("change", async function () {
+        let selOption = chartType.options[chartType.selectedIndex];
+        dynamic.setAttribute('type', selOption.value);
+        //await formatQlikEmbed(dynamic, 'dynamic-chart-code');
+      });
+
+      dim.addEventListener("change", async function () {
+        let selOption = dim.options[dim.selectedIndex];
+        console.log("selected Option:", selOption);
+        dynamic.setAttribute('dimensions', `["[${selOption.value}]"]`);
+       // await formatQlikEmbed(dynamic, 'dynamic-chart-code');
+      });
+
+      measure.addEventListener("change", async function () {
+        let selOption = measure.options[measure.selectedIndex];
+        dynamic.setAttribute('measures', `["[${selOption.value}]"]`);
+        //await formatQlikEmbed(dynamic, 'dynamic-chart-code');
+      });
+
+      let viz = document.getElementById("visualization");
+      (async () => {
+       // await formatQlikEmbed(viz, 'visualization-code');
+      })();
+
+      (async () => {
+       // await formatQlikEmbed(dynamic, 'dynamic-chart-code');
+      })();
+
+      let field = document.getElementById("field-list");
+      (async () => {
+       // await formatQlikEmbed(field, 'field-code');
+      })();
+
+      let classicChart = document.getElementById("classicChartObject");
+      (async () => {
+      //  await formatQlikEmbed(classicChart, 'classic-chart-code');
+      })();
+
+      let classicApp = document.getElementById("classic-app-viz");
+      (async () => {
+       // await formatQlikEmbed(classicApp, 'classic-app-code');
+      })();
+
+      let chartDataCode = document.getElementById("chart-data-code");
+      (async () => {
+      //  let result = await formatChartJs()
+      //  chartDataCode.innerHTML = result;
+        console.log("come on highlight javascript")
+      })();
+  </script>
 </body>
 
 </html>
