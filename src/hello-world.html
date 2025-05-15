@@ -20,6 +20,7 @@
           <p id="app-id"></p>
         </div>
         <ul id="sheet-list"></ul>
+        <ul id="theme-list"></ul>
       </div>
       <div class="content">
           <div class="container">
@@ -186,21 +187,8 @@
         objLi.textContent = `${obj.name} (${obj.type}) `;
 
         // Copy‑to‑clipboard button
-        const btn = document.createElement('button');
-        btn.className = 'copy-btn';
-        btn.setAttribute('data-id', obj.name);
-        btn.title = 'Copy ID';
-        btn.textContent = '📋';
 
-        btn.addEventListener('click', () => {
-          navigator.clipboard.writeText(obj.name)
-            .then(() => {
-              btn.textContent = '✅';
-              setTimeout(() => btn.textContent = '📋', 1000);
-            })
-            .catch(err => console.error('Failed to copy!', err));
-        });
-
+        const btn = createButton(obj.name);
         objLi.appendChild(btn);
         objUl.appendChild(objLi);
       }
@@ -209,6 +197,46 @@
       rootUl.appendChild(sheetLi);
     }
 
+    //get theme list
+        const themeUl = document.getElementById("theme-list");
+        themeUl.textContent = "Theme List";
+        if (!themeUl) {
+          console.error("Theme list element not found");
+        }
+        let themeList;
+        try {
+          const response = await fetch("https://cdn.qlikcloud.com/qmfe/sense-client/8.443.0/assets/external/sense-themes-default/default-themes.json");
+          if (!response.ok) {
+            throw new Error(`Failed to fetch theme list: ${response.status} ${response.statusText}`);
+          }
+          themeList = await response.json();
+          themeList = themeList.default.map(theme => {
+            const themeLi = document.createElement("li");
+            themeLi.textContent = theme.id || "Untitled Theme";
+            const btn = createButton(theme.id);
+            themeLi.appendChild(btn);
+            themeUl.appendChild(themeLi);
+          });
+        } catch (error) {
+          console.error("Error fetching theme list:", error);
+        }
+
+        function createButton(id) { 
+          const btn = document.createElement("button");
+          btn.className = "copy-btn";
+          btn.dataset.id = id;
+          btn.title = "Copy ID";
+          btn.textContent = "📋";
+          btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(id)
+              .then(() => {
+                btn.textContent = "✅";
+                setTimeout(() => (btn.textContent = "📋"), 1000);
+              })
+              .catch((err) => console.error("Failed to copy!", err));
+          });
+          return btn;
+        }
 
     </script>
 </body>
