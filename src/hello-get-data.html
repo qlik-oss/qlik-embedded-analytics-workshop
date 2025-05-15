@@ -36,8 +36,8 @@
 
               <!-- moved from the bottom into this intro-header -->
               <div>
-                <a href="hello-classic-app.html">
-                  <img src="https://img.shields.io/badge/Step_3--_Embed_a_complete_analytics_application_>-19426C?style=for-the-badge"></img>
+                <a href="hello-create-cube.html">
+                  <img src="https://img.shields.io/badge/Step_4--_Get_data_without_visualization__>-19426C?style=for-the-badge"></img>
                 </a>
               </div>
             </div>
@@ -263,6 +263,10 @@
 
     </script>
     <script type="module">
+      
+      import { formatQlikEmbed, formatChartJs } from './js/formatQlikEmbed.js';
+      const editor2 = document.getElementById("htmlEditor2");
+      editor2.value = await formatChartJs();
   //Get the data from the visualization in the page
   async function generateDataTable() {
     const vizEl = document.getElementById("visualization");
@@ -270,7 +274,6 @@
     const doc = await refApi.getDoc();
     const obj = await refApi.getObject();
     let objLayout = await obj.getLayout();
-    console.log(objLayout);
     //remove any existing data table;
     let remTable = document.getElementById("theDataTable");
     if(remTable) {
@@ -308,7 +311,6 @@
   }
   
   const getDataButton = document.addEventListener("click", async(e) => {
-    e.preventDefault();
     await generateDataTable();
   });
   
