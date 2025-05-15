@@ -18,7 +18,7 @@
     id="visualization"
     ui="analytics/chart"
     app-id="${config.appId}"
-    object-id="ZxDKp"
+    object-id="jLxLm"
     theme="breeze"
     disable-cell-padding="true"
   ></qlik-embed>`;
