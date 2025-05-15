@@ -30,7 +30,7 @@
 </head>
 <body>
     <div class="tippy-top">
-        <div class="top-bar">hello qlik-embed analytics/chart</div>
+        <div class="top-bar">hello qlik-embed ai/assistant</div>
     </div>
     <div class="main-app">
       <div class="side-panel" id="side-panel">
@@ -61,7 +61,26 @@
             <div id="answers-container">
               
             </div>
-
+            <div class="editor-container">
+                  <div class="editor-panel">
+                    <div class="code-editor" style="height:300px">
+                      <div class="editor-header">
+                        <span class="editor-title">HTML</span>
+                        <div class="editor-controls">
+                          <div class="control-dot dot-red"></div>
+                          <div class="control-dot dot-yellow"></div>
+                          <div class="control-dot dot-green"></div>
+                          <button id="formatButton" class="format-button">Format HTML</button>
+                        </div>
+                      </div>
+                      <div class="editor-wrapper" style="height:89%">
+                        <div id="lineNumbers" class="line-numbers"></div>
+                        <textarea id="htmlEditor" class="code-textarea" spellcheck="false" wrap="off"></textarea>
+                        <div id="lineCount" class="line-count">1 lines</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
           </div>
       </div>
     </div>
@@ -111,6 +130,7 @@
         }
       });
     </script>
+    <script type="module" src="js/assistant.js"></script>
 </body>
 
 </html>

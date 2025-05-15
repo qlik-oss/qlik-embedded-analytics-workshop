@@ -10,13 +10,11 @@
 
   // Initial HTML example
   const initialHtml = `<qlik-embed
-    id="visualization"
-    ui="analytics/chart"
-    app-id="${config.appId}"
-    object-id="ZxDKp"
-    theme="breeze"
-    disable-cell-padding="true"
-  ></qlik-embed>`;
+  id="assistant"
+  ui="ai/assistant"
+  assistant-id="${config.assistantId}"
+  appearance="qlik-light"
+></qlik-embed>`;
 
   // DOM elements
   const htmlEditor = document.getElementById('htmlEditor');
@@ -149,8 +147,7 @@
 
       // Update the preview content
       let newDiv = document.createElement('div');
-      newDiv.id = "embed-content";
-      newDiv.classList.add("viz");
+      newDiv.classList.add("app");
       newDiv.innerHTML = sanitizedHtml;
       previewContent.appendChild(newDiv);
 

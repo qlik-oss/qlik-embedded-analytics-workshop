@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="tippy-top">
-        <div class="top-bar">hello qlik-embed analytics/chart</div>
+        <div class="top-bar">hello get chart data from qlik-embed</div>
     </div>
     <div class="main-app">
       <div class="side-panel" id="side-panel">
@@ -30,36 +30,55 @@
                 <p>
                   qlik-embed is a powerful tool that allows you to seamlessly integrate Qlik Sense visualizations 
                   into web apps using just a few lines of HTML. It leverages modern web standards, minimal setup, 
-                  and native embedding syntax to enable real-time, low-code integration with Qlik's visualization engine.
+                  and native embedding syntax to enable real-time, low-code integration with Qlik’s visualization engine.
                 </p>
               </div>
 
               <!-- moved from the bottom into this intro-header -->
               <div>
-                <a href="hello-get-data.html">
-                  <img src="https://img.shields.io/badge/Step_3--_Get_data_from_an_embedded_visualization__>-19426C?style=for-the-badge"></img>
+                <a href="hello-create-cube.html">
+                  <img src="https://img.shields.io/badge/Step_4--_Get_data_without_visualization__>-19426C?style=for-the-badge"></img>
                 </a>
               </div>
             </div>
               <div class="editor-container">
-                  <div class="editor-panel">
-                    <div class="code-editor">
-                      <div class="editor-header">
-                        <span class="editor-title">HTML</span>
-                        <div class="editor-controls">
-                          <div class="control-dot dot-red"></div>
-                          <div class="control-dot dot-yellow"></div>
-                          <div class="control-dot dot-green"></div>
-                          <button id="formatButton" class="format-button">Format HTML</button>
+                  <div style="display:flex; flex-direction: column; width:80%">
+                    <div class="editor-panel" style="height:200px">
+                      <div class="code-editor">
+                        <div class="editor-header">
+                          <span class="editor-title">HTML</span>
+                          <div class="editor-controls">
+                            <div class="control-dot dot-red"></div>
+                            <div class="control-dot dot-yellow"></div>
+                            <div class="control-dot dot-green"></div>
+                          </div>
+                        </div>
+                        <div class="editor-wrapper">
+                          <div id="lineNumbers" class="line-numbers"></div>
+                          <textarea id="htmlEditor" class="code-textarea" spellcheck="false" wrap="off"></textarea>
+                          <div id="lineCount" class="line-count">1 lines</div>
                         </div>
                       </div>
-                      <div class="editor-wrapper">
-                        <div id="lineNumbers" class="line-numbers"></div>
-                        <textarea id="htmlEditor" class="code-textarea" spellcheck="false" wrap="off"></textarea>
-                        <div id="lineCount" class="line-count">1 lines</div>
+                    </div>
+                    <div class="editor-panel" style="height:500px">
+                      <div class="code-editor">
+                        <div class="editor-header">
+                          <span class="editor-title">Javascript</span>
+                          <div class="editor-controls">
+                            <div class="control-dot dot-red"></div>
+                            <div class="control-dot dot-yellow"></div>
+                            <div class="control-dot dot-green"></div>
+                          </div>
+                        </div>
+                        <div class="editor-wrapper">
+                          <div id="lineNumbers2" class="line-numbers"></div>
+                          <textarea id="htmlEditor2" class="code-textarea" spellcheck="false" wrap="off" readonly></textarea>
+                          <div id="lineCount2" class="line-count">1 lines</div>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  
       
                   <div class="preview-panel">
                     <div class="preview-container">
@@ -82,6 +101,10 @@
                           </qlik-embed>
                         </div>
                         <div id="previewContent" class="preview-content-wrapper">
+                        </div>
+                        
+                        <div id="chart-data">
+                          <button id="get-data">Get data from chart</button>
                         </div>
                       </div>
                     </div>
@@ -128,7 +151,7 @@
   
         });
     </script>
-    <script type="module" src="js/html-preview.js"></script>
+    <script type="module" src="js/get-data.js"></script>
     <script type="module">
       import { auth, qix } from "https://cdn.jsdelivr.net/npm/@qlik/api/index.min.js";
 
@@ -239,6 +262,77 @@
         }
 
     </script>
+    <script type="module">
+      
+      import { formatQlikEmbed, formatChartJs } from './js/formatQlikEmbed.js';
+      const editor2 = document.getElementById("htmlEditor2");
+      editor2.value = await formatChartJs();
+  //Get the data from the visualization in the page
+  async function generateDataTable() {
+    const vizEl = document.getElementById("visualization");
+    const refApi = await vizEl.getRefApi();
+    const doc = await refApi.getDoc();
+    const obj = await refApi.getObject();
+    let objLayout = await obj.getLayout();
+    //remove any existing data table;
+    let remTable = document.getElementById("theDataTable");
+    if(remTable) {
+      remTable.remove();
+    }
+
+    let container = document.getElementById("chart-data");
+    let table = document.createElement("table");
+    table.id = "theDataTable";
+    let cols = [objLayout.qHyperCube.qDimensionInfo[0].title, objLayout.qHyperCube.qMeasureInfo[0].title];
+    let thead = document.createElement("thead");
+    let tr = document.createElement("tr");
+    cols.forEach((item) => {
+      let th = document.createElement("th");
+      th.textContent = item;
+      tr.appendChild(th);
+    });
+    thead.appendChild(tr);
+    table.appendChild(thead);
+    let tBody = document.createElement("tbody");
+    table.appendChild(tBody);
+    container.appendChild(table);
+    paintChart(objLayout.qHyperCube.qDataPages[0].qMatrix, table, tBody);
+
+    // Register an event listener for change events
+    obj.on("changed", async () => {
+      objLayout = await obj.getLayout()
+      paintChart(objLayout.qHyperCube.qDataPages[0].qMatrix, table, tBody);
+      let currSel = await doc.getCurrentSelectionObject();
+      let currLayout = await currSel.getLayout();
+      console.log("Here's the current selections");
+      console.log(currLayout)
+      console.log("changed ✅");
+    });
+  }
+  
+  const getDataButton = document.addEventListener("click", async(e) => {
+    await generateDataTable();
+  });
+  
+    function paintChart(theCube, table, tBody) {
+      let newTBody = document.createElement("tbody");
+      theCube.forEach((item) => {
+        let tr = document.createElement("tr");
+        let vals = Object.values(item);
+        vals.forEach((elem) => {
+          let td = document.createElement("td");
+          td.textContent = elem.qText;
+          tr.appendChild(td);
+        });
+        newTBody.appendChild(tr);
+      });
+      if (tBody != null) {
+        table.replaceChild(newTBody, table.tBodies[0]);
+      } else {
+        table.appendChild(newTBody);
+      }
+    }
+</script>
 </body>
 
 </html>

@@ -8,12 +8,17 @@
   const response = await fetch('/config');
   const config = await response.json();
 
+  let selectionsBar = document.getElementById('selections-bar');
+  if(selectionsBar) {
+    selectionsBar.setAttribute('app-id', config.appId);
+  }
+
   // Initial HTML example
   const initialHtml = `<qlik-embed
     id="visualization"
     ui="analytics/chart"
     app-id="${config.appId}"
-    object-id="ZxDKp"
+    object-id="jLxLm"
     theme="breeze"
     disable-cell-padding="true"
   ></qlik-embed>`;
@@ -42,10 +47,6 @@
   htmlEditor.addEventListener('scroll', () => {
     // Sync line numbers scroll position with textarea
     lineNumbers.scrollTop = htmlEditor.scrollTop;
-  });
-
-  formatButton.addEventListener('click', () => {
-    formatHtml();
   });
 
   // Update line count
