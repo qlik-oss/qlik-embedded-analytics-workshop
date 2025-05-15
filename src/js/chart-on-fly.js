@@ -12,15 +12,13 @@
   if(selectionsBar) {
     selectionsBar.setAttribute('app-id', config.appId);
   }
-
+  
   // Initial HTML example
   const initialHtml = `<qlik-embed
     id="visualization"
     ui="analytics/chart"
     app-id="${config.appId}"
-    object-id="ZxDKp"
-    theme="breeze"
-    disable-cell-padding="true"
+    object-id="mAbpP"
   ></qlik-embed>`;
 
   // DOM elements
