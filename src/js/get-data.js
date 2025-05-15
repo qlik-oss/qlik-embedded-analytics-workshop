@@ -49,10 +49,6 @@
     lineNumbers.scrollTop = htmlEditor.scrollTop;
   });
 
-  formatButton.addEventListener('click', () => {
-    formatHtml();
-  });
-
   // Update line count
   function updateLineCount() {
     const lines = htmlEditor.value.split('\n').length;

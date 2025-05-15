@@ -42,24 +42,43 @@
               </div>
             </div>
               <div class="editor-container">
-                  <div class="editor-panel">
-                    <div class="code-editor">
-                      <div class="editor-header">
-                        <span class="editor-title">HTML</span>
-                        <div class="editor-controls">
-                          <div class="control-dot dot-red"></div>
-                          <div class="control-dot dot-yellow"></div>
-                          <div class="control-dot dot-green"></div>
-                          <button id="formatButton" class="format-button">Format HTML</button>
+                  <div style="display:flex; flex-direction: column; width:80%">
+                    <div class="editor-panel" style="height:200px">
+                      <div class="code-editor">
+                        <div class="editor-header">
+                          <span class="editor-title">HTML</span>
+                          <div class="editor-controls">
+                            <div class="control-dot dot-red"></div>
+                            <div class="control-dot dot-yellow"></div>
+                            <div class="control-dot dot-green"></div>
+                          </div>
+                        </div>
+                        <div class="editor-wrapper">
+                          <div id="lineNumbers" class="line-numbers"></div>
+                          <textarea id="htmlEditor" class="code-textarea" spellcheck="false" wrap="off"></textarea>
+                          <div id="lineCount" class="line-count">1 lines</div>
                         </div>
                       </div>
-                      <div class="editor-wrapper">
-                        <div id="lineNumbers" class="line-numbers"></div>
-                        <textarea id="htmlEditor" class="code-textarea" spellcheck="false" wrap="off"></textarea>
-                        <div id="lineCount" class="line-count">1 lines</div>
+                    </div>
+                    <div class="editor-panel" style="height:500px">
+                      <div class="code-editor">
+                        <div class="editor-header">
+                          <span class="editor-title">Javascript</span>
+                          <div class="editor-controls">
+                            <div class="control-dot dot-red"></div>
+                            <div class="control-dot dot-yellow"></div>
+                            <div class="control-dot dot-green"></div>
+                          </div>
+                        </div>
+                        <div class="editor-wrapper">
+                          <div id="lineNumbers2" class="line-numbers"></div>
+                          <textarea id="htmlEditor2" class="code-textarea" spellcheck="false" wrap="off" readonly></textarea>
+                          <div id="lineCount2" class="line-count">1 lines</div>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  
       
                   <div class="preview-panel">
                     <div class="preview-container">
@@ -251,7 +270,7 @@
     const doc = await refApi.getDoc();
     const obj = await refApi.getObject();
     let objLayout = await obj.getLayout();
-
+    console.log(objLayout);
     //remove any existing data table;
     let remTable = document.getElementById("theDataTable");
     if(remTable) {
